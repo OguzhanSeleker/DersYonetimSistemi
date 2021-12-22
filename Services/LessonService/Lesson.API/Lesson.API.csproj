@@ -19,10 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mapping\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\SharedLibrary\SharedLibrary.csproj" />
     <ProjectReference Include="..\Lesson.Domain\Lesson.Domain.csproj" />
     <ProjectReference Include="..\Lesson.Infrastructure\Lesson.Infrastructure.csproj" />
   </ItemGroup>

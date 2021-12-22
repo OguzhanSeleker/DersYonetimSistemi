@@ -1,6 +1,8 @@
 ﻿using Lesson.API.Dtos;
+using Lesson.API.Mapping;
 using Lesson.Domain.Interfaces;
 using Lesson.Infrastructure.Repositories;
+using SharedLibrary.ResponseDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +23,23 @@ namespace Lesson.API.Services
             _lessonCodeRepository = lessonCodeRepository;
         }
 
-        public async Task<bool> AddLesson(CreateLessonDto createLessonDto)
+        public async Task<OperationResult<NoContent>> AddLesson(CreateLessonDto createLessonDto)
+        {
+            try
+            {
+                var lesson = ObjectMapper.Mapper.Map<Domain.Aggregates.Lesson>(createLessonDto);
+                _lessonRepository.Add(lesson);
+                await _unitOfWork.CommitAsync();
+                return OperationResult<NoContent>.CreatedSuccessResult();
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<NoContent>.CreateFailure(ex);
+            }
+            
+        }
+
+        public Task<OperationResult<NoContent>> AddStudents(StudentDto studentDto)
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,8 @@
+using Lesson.API.Extensions;
+using Lesson.API.Services;
+using Lesson.Domain.Interfaces;
 using Lesson.Infrastructure;
+using Lesson.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -27,9 +31,11 @@ namespace Lesson.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<LessonDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("PostgreSql"), configure => { configure.MigrationsAssembly("Lesson.API"); })
-                );
+            services
+                .AddDatabase(Configuration)
+                .AddRepositories()
+                .AddServices();
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
