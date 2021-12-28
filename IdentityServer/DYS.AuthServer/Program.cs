@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using AuthServer.Data;
-using AuthServer.Models;
+using DYS.AuthServer.Data;
+using DYS.AuthServer.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +16,7 @@ using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Linq;
 
-namespace AuthServer
+namespace DYS.AuthServer
 {
     public class Program
     {
@@ -29,23 +29,13 @@ namespace AuthServer
                 .MinimumLevel.Override("System", LogEventLevel.Warning)
                 .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
                 .Enrich.FromLogContext()
-                // uncomment to write to Azure diagnostics stream
-                //.WriteTo.File(
-                //    @"D:\home\LogFiles\Application\identityserver.txt",
-                //    fileSizeLimitBytes: 1_000_000,
-                //    rollOnFileSizeLimit: true,
-                //    shared: true,
-                //    flushToDiskInterval: TimeSpan.FromSeconds(1))
                 .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Code)
                 .CreateLogger();
 
             try
             {
-
                 var host = CreateHostBuilder(args).Build();
-
-
-                using (var scope = host.Services.CreateScope())
+                using(var scope = host.Services.CreateScope())
                 {
                     var serviceProvider = scope.ServiceProvider;
                     var applicationDbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
@@ -58,8 +48,8 @@ namespace AuthServer
                     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
                     if (!roleManager.Roles.Any())
                     {
-                        roleManager.CreateAsync(new UserRole { Name = "Admin" }).Wait();
-                        userManager.AddToRoleAsync( userManager.FindByNameAsync("seleker17").Result, "Admin").Wait();
+                        roleManager.CreateAsync(new IdentityRole { Name = "Admin" }).Wait();
+                        userManager.AddToRoleAsync(userManager.FindByNameAsync("seleker17").Result, "Admin").Wait();
                     }
                 }
                 Log.Information("Starting host...");
