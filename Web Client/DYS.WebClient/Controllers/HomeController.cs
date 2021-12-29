@@ -1,4 +1,5 @@
 ﻿using DYS.WebClient.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -22,7 +23,7 @@ namespace DYS.WebClient.Controllers
         {
             return View();
         }
-
+        [Authorize(Roles ="Admin")]
         public IActionResult Privacy()
         {
             return View();
@@ -32,6 +33,11 @@ namespace DYS.WebClient.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

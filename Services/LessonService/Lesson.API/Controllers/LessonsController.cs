@@ -1,5 +1,6 @@
 ﻿using Lesson.API.Dtos;
 using Lesson.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SharedLibrary.ControllerBases;

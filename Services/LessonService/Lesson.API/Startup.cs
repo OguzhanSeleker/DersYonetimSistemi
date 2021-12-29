@@ -66,6 +66,10 @@ namespace Lesson.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lesson.API v1"));
             }
+            else
+            {
+                app.UseExceptionHandler();
+            }
 
             app.UseRouting();
             app.UseAuthentication();
