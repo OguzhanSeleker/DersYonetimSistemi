@@ -1,5 +1,7 @@
 ﻿using DYS.WebClient.Models;
 using DYS.WebClient.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using SharedLibrary.ControllerBases;
 using System;
@@ -35,6 +37,14 @@ namespace DYS.WebClient.Controllers
             }
 
             return RedirectToAction(nameof(Index), "Home");
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await _identityService.RevokeRefreshToken();
+            return RedirectToAction(nameof(HomeController.Index), "Home");
+
         }
     }
 }

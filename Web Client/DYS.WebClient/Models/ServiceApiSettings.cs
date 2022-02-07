@@ -7,7 +7,8 @@ namespace DYS.WebClient.Models
 {
     public class ServiceApiSettings
     {
-        public string BaseUri { get; set; }
+        public string IdentityBaseUri { get; set; }
+        public string GatewayBaseUri { get; set; }
         public string LessonApiUri { get; set; }
     }
 }

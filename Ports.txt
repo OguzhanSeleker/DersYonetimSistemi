@@ -1,0 +1,3 @@
+Gateway      => 5000
+AuthServer   => 5001
+WebClient    => 5002

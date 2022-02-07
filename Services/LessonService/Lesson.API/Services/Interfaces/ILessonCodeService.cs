@@ -11,7 +11,7 @@ namespace Lesson.API.Services
     public interface ILessonCodeService
     {
         Task<OperationResult<bool>> AddLessonCode(AddLessonCodeDto AddlessonCodeDto);
-        Task<OperationResult<>>
+        //Task<OperationResult<>>
         
     }
 }

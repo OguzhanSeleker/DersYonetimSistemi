@@ -29,6 +29,7 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <a class="nav-link text-dark">@User.Identity.Name</a>
+                        <a class="nav-link text-dark" asp-controller="Auth" asp-action="LogOut">Çıkış</a>
                     }
                     else
                     {

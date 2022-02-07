@@ -1,3 +1,4 @@
+using DYS.WebClient.Handler;
 using DYS.WebClient.Models;
 using DYS.WebClient.Services;
 using DYS.WebClient.Services.Interfaces;
@@ -27,10 +28,16 @@ namespace DYS.WebClient
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpContextAccessor();
-            services.AddHttpClient<IIdentityService, IdentityService>();
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
+            services.AddScoped<ResourceOwnerPasswordTokenHandler>();
+            var serviceApiSettings = Configuration.GetSection("ServiceApSettings").Get<ServiceApiSettings>();
+            services.AddHttpContextAccessor();
+            services.AddHttpClient<IIdentityService, IdentityService>();
+            services.AddHttpClient<IUserService, UserService>(opt =>
+            {
+                opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opt =>
             {
