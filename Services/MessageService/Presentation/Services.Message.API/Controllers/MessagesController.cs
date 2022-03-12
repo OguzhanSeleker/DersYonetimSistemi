@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Message.Application.Repositories;
 using Services.Message.Domain.Dtos;
@@ -14,6 +15,7 @@ namespace Services.Message.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MessagesController : CustomBaseController
     {
         readonly private IMessageReadRepository _messageReadRepository;
