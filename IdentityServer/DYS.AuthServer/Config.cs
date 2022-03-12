@@ -14,6 +14,7 @@ namespace DYS.AuthServer
         public static IEnumerable<ApiResource> ApiResources => new ApiResource[]
                 {
             new ApiResource("resource_lesson"){Scopes={"lesson_fullpermission"}},
+            new ApiResource("resource_message"){Scopes={"message_fullpermission"}},
             
             new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
                 };
@@ -31,6 +32,7 @@ namespace DYS.AuthServer
             new ApiScope[]
             {
                 new ApiScope("lesson_fullpermission","Lesson API için full erişim"),
+                new ApiScope("message_fullpermission","Message API için full erişim"),
                 //new ApiScope("gateway_fullpermission","Gateway API için full erişim"),
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName),
 
@@ -46,7 +48,7 @@ namespace DYS.AuthServer
                     AllowOfflineAccess = true,
                     ClientSecrets={new Secret("secret".Sha256())},
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                    AllowedScopes={ "lesson_fullpermission", IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.OfflineAccess,"Roles", IdentityServerConstants.LocalApi.ScopeName},
+                    AllowedScopes={ "lesson_fullpermission","message_fullpermission", IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.OfflineAccess,"Roles", IdentityServerConstants.LocalApi.ScopeName},
                     AccessTokenLifetime = 1*60*60, // 1 saat
                     RefreshTokenExpiration = TokenExpiration.Absolute,
                     AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(60)- DateTime.Now).TotalSeconds,

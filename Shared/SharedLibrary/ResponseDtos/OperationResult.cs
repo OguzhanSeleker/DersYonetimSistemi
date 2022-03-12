@@ -13,6 +13,10 @@ namespace SharedLibrary.ResponseDtos
         {
             return new OperationResult<T> { Success = true, StatusCode = StatusCode.NoContent };
         }
+        public static OperationResult<T> CreatedSuccessResult(T data)
+        {
+            return new OperationResult<T> { Success = true, StatusCode = StatusCode.Created , Data = data};
+        }
         public static OperationResult<T> CreatedSuccessResult()
         {
             return new OperationResult<T> { Success = true, StatusCode = StatusCode.Created };
