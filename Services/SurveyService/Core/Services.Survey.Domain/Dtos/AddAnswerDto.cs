@@ -17,5 +17,7 @@ namespace Services.Survey.Domain.Dtos
         public Guid QuestionId { get; set; }
         [Required]
         public Guid MainSurveyId { get; set; }
+        [Required]
+        public Guid QuestionContentId { get; set; }
     }
 }

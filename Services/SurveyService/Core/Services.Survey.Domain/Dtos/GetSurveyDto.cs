@@ -6,6 +6,8 @@ namespace Services.Survey.Domain.Dtos
     public class GetSurveyDto : IDto
     {
         public Guid Id { get; set; }
+        public string SurveyTitle { get; set; }
+        public string SurveyDescription { get; set; }
         public Guid CreatedPerson { get; set; }
         public Guid LessonId { get; set; }
         public DateTime StartingDate { get; set; }

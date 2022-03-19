@@ -16,5 +16,7 @@ namespace Services.Survey.Domain.Dtos
         public GetQuestionDto GetQuestionDto { get; set; }
         public Guid MainSurveyId { get; set; }
         public GetSurveyDto GetSurveyDto { get; set; }
+        public Guid QuestionContentId { get; set; }
+        public GetQuestionContentDto GetQuestionContentDto { get; set; }
     }
 }

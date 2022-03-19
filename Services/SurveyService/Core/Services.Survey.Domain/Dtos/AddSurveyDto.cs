@@ -9,6 +9,10 @@ namespace Services.Survey.Domain.Dtos
     public class AddSurveyDto : IDto
     {
         [Required]
+        public string SurveyTitle { get; set; }
+        [Required]
+        public string SurveyDescription { get; set; }
+        [Required]
         public Guid CreatedPerson { get; set; }
         [Required]
         public Guid LessonId { get; set; }

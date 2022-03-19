@@ -32,6 +32,7 @@ namespace Services.Survey.API.Controllers
 
         public SurveysController(SurveyServiceDbContext context, IMainSurveyReadRepository mainSurveyReadRepository, IMainSurveyWriteRepository mainSurveyWriteRepository, IAnswerReadRepository answerReadRepository, IAnswerWriteRepository answerWriteRepository, IQuestionReadRepository questionReadRepository, IQuestionWriteRepository questionWriteRepository, IQuestionContentReadRepository questionContentReadRepository, IQuestionContentWriteRepository questionContentWriteRepository)
         {
+            _context = context;
             _mainSurveyReadRepository = mainSurveyReadRepository;
             _mainSurveyWriteRepository = mainSurveyWriteRepository;
             _answerReadRepository = answerReadRepository;
@@ -116,9 +117,17 @@ namespace Services.Survey.API.Controllers
             return CreateActionResultInstance(OperationResult<NoContent>.CreateFailure("Not Found", SharedLibrary.ResponseDtos.StatusCode.NotFound));
 
         }
-        //public async Task<IActionResult> AddAnswer(AddAnswerDto addAnswerDto)
-        //{
-
-        //}
+        [HttpPost]
+        [Route("[action]")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> AddAnswer(AddAnswerDto addAnswerDto)
+        {
+            var answer = ObjectMapper.Mapper.Map<Answer>(addAnswerDto);
+            answer = await _answerWriteRepository.AddAsync(answer);
+            var save = await _answerWriteRepository.SaveAsync();
+            if (save > 0)
+                return CreateActionResultInstance(OperationResult<GetAnswerDto>.CreatedSuccessResult(ObjectMapper.Mapper.Map<GetAnswerDto>(answer)));
+            return CreateActionResultInstance(OperationResult<NoContent>.CreateFailure("Could Not Added", SharedLibrary.ResponseDtos.StatusCode.Error));
+        }
     }
 }

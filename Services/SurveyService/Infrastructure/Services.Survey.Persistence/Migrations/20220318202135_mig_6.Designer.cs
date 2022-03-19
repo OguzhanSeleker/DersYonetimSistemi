@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Services.Survey.Persistence.Contexts;
@@ -9,9 +10,10 @@ using Services.Survey.Persistence.Contexts;
 namespace Services.Survey.Persistence.Migrations
 {
     [DbContext(typeof(SurveyServiceDbContext))]
-    partial class SurveyServiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220318202135_mig_6")]
+    partial class mig_6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
