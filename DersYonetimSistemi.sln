@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31829.152
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{18FC6D21-3059-4F85-806A-18217AC4E844}"
 EndProject
@@ -25,12 +25,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Ports.txt = Ports.txt
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LessonService", "LessonService", "{B6DFC7CA-3B05-4A7B-88E4-1FFBFE6728CD}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lesson.DAL", "Services\LessonService\Lesson.DAL\Lesson.DAL.csproj", "{0DC52598-3DA7-4419-B950-FD7542439DC3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lesson.API", "Services\LessonService\Lesson.API\Lesson.API.csproj", "{A214DD76-C49F-40F1-BD7B-58FBF37D2B61}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MessageService", "MessageService", "{770C5B9B-7759-4FA1-8D7B-E78B031352C8}"
 EndProject
@@ -58,13 +52,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{00EAA243-DEBB-4E9B-8115-0BB308F0D95A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Notification.Application", "Services\NotificationService\Core\Services.Notification.Application\Services.Notification.Application.csproj", "{8B7C0160-EC61-4A0D-978A-19C586F92B55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Notification.Application", "Services\NotificationService\Core\Services.Notification.Application\Services.Notification.Application.csproj", "{8B7C0160-EC61-4A0D-978A-19C586F92B55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Notification.Domain", "Services\NotificationService\Core\Services.Notification.Domain\Services.Notification.Domain.csproj", "{36604C98-F4C4-4DDB-A285-786EA414CFBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Notification.Domain", "Services\NotificationService\Core\Services.Notification.Domain\Services.Notification.Domain.csproj", "{36604C98-F4C4-4DDB-A285-786EA414CFBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Notification.Persistence", "Services\NotificationService\Persistence\Services.Notification.Persistence\Services.Notification.Persistence.csproj", "{604792C3-CABF-42A3-9638-2DF3AF52A665}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Notification.Persistence", "Services\NotificationService\Persistence\Services.Notification.Persistence\Services.Notification.Persistence.csproj", "{604792C3-CABF-42A3-9638-2DF3AF52A665}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Notification.API", "Services\NotificationService\Presentation\Services.Notification.API\Services.Notification.API.csproj", "{AB4A990B-C533-42BC-BB01-4C94088AFC10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Notification.API", "Services\NotificationService\Presentation\Services.Notification.API\Services.Notification.API.csproj", "{AB4A990B-C533-42BC-BB01-4C94088AFC10}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SurveyService", "SurveyService", "{1FE3C37C-394F-4147-BF33-BC04DAE8935A}"
 EndProject
@@ -74,13 +68,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentatiton", "Presentatiton", "{EC1908A8-83B7-416F-A8DE-F005580C5480}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Survey.Domain", "Services\SurveyService\Core\Services.Survey.Domain\Services.Survey.Domain.csproj", "{B5ECFEC4-6FF2-4F49-A096-A0A1E680E301}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Survey.Domain", "Services\SurveyService\Core\Services.Survey.Domain\Services.Survey.Domain.csproj", "{B5ECFEC4-6FF2-4F49-A096-A0A1E680E301}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Survey.Application", "Services\SurveyService\Core\Services.Survey.Application\Services.Survey.Application.csproj", "{05C402E9-D392-4CA9-A739-5098D2E44EBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Survey.Application", "Services\SurveyService\Core\Services.Survey.Application\Services.Survey.Application.csproj", "{05C402E9-D392-4CA9-A739-5098D2E44EBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Survey.Persistence", "Services\SurveyService\Infrastructure\Services.Survey.Persistence\Services.Survey.Persistence.csproj", "{63E9A3A5-3A98-48BA-93B7-8F186D2AF957}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Survey.Persistence", "Services\SurveyService\Infrastructure\Services.Survey.Persistence\Services.Survey.Persistence.csproj", "{63E9A3A5-3A98-48BA-93B7-8F186D2AF957}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Survey.API", "Services\SurveyService\Presentation\Services.Survey.API\Services.Survey.API.csproj", "{436971C0-CF73-4220-AB6B-EC19C44245A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Survey.API", "Services\SurveyService\Presentation\Services.Survey.API\Services.Survey.API.csproj", "{436971C0-CF73-4220-AB6B-EC19C44245A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -104,14 +98,6 @@ Global
 		{55F5DE79-B3A1-4767-A3F2-72F298810BF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55F5DE79-B3A1-4767-A3F2-72F298810BF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55F5DE79-B3A1-4767-A3F2-72F298810BF3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0DC52598-3DA7-4419-B950-FD7542439DC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0DC52598-3DA7-4419-B950-FD7542439DC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0DC52598-3DA7-4419-B950-FD7542439DC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0DC52598-3DA7-4419-B950-FD7542439DC3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A214DD76-C49F-40F1-BD7B-58FBF37D2B61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A214DD76-C49F-40F1-BD7B-58FBF37D2B61}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A214DD76-C49F-40F1-BD7B-58FBF37D2B61}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A214DD76-C49F-40F1-BD7B-58FBF37D2B61}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1088EB40-86C3-4129-B45E-FB18A7849036}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1088EB40-86C3-4129-B45E-FB18A7849036}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1088EB40-86C3-4129-B45E-FB18A7849036}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -173,9 +159,6 @@ Global
 		{2DB1396A-C382-4BA8-93B9-0266B978C716} = {F39E35EE-E0DD-4E52-B58E-6F2AACAE2CDD}
 		{F9D45B26-E85B-4D73-A848-87CAC4AE6B91} = {F45E9E72-4913-4B3D-9C9A-C132F7BE3DFC}
 		{55F5DE79-B3A1-4767-A3F2-72F298810BF3} = {F66CA822-9302-438E-88FF-565CCAAC20E9}
-		{B6DFC7CA-3B05-4A7B-88E4-1FFBFE6728CD} = {18FC6D21-3059-4F85-806A-18217AC4E844}
-		{0DC52598-3DA7-4419-B950-FD7542439DC3} = {B6DFC7CA-3B05-4A7B-88E4-1FFBFE6728CD}
-		{A214DD76-C49F-40F1-BD7B-58FBF37D2B61} = {B6DFC7CA-3B05-4A7B-88E4-1FFBFE6728CD}
 		{770C5B9B-7759-4FA1-8D7B-E78B031352C8} = {18FC6D21-3059-4F85-806A-18217AC4E844}
 		{4FECBD4A-E692-4CDF-8EFD-03E15CB748E2} = {770C5B9B-7759-4FA1-8D7B-E78B031352C8}
 		{1088EB40-86C3-4129-B45E-FB18A7849036} = {4FECBD4A-E692-4CDF-8EFD-03E15CB748E2}

@@ -112,7 +112,7 @@ namespace Services.Survey.API.Controllers
         public async Task<IActionResult> GetQuestionContentsByQuestionId(string questionId)
         {
             var questionContents = _questionContentReadRepository.GetWhere(i => i.QuestionId == Guid.Parse(questionId)).ToList();
-            if(questionContents != null && questionContents.Count > 0)
+            if (questionContents != null && questionContents.Count > 0)
                 return CreateActionResultInstance(OperationResult<List<GetQuestionContentDto>>.OkSuccessResult(ObjectMapper.Mapper.Map<List<GetQuestionContentDto>>(questionContents)));
             return CreateActionResultInstance(OperationResult<NoContent>.CreateFailure("Not Found", SharedLibrary.ResponseDtos.StatusCode.NotFound));
 
