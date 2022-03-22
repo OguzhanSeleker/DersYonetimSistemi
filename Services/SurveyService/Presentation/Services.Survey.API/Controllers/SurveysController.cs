@@ -88,7 +88,7 @@ namespace Services.Survey.API.Controllers
         [HttpGet]
         [ServiceFilter(typeof(ParameterFilterAttribute))]
         [Route("[action]/surveyId")]
-        public async Task<IActionResult> GetQuestionsBySurveyId(string surveyId)
+        public IActionResult GetQuestionsBySurveyId(string surveyId)
         {
             var questions = _questionReadRepository.GetWhere(i => i.MainSurveyId == Guid.Parse(surveyId)).ToList();
             if (questions != null && questions.Count() > 0)
@@ -109,7 +109,7 @@ namespace Services.Survey.API.Controllers
         [HttpGet]
         [ServiceFilter(typeof(ParameterFilterAttribute))]
         [Route("[action]/questionId")]
-        public async Task<IActionResult> GetQuestionContentsByQuestionId(string questionId)
+        public IActionResult GetQuestionContentsByQuestionId(string questionId)
         {
             var questionContents = _questionContentReadRepository.GetWhere(i => i.QuestionId == Guid.Parse(questionId)).ToList();
             if (questionContents != null && questionContents.Count > 0)

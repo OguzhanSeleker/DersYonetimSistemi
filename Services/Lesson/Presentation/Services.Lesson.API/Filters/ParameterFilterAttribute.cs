@@ -1,0 +1,39 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Services.Lesson.API.Filters
+{
+    public class ParameterFilterAttribute : IActionFilter
+    {
+        public void OnActionExecuted(ActionExecutedContext context)
+        {
+        }
+
+        public void OnActionExecuting(ActionExecutingContext context)
+        {
+            var param = context.ActionArguments.FirstOrDefault();
+            if(param.Key == null && param.Value == null)
+            {
+                context.Result = new BadRequestObjectResult("parameter is null");
+                return;
+            }
+            if (string.IsNullOrEmpty(param.Value.ToString()))
+            {
+                context.Result = new BadRequestObjectResult("Parameter is empty");
+                return;
+            }
+
+            Guid id = Guid.Empty;
+            Guid.TryParse(param.Value.ToString(), out id);
+            if(id == Guid.Empty)
+            {
+                context.Result = new BadRequestObjectResult("Parameter is not guid");
+                return;
+            }
+        }
+    }
+}
