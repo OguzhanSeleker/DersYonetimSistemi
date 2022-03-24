@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Survey.API.Filters;
 using Services.Survey.Application.Repositories.ReadRepositories;
@@ -18,6 +19,7 @@ namespace Services.Survey.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SurveysController : CustomBaseController
     {
         private readonly SurveyServiceDbContext _context;

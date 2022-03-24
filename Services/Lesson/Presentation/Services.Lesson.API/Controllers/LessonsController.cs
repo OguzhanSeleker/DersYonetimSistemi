@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Lesson.API.Filters;
 using Services.Lesson.Application.Repositories;
@@ -17,6 +18,7 @@ namespace Services.Lesson.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ServiceFilter(typeof(HttpResponseExceptionFilter))]
+    [Authorize]
     public class LessonsController : CustomBaseController
     {
         #region Repository

@@ -1,58 +1,195 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - DYS.Web</title>
-    @*<link href="~/lib/bootstrap-5.1/css/bootstrap.min.css" rel="stylesheet" />*@
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <title>Ders Yönetim Sistemi</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="~/css/style.css">
+
     <style>
         @RenderSection("styles", required: false)
     </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DYS.Web</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    
+  <!--All Page-->
+  <div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar">
+      <div class="p-4 pt-5">
+        <a href="#" class="img logo rounded-circle mb-2" style="background-image: url(images/hacker.png);"></a>
+        <p class="h5 text-center text-light mb-4">@(User.Identity.IsAuthenticated ? User.Identity.Name : "Giriş Yapınız.") </p>
+     
+                        <ul class="list-unstyled components mb-5">
+                            <li>
+                                <a href="#">Tüm Dersler</a>
+                            </li>
+                               @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="active">
+                            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Derslerim</a>
+                            <ul class="list-unstyled" id="homeSubmenu">
+                                <li>
+                                    <a href="#">Matematik 1 / MAT 101 </a>
+                                </li>
+                                <li>
+                                    <a href="#">Fizik 2 / FIZ 102</a>
+                                </li>
+                                <li>
+                                    <a href="#">Matematiksel Modelleme / MAT XXX</a>
+                                </li>
+                            </ul>
                         </li>
-                    </ul>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <a class="nav-link text-dark">@User.Identity.Name</a>
-                        <a class="nav-link text-dark" asp-controller="Auth" asp-action="LogOut">Çıkış</a>
-                    }
-                    else
-                    {
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="SignIn">Giriş Yap</a>
-                    }
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - DYS.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li>
+                            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Hızlı
+                                İşlemler</a>
+                            <ul class="list-unstyled" id="pageSubmenu">
+                                <li>
+                                    <a href="#">Güncel Ödevler</a>
+                                </li>
+                                <li>
+                                    <a href="#">Aktif Anketler</a>
+                                </li>
+                                <li>
+                                    <a href="#">Quizler</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    
+                </ul>
+
+                 
+                    <div class="footer">
+
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
+      </div>
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content" class="p-md-4">
+      <!-- Navbar Header-->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container-fluid">
+
+           <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            <i class="fa fa-bars"></i>
+            <span class="sr-only">Toggle Menu</span>
+          </button> 
+          <div class="text-left">
+            <h4 class="site_title">Ders Yönetim Sistemi</h4>
+          </div>
+          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <i class="fa fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Anasayfa</a>
+              </li>
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                                            <li class="nav-item dropdown pr-1">
+                                <a class="nav-link dropdown-toggle text-info" href="#" id="navbarDropdown" role="button"
+                                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Ders İşlemleri
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <a class="dropdown-item" href="#">Ders Ekle</a>
+                                  <div class="dropdown-divider"></div>
+                                  <a class="dropdown-item" href="#">Dersleri Listele</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown pr-1">
+                                <a class="nav-link dropdown-toggle text-info" href="#" id="navbarDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Kişi İşlemleri
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">Kişi Ekle</a>
+                                    <a class="dropdown-item" href="#">Kişileri Listele</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Profil Düzenle</a>
+                                </div>
+                            </li>
+                                <li class="nav-item">
+                <a class="nav-link text-primary" href="#" data-target="#modalOturum" data-toggle="modal">Oturum Aç</a>
+              </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                <a class="nav-link" href="#">Oturumu Kapat</a>
+              </li>
+                            }
+                            
+              
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div id="AnaSayfa_Oturumsuz">
+        <h2 class="mb-4 ml-3">Ders Yönetim Sistemi</h2>
+        </br>
+        <div class="card d-inline-flex m-4 shadow" style="width: 25rem; height: 17rem;">
+          <div class="card-body">
+            <h5 class="card-title mb-2 text-black">Eğitmenler</h5>
+            <p class="card-text">Ders Yönetim Sistemi ile ders vermek çok hızlı ve kolay. Öğrencilerinizi sınıflarınıza
+              ekleyebilir, duyurular yapabilir, ödevler yayınlabilir ve diğer tüm sınıf içi işlemlerinizi burada
+              gerçekleştirebilirsiniz. Siz de derslerinizi oluşturmak için oturum açın.
+            </p>
+            <a href="#" class="card-link">Oturum Aç </a>
+          </div>
+        </div>
+        <div class="card d-inline-flex m-4 shadow" style="width: 25rem; height: 17rem;">
+          <div class="card-body">
+            <h5 class="card-title mb-2 text-black">Öğrenciler</h5>
+            <p class="card-text">Ders Yönetim Sistemi ile verilen derslerinizin ödevlerini, duyurularını, yoklamalarını,
+              anketlerini, kısa sınavlarını, ders kaynaklarını ve mesaj panolarını takip edebilirsiniz. Bütün bu
+              özellikleri kullanmak için oturum açmanız yeterli!</p>
+            <a href="#" class="card-link">Oturum Aç</a>
+          </div>
+        </div>
+        <div class="card  m-4 shadow" style="width: 50rem; height: 25rem;">
+          <h5 class="card-header">Özellikler</h5>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <strong>Anket : </strong> Eğitmenler kolayca ders içerisinde anket oluşturabilir, öğrenciler
+                cevaplayabilir. Ardından anketi oluşturan eğitmenler tarafından istatistikler görülebilir ve
+                değerlendirilebilir.
+              </li>
+              <li class="list-group-item">
+                <strong>Kısa Sınav : </strong> Eğitmenler ders içi değerlendirmeye katabileceği kısa sınavlar
+                oluşturabilir, öğrenciler belirlenen tarih ve süre aralığında çözebilir anında not alabilir.
+              </li>
+              <li class="list-group-item">
+                <strong>Duyuru modülü : </strong> Ders içerisinde öğrencilerin eğitmenler tarafından kısa süre
+                içerisinde
+                bilgilendirilebileceği bir modüldür.
+              </li>
+              <li class="list-group-item">
+                <strong>Mesaj modülü : </strong> Öğrenciler birbirlerine sorular sorabilir, eğitmenler ile görüşebilir.
+              </li>
+            </ul>
+            <!-- <a href="#" class="card-link">Oturum Aç</a> -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

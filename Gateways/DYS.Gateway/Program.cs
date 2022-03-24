@@ -17,7 +17,10 @@ namespace DYS.Gateway
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+            Host.CreateDefaultBuilder(args).ConfigureAppConfiguration((context, config) =>
+            {
+                config.AddJsonFile($"configuration.{context.HostingEnvironment.EnvironmentName.ToLower()}.json").AddEnvironmentVariables();
+            })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
