@@ -14,4 +14,10 @@
     <ProjectReference Include="..\..\Shared\SharedLibrary\SharedLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Message\" />
+    <Folder Include="Models\Survey\" />
+    <Folder Include="Models\Notification\" />
+  </ItemGroup>
+
 </Project>

@@ -1,3 +1,4 @@
+using DYS.WebClient.Extensions;
 using DYS.WebClient.Handler;
 using DYS.WebClient.Models;
 using DYS.WebClient.Services;
@@ -33,15 +34,12 @@ namespace DYS.WebClient
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
             var serviceApiSettings = Configuration.GetSection("ServiceApSettings").Get<ServiceApiSettings>();
             services.AddHttpContextAccessor();
-            services.AddHttpClient<IIdentityService, IdentityService>();
-            services.AddHttpClient<IUserService, UserService>(opt =>
-            {
-                opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
-            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+            services.AddHttpClientServices(Configuration);
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opt =>
             {
                 opt.LoginPath = "/Auth/SignIn";
+                opt.LogoutPath = "/Auth/LogOut";
                 opt.ExpireTimeSpan = TimeSpan.FromDays(60);
                 opt.SlidingExpiration = true;
                 opt.Cookie.Name = "dyswebcookie";

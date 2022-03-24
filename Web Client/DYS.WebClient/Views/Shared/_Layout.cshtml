@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model DYS.WebClient.Models.SigninInput
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Ders Yönetim Sistemi</title>
@@ -77,12 +78,12 @@
       <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
         <div class="container-fluid">
 
-           <button type="button" id="sidebarCollapse" class="btn btn-primary">
+           <button type="button" id="sidebarCollapse" class="btn">
             <i class="fa fa-bars"></i>
             <span class="sr-only">Toggle Menu</span>
           </button> 
-          <div class="text-left">
-            <h4 class="site_title">Ders Yönetim Sistemi</h4>
+          <div class="text-left ml-1">
+            <h4 class="site_title m-0">Ders Yönetim Sistemi</h4>
           </div>
           <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -96,7 +97,14 @@
               </li>
                             @if (!User.Identity.IsAuthenticated)
                             {
-                                                            <li class="nav-item dropdown pr-1">
+                                                           
+                                <li class="nav-item">
+                <a class="nav-link text-primary" href="#" data-target="#modalOturum" data-toggle="modal">Oturum Aç</a>
+              </li>
+                            }
+                            else
+                            {
+                                 <li class="nav-item dropdown pr-1">
                                 <a class="nav-link dropdown-toggle text-info" href="#" id="navbarDropdown" role="button"
                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   Ders İşlemleri
@@ -120,13 +128,7 @@
                                 </div>
                             </li>
                                 <li class="nav-item">
-                <a class="nav-link text-primary" href="#" data-target="#modalOturum" data-toggle="modal">Oturum Aç</a>
-              </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                <a class="nav-link" href="#">Oturumu Kapat</a>
+                <a class="nav-link" asp-controller="Auth" asp-action="LogOut">Oturumu Kapat</a>
               </li>
                             }
                             
@@ -135,57 +137,45 @@
           </div>
         </div>
       </nav>
-      <div id="AnaSayfa_Oturumsuz">
-        <h2 class="mb-4 ml-3">Ders Yönetim Sistemi</h2>
-        </br>
-        <div class="card d-inline-flex m-4 shadow" style="width: 25rem; height: 17rem;">
-          <div class="card-body">
-            <h5 class="card-title mb-2 text-black">Eğitmenler</h5>
-            <p class="card-text">Ders Yönetim Sistemi ile ders vermek çok hızlı ve kolay. Öğrencilerinizi sınıflarınıza
-              ekleyebilir, duyurular yapabilir, ödevler yayınlabilir ve diğer tüm sınıf içi işlemlerinizi burada
-              gerçekleştirebilirsiniz. Siz de derslerinizi oluşturmak için oturum açın.
-            </p>
-            <a href="#" class="card-link">Oturum Aç </a>
-          </div>
-        </div>
-        <div class="card d-inline-flex m-4 shadow" style="width: 25rem; height: 17rem;">
-          <div class="card-body">
-            <h5 class="card-title mb-2 text-black">Öğrenciler</h5>
-            <p class="card-text">Ders Yönetim Sistemi ile verilen derslerinizin ödevlerini, duyurularını, yoklamalarını,
-              anketlerini, kısa sınavlarını, ders kaynaklarını ve mesaj panolarını takip edebilirsiniz. Bütün bu
-              özellikleri kullanmak için oturum açmanız yeterli!</p>
-            <a href="#" class="card-link">Oturum Aç</a>
-          </div>
-        </div>
-        <div class="card  m-4 shadow" style="width: 50rem; height: 25rem;">
-          <h5 class="card-header">Özellikler</h5>
-          <div class="card-body">
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-                <strong>Anket : </strong> Eğitmenler kolayca ders içerisinde anket oluşturabilir, öğrenciler
-                cevaplayabilir. Ardından anketi oluşturan eğitmenler tarafından istatistikler görülebilir ve
-                değerlendirilebilir.
-              </li>
-              <li class="list-group-item">
-                <strong>Kısa Sınav : </strong> Eğitmenler ders içi değerlendirmeye katabileceği kısa sınavlar
-                oluşturabilir, öğrenciler belirlenen tarih ve süre aralığında çözebilir anında not alabilir.
-              </li>
-              <li class="list-group-item">
-                <strong>Duyuru modülü : </strong> Ders içerisinde öğrencilerin eğitmenler tarafından kısa süre
-                içerisinde
-                bilgilendirilebileceği bir modüldür.
-              </li>
-              <li class="list-group-item">
-                <strong>Mesaj modülü : </strong> Öğrenciler birbirlerine sorular sorabilir, eğitmenler ile görüşebilir.
-              </li>
-            </ul>
-            <!-- <a href="#" class="card-link">Oturum Aç</a> -->
-          </div>
-        </div>
+      <div>
+      @RenderBody()
       </div>
+     @* *@
 
     </div>
   </div>
+  <div class="modal fade" data-backdrop="static" id="modalOturum">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Oturum Aç</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <form asp-controller="Auth" asp-action="SignIn" method="post">
+                        <div class="mb-3">
+                            <label asp-for="UserName" for="inputUsername" class="form-label"></label>
+                        <input type="text" asp-for="UserName" class="form-control" id="inputUsername" aria-describedby="emailHelp">
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Password" for="exampleInputPassword1" class="form-label"></label>
+                        <input asp-for="Password" type="password" class="form-control" id="exampleInputPassword1">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3 form-check">
+                             <input type="checkbox" asp-for="IsRemember" class="form-check-input" id="exampleCheck1">
+                        <label asp-for="IsRemember" class="form-check-label" for="exampleCheck1"></label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm mr-1">Oturum Aç</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm"
+                            data-dismiss="modal">İptal</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>

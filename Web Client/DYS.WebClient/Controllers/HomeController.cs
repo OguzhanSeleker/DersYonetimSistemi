@@ -21,6 +21,7 @@ namespace DYS.WebClient.Controllers
 
         public IActionResult Index()
         {
+
             return View();
         }
         [Authorize(Roles ="Admin")]

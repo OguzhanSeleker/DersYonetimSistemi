@@ -160,19 +160,19 @@ namespace Services.Lesson.API.Controllers
                 return ReturnNotFound();
             return ReturnOk(ObjectMapper.Mapper.Map<QueryCourseDto>(course));
         }
-        [HttpGet]
-        public async Task<IActionResult> test()
-        {
-            await _roleInCourseWriteRepository.AddRangeAsync(new List<RoleInCourse>
-            {
-                new RoleInCourse{RoleName="Öğrenci", RoleKey="Student"},
-                new RoleInCourse{RoleName="Eğitmen", RoleKey="Lecturer"},
-                new RoleInCourse{RoleName="Asistan",RoleKey="Assistant" }
+        //[HttpGet]
+        //public async Task<IActionResult> test()
+        //{
+        //    await _roleInCourseWriteRepository.AddRangeAsync(new List<RoleInCourse>
+        //    {
+        //        new RoleInCourse{RoleName="Öğrenci", RoleKey="Student"},
+        //        new RoleInCourse{RoleName="Eğitmen", RoleKey="Lecturer"},
+        //        new RoleInCourse{RoleName="Asistan",RoleKey="Assistant" }
 
-            });
-            await _roleInCourseWriteRepository.SaveAsync();
-            return ReturnSuccess();
-        }
+        //    });
+        //    await _roleInCourseWriteRepository.SaveAsync();
+        //    return ReturnSuccess();
+        //}
 
     }
 }
