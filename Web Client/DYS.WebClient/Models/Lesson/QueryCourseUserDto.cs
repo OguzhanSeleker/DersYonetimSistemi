@@ -1,6 +1,7 @@
 ﻿using System;
 
 namespace DYS.WebClient.Models.Lesson
+{
     public class QueryCourseUserDto : GetDto
     {
         public Guid CourseId { get; set; }

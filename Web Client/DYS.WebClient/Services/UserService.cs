@@ -21,5 +21,14 @@ namespace DYS.WebClient.Services
         {
             return await _client.GetFromJsonAsync<UserViewModel>("/api/user/getuser");
         }
+
+        public async Task<UserViewModel> GetUserById(string id)
+        {
+            var response = await _client.GetAsync($"/api/User/GetUserById/{id}");
+            if (!response.IsSuccessStatusCode)
+                return null;
+            var usrmodel = await response.Content.ReadFromJsonAsync<UserViewModel>();
+            return usrmodel;
+        }
     }
 }

@@ -15,25 +15,30 @@ namespace Services.Lesson.API.Filters
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            var param = context.ActionArguments.FirstOrDefault();
-            if(param.Key == null && param.Value == null)
+            var paramList = context.ActionArguments.
+                ToList();
+            foreach (var param in paramList)
             {
-                context.Result = new BadRequestObjectResult("parameter is null");
-                return;
-            }
-            if (string.IsNullOrEmpty(param.Value.ToString()))
-            {
-                context.Result = new BadRequestObjectResult("Parameter is empty");
-                return;
-            }
+                if (param.Key == null && param.Value == null)
+                {
+                    context.Result = new BadRequestObjectResult("parameter is null");
+                    return;
+                }
+                if (string.IsNullOrEmpty(param.Value.ToString()))
+                {
+                    context.Result = new BadRequestObjectResult("Parameter is empty");
+                    return;
+                }
 
-            Guid id = Guid.Empty;
-            Guid.TryParse(param.Value.ToString(), out id);
-            if(id == Guid.Empty)
-            {
-                context.Result = new BadRequestObjectResult("Parameter is not guid");
-                return;
+                Guid id = Guid.Empty;
+                Guid.TryParse(param.Value.ToString(), out id);
+                if (id == Guid.Empty)
+                {
+                    context.Result = new BadRequestObjectResult("Parameter is not guid");
+                    return;
+                }
             }
+            
         }
     }
 }

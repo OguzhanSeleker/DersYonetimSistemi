@@ -13,6 +13,10 @@ namespace DYS.WebClient.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public IList<string> Roles { get; set; }
+        public string FullName
+        {
+            get => FirstName + " " + LastName;
+        }
 
         public IEnumerable<string> getUserProps()
         {

@@ -1,23 +1,29 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace DYS.WebClient.Models.Lesson
 {
+    [JsonObject]
     public class GetDto : IDto
     {
-        [Required]
+        public GetDto()
+        {
+
+        }
+        [JsonProperty("id")]
         public Guid Id { get; set; }
-        [Required]
+        [JsonProperty("createdDate")]
         public DateTime CreatedDate { get; set; }
-        [Required]
+        [JsonProperty("createdBy")]
         public Guid CreatedBy { get; set; }
-        [Required]
+        [JsonProperty("updatedDate")]
         public DateTime? UpdatedDate { get; set; }
-        [Required]
+        [JsonProperty("updatedBy")]
         public Guid? UpdatedBy { get; set; }
-        [Required]
+        [JsonProperty("deletedDate")]
         public DateTime? DeletedDate { get; set; }
-        [Required]
+        [JsonProperty("deleted")]
         public bool Deleted { get; set; }
     }
 }

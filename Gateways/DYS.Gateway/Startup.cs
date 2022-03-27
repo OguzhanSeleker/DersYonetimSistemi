@@ -1,5 +1,6 @@
 
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -26,7 +27,7 @@ namespace DYS.Gateway
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddHttpClient<TokenExhangeDelegateHandler>();
-            services.AddAuthentication().AddJwtBearer("GatewayAuthenticationScheme", options =>
+            services.AddAuthentication().AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
                 options.Authority = Configuration["IdentityServerURL"];
                 options.Audience = "resource_gateway";

@@ -1,19 +1,21 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace DYS.WebClient.Models.Lesson
 {
+    [JsonObject]
     public class TimePlaceDto : GetDto
     {
-        [Required]
+        [JsonProperty("dayOfWeek")]
         public DayOfWeek DayOfWeek { get; set; }
-        [Required]
+        [JsonProperty("startHour")]
         public string StartHour { get; set; }
-        [Required]
+        [JsonProperty("endHour")]
         public string EndHour { get; set; }
-        [Required]
+        [JsonProperty("classRoom")]
         public string ClassRoom { get; set; }
-        [Required]
+        [JsonProperty("courseId")]
         public Guid CourseId { get; set; }
     }
 }

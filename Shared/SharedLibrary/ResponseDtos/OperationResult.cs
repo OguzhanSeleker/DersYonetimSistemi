@@ -1,13 +1,20 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace SharedLibrary.ResponseDtos
 {
+    [JsonObject]
     public class OperationResult<T>
     {
+        [JsonProperty("statusCode")]
         public StatusCode StatusCode { get; private set; }
+        [JsonProperty("success")]
         public bool Success { get; private set; }
+        [JsonProperty("errorMessage")]
         public string ErrorMessage { get; private set; }
+        [JsonProperty("exception")]
         public Exception Exception { get; set; }
+        [JsonProperty("data")]
         public T Data { get; private set; }
         public static OperationResult<T> NoContentSuccessResult()
         {

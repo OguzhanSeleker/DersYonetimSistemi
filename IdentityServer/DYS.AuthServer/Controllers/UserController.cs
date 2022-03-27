@@ -15,6 +15,7 @@ using static IdentityServer4.IdentityServerConstants;
 namespace DYS.AuthServer.Controllers
 {
     [Authorize(LocalApi.PolicyName)]
+    //[Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : CustomBaseController
@@ -58,10 +59,23 @@ namespace DYS.AuthServer.Controllers
         public async Task<IActionResult> GetUser()
         {
             var userIdClaim = User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub);
-            if (userIdClaim == null) return CreateActionResultInstance(OperationResult<NoContent>.CreateFailure("UserClaim Not Found",SharedLibrary.ResponseDtos.StatusCode.BadRequest));
+            if (userIdClaim == null) return CreateActionResultInstance(OperationResult<NoContent>.CreateFailure("UserClaim Not Found", SharedLibrary.ResponseDtos.StatusCode.BadRequest));
 
             var user = await _userManager.FindByIdAsync(userIdClaim.Value);
             if (user == null) return CreateActionResultInstance(OperationResult<NoContent>.CreateFailure("UserClaim Not Found", SharedLibrary.ResponseDtos.StatusCode.BadRequest));
+            var userRole = await _userManager.GetRolesAsync(user);
+            return CreateActionResultInstance(OperationResult<GetUserDto>.OkSuccessResult(new GetUserDto { Id = user.Id, UserName = user.UserName, Email = user.Email, FirstName = user.FirstName, LastName = user.LastName, Roles = userRole }));
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return ReturnBadMessage("parameter could not null");
+            Guid userId = Guid.Empty;
+            Guid.TryParse(id,out userId);
+            if (userId == Guid.Empty) return ReturnBadMessage("id is not guid");
+            //return ReturnError();
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null) return ReturnNotFound();
             var userRole = await _userManager.GetRolesAsync(user);
             return CreateActionResultInstance(OperationResult<GetUserDto>.OkSuccessResult(new GetUserDto { Id = user.Id, UserName = user.UserName, Email = user.Email, FirstName = user.FirstName, LastName = user.LastName, Roles = userRole }));
         }

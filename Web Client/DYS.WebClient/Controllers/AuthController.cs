@@ -1,9 +1,11 @@
 ﻿using DYS.WebClient.Models;
+using DYS.WebClient.Services;
 using DYS.WebClient.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using SharedLibrary.ControllerBases;
+using SharedLibrary.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +14,15 @@ using System.Threading.Tasks;
 namespace DYS.WebClient.Controllers
 {
 
-    public class AuthController : Controller
+    public class AuthController : BaseController
     {
         private readonly IIdentityService _identityService;
 
-        public AuthController(IIdentityService identityService)
+        public AuthController(IUserService userService, ISharedIdentityService sharedIdentityService, IIdentityService identityService) : base(userService, sharedIdentityService)
         {
             _identityService = identityService;
         }
-        public IActionResult SignIn()
-        {
-            return View();
-        }
+
         [HttpPost]
         public async Task<IActionResult> SignIn(SigninInput signinInput)
         {

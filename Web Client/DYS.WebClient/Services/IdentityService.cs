@@ -40,7 +40,7 @@ namespace DYS.WebClient.Services
                 Address = _serviceApiSettings.IdentityBaseUri,
                 Policy = new DiscoveryPolicy { RequireHttps = false }
             });
-            if (disco.IsError) throw disco.Exception;
+            if (disco.IsError) return null;
 
             var refreshToken = await _httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken);
 
@@ -53,7 +53,7 @@ namespace DYS.WebClient.Services
             };
 
             var token = await _httpClient.RequestRefreshTokenAsync(refreshTokenRequest);
-            if (token.IsError) throw token.Exception;
+            if (token.IsError) return null;
 
             var authenticationToken = new List<AuthenticationToken>()
             {

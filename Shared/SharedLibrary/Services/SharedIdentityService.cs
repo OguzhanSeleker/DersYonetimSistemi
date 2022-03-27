@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SharedLibrary.Services
 {
-    public class SharedIdentityService
+    public class SharedIdentityService : ISharedIdentityService
     {
         private IHttpContextAccessor _httpContextAccessor;
 

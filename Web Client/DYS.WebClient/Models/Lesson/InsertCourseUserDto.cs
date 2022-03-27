@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace DYS.WebClient.Models.Lesson
+{ 
     public class InsertCourseUserDto : InsertDto
     {
         [Required]

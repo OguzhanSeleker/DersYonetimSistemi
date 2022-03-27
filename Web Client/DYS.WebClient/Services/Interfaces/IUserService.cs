@@ -9,5 +9,6 @@ namespace DYS.WebClient.Services
     public interface IUserService 
     {
         Task<UserViewModel> GetUser();
+        Task<UserViewModel> GetUserById(string id);
     }
 }

@@ -57,6 +57,7 @@ namespace DYS.AuthServer
                     RefreshTokenExpiration = TokenExpiration.Absolute,
                     AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(60)- DateTime.Now).TotalSeconds,
                     RefreshTokenUsage = TokenUsage.ReUse
+                    
                 }
             };
     }

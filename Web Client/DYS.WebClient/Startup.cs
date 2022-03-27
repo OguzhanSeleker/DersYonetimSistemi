@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SharedLibrary.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,15 +33,14 @@ namespace DYS.WebClient
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
-            var serviceApiSettings = Configuration.GetSection("ServiceApSettings").Get<ServiceApiSettings>();
+            var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
             services.AddHttpContextAccessor();
             services.AddHttpClientServices(Configuration);
-
+            services.AddScoped<ISharedIdentityService, SharedIdentityService>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opt =>
             {
-                opt.LoginPath = "/Auth/SignIn";
-                opt.LogoutPath = "/Auth/LogOut";
-                opt.ExpireTimeSpan = TimeSpan.FromDays(60);
+                opt.LoginPath = "/home/index";
+                opt.ExpireTimeSpan = TimeSpan.FromDays(1);
                 opt.SlidingExpiration = true;
                 opt.Cookie.Name = "dyswebcookie";
                 opt.AccessDeniedPath = "/home/AccessDenied";

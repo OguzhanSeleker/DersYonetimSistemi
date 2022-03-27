@@ -1,9 +1,11 @@
 ﻿using DYS.WebClient.Models.Lesson;
 using DYS.WebClient.Services.Interfaces;
+using Newtonsoft.Json;
 using SharedLibrary.ResponseDtos;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DYS.WebClient.Services
@@ -36,9 +38,18 @@ namespace DYS.WebClient.Services
             return null;
         }
 
+        public async Task<List<QueryCourseDto>> GetCourseListByLessonIdAndUserId(string lessonId, string userId)
+        {
+            var response = await _client.GetAsync($"Lessons/GetCourseListByLessonIdAndUserId?lessonId={lessonId}&userId={userId}");
+            if (!response.IsSuccessStatusCode)
+                return null;
+            var res = await JsonConvert.DeserializeObjectAsync<OperationResult<List<QueryCourseDto>>>(await response.Content.ReadAsStringAsync());
+            return res.Data;
+        }
+
         public async Task<QueryLessonDto> GetLessonByCourseId(string courseId)
         {
-            var response = await _client.GetAsync($"Lessons/GetLessonByCourseId/{courseId}");
+            var response = await _client.GetAsync($"Lessons/GetLessonByCourseId?courseId={courseId}");
             if (!response.IsSuccessStatusCode)
                 return null;
             var result = await response.Content.ReadFromJsonAsync<OperationResult<QueryLessonDto>>();
@@ -56,41 +67,52 @@ namespace DYS.WebClient.Services
 
         public async Task<List<QueryLessonDto>> GetLessonlistByUserId(string userId)
         {
-            var response = await _client.GetAsync($"Lessons/GetLessonlistByUserId/{userId}");
+            var response = await _client.GetAsync($"Lessons/GetLessonlistByUserId?userId={userId}");
             if (!response.IsSuccessStatusCode)
                 return null;
-            var result = await response.Content.ReadFromJsonAsync<OperationResult<List<QueryLessonDto>>>();
+            var byteArr = await response.Content.ReadAsByteArrayAsync();
+            var result = JsonConvert.DeserializeObject<OperationResult<List<QueryLessonDto>>>(Encoding.UTF8.GetString(byteArr));
             return result.Data;
         }
 
-        public Task<QueryCourseDto> InsertCourse(InsertCourseDto insertCourseDto)
+        public async Task<QueryCourseDto> InsertCourse(InsertCourseDto insertCourseDto)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.PostAsJsonAsync<InsertCourseDto>($"Lessons/InsertCourse", insertCourseDto);
+            if (!response.IsSuccessStatusCode)
+                return null;
+            return (await response.Content.ReadFromJsonAsync<OperationResult<QueryCourseDto>>()).Data;
         }
 
-        public Task<bool> InsertCourseUser(InsertCourseUserDto insertCourseUserDto)
+        public async Task<bool> InsertCourseUser(InsertCourseUserDto insertCourseUserDto)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.PostAsJsonAsync<InsertCourseUserDto>($"Lessons/InsertCourseUser", insertCourseUserDto);
+            return response.IsSuccessStatusCode;
         }
 
-        public Task<bool> InsertCourseUserList(List<InsertCourseUserDto> insertCourseUserDtos)
+        public async Task<bool> InsertCourseUserList(List<InsertCourseUserDto> insertCourseUserDtos)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.PostAsJsonAsync<List<InsertCourseUserDto>>($"Lessons/InsertCourseUser", insertCourseUserDtos);
+            return response.IsSuccessStatusCode;
         }
 
-        public Task<QueryLessonDto> InsertLesson(InsertLessonDto insertLessonDto)
+        public async Task<QueryLessonDto> InsertLesson(InsertLessonDto insertLessonDto)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.PostAsJsonAsync<InsertLessonDto>($"Lessons/InsertLesson", insertLessonDto);
+            if (!response.IsSuccessStatusCode)
+                return null;
+            return (await response.Content.ReadFromJsonAsync<OperationResult<QueryLessonDto>>()).Data;
         }
 
-        public Task<bool> RemoveUserFromCourse(string courseUserId)
+        public async Task<bool> RemoveUserFromCourse(string courseUserId)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.DeleteAsync($"Lessons/RemoveUserFromCourse{courseUserId}");
+            return response.IsSuccessStatusCode;
         }
 
-        public Task<bool> UpdateLesson(UpdateLessonDto updateLessonDto)
+        public async Task<bool> UpdateLesson(UpdateLessonDto updateLessonDto)
         {
-            throw new System.NotImplementedException();
+            var response = await _client.PutAsJsonAsync<UpdateLessonDto>($"Lessons/UpdateLesson", updateLessonDto);
+            return response.IsSuccessStatusCode;
         }
     }
 }

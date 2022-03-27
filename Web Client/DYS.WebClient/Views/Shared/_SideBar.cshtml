@@ -1,0 +1,61 @@
+﻿@model DYS.WebClient.Models.SideBarViewModel
+
+<nav id="sidebar">
+    <div class="p-4 pt-5">
+        <a href="#" class="img logo rounded-circle mb-2" style="background-image: url(../images/hacker.png);"></a>
+        <p class="h5 text-center text-light mb-4">@(Model != null ? @Model.UserFullName : "Giriş Yapınız.") </p>
+
+        <ul class="list-unstyled components mb-5">
+            <li>
+                <a href="#">Tüm Dersler</a>
+            </li>
+            @if (Model != null)
+            {
+                <li class="active">
+                    <a href="#sidebarLesson" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Sınıflarım</a>
+                    <ul class="list-unstyled" id="sidebarLesson">
+                        @foreach (var lesson in Model.LessonModelList)
+                        {
+                            <li>
+                                <a href="#">@lesson.LessonCode - @lesson.LessonName </a>
+                                @foreach (var courseInLesson in lesson.LessonCourseModelList)
+                                {
+                                    <ul class="list-unstyled" id=sidebarCourse>
+                                        <li>
+                                            <a asp-action="Detail" asp-controller="Lesson" asp-route-id="@courseInLesson.CourseId">CRN : @courseInLesson.CourseCRN</a>
+                                        </li>
+                                    </ul>
+                                }
+                            </li>
+
+                        }
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        Hızlı
+                        İşlemler
+                    </a>
+                    <ul class="list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Güncel Ödevler</a>
+                        </li>
+                        <li>
+                            <a href="#">Aktif Anketler</a>
+                        </li>
+                        <li>
+                            <a href="#">Quizler</a>
+                        </li>
+                    </ul>
+                </li>
+            }
+
+        </ul>
+
+
+        <div class="footer">
+        </div>
+
+    </div>
+</nav>

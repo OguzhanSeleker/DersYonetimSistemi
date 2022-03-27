@@ -1,0 +1,271 @@
+﻿@model DYS.WebClient.Models.LessonIndexViewModel
+
+@{
+    ViewData["Title"] = "Sınıflarım";
+}
+
+<div class="wrapper d-flex align-items-stretch">
+    @await Html.PartialAsync("_SideBar",Model.SideBarViewModel)
+    <div id="content" class="p-md-4">
+        @await Html.PartialAsync("_NavigationBar", Model.SigninInput)
+        <div>
+            <h2 class="mb-2 ml-5">Hoşgeldiniz</h2>
+            <div class="container-sm shadow bg-light p-5 mt-4 mb-5 ml-5 mr-5">
+                <div class="">
+                    <!--Duyurular Card Start-->
+                    <div class="card d-inline-flex mr-1" style="width: 49%;">
+                        <div class="card-header pb-2 pt-3">
+                            <h5>Son Duyurular</h5>
+                        </div>
+                        <div class="accordion" id="accordionExample">
+                            <div class="card">
+                                <div class="card-header pl-2 pt-1 pb-1" id="headingOne">
+                                    <h2 class="mb-0 w-100 d-inline-flex">
+                                        <button class="btn btn-link btn-block text-left" type="button"
+                                                data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                                                aria-controls="collapseOne">
+                                            1. Ödevin Teslim Tarihi Hakkında
+                                            <span class="text-muted float-right ">20.03.2022 17.13</span>
+                                        </button>
+                                    </h2>
+                                    <footer class="blockquote-footer pl-3 m-0" style="font-size: 90% !important;">
+                                        Muh 302
+                                    </footer>
+                                </div>
+
+                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                     data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        1. Ödevin Teslim tarihi 3 gün uzatılmıştır.
+                                        Son Teslim tarihi 23.03.2022 20.00'dır
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header pl-2 pt-1 pb-1" id="headingtwo">
+                                    <h2 class="mb-0 w-100 d-inline-flex">
+                                        <button class="btn btn-link btn-block text-left" type="button"
+                                                data-toggle="collapse" data-target="#collapsetwo" aria-expanded="true"
+                                                aria-controls="collapsetwo">
+                                            1. Ödevin Teslim Tarihi Hakkında
+                                            <span class="text-muted float-right ">20.03.2022 17.13</span>
+                                        </button>
+                                    </h2>
+                                    <footer class="blockquote-footer pl-3 m-0" style="font-size: 90% !important;">
+                                        Muh 302
+                                    </footer>
+                                </div>
+
+                                <div id="collapsetwo" class="collapse" aria-labelledby="headingtwo"
+                                     data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        1. Ödevin Teslim tarihi 3 gün uzatılmıştır.
+                                        Son Teslim tarihi 23.03.2022 20.00'dır
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header pl-2 pt-1 pb-1" id="heading3">
+                                    <h2 class="mb-0 w-100 d-inline-flex">
+                                        <button class="btn btn-link btn-block text-left" type="button"
+                                                data-toggle="collapse" data-target="#collapse3" aria-expanded="true"
+                                                aria-controls="collapse3">
+                                            1. Ödevin Teslim Tarihi Hakkında
+                                            <span class="text-muted float-right ">20.03.2022 17.13</span>
+                                        </button>
+                                    </h2>
+                                    <footer class="blockquote-footer pl-3 m-0" style="font-size: 90% !important;">
+                                        Muh 302
+                                    </footer>
+                                </div>
+
+                                <div id="collapse3" class="collapse" aria-labelledby="heading3"
+                                     data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        1. Ödevin Teslim tarihi 3 gün uzatılmıştır.
+                                        Son Teslim tarihi 23.03.2022 20.00'dır
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Duyurular Card End-->
+                    <!--Son Mesajlar Card Start-->
+                    <div class="card d-inline-flex ml-1" style="width: 49%;">
+                        <div class="card-header pb-2 pt-3">
+                            <h5>Son 1 Ayda Oluşturulan Mesajlar</h5>
+                        </div>
+                        <div class="card-body m-0 p-0">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <blockquote class="blockquote m-0">
+                                        <p class="m-0">
+                                            Oğuzhan Seleker tarafından <a href="#"
+                                                                          class="text-primary">1. Vize Tarihi</a>
+                                            başlıklı
+                                            mesajın altına <span class="font-italic">
+                                                "1. vize sınavının tarihi belli
+                                                oldu mu?"
+                                            </span>
+                                            içerikli
+                                            mesaj attı.
+                                        </p>
+                                        <footer class="blockquote-footer"> 3 Mart 2022 20:12</footer>
+                                    </blockquote>
+                                </li>
+                                <li class="list-group-item">
+                                    <blockquote class="blockquote m-0">
+                                        <p class="m-0">
+                                            Oğuzhan Seleker tarafından <a href="#"
+                                                                          class="text-primary">1. Vize Tarihi</a>
+                                            başlıklı
+                                            mesajın altına <span class="font-italic">
+                                                "1. vize sınavının tarihi belli
+                                                oldu mu?"
+                                            </span>
+                                            içerikli
+                                            mesaj attı.
+                                        </p>
+                                        <footer class="blockquote-footer"> 3 Mart 2022</footer>
+                                    </blockquote>
+                                </li>
+                                <li class="list-group-item">
+                                    <blockquote class="blockquote m-0">
+                                        <p class="m-0">
+                                            Oğuzhan Seleker tarafından <a href="#"
+                                                                          class="text-primary">1. Vize Tarihi</a>
+                                            başlıklı
+                                            mesajın altına <span class="font-italic">
+                                                "1. vize sınavının tarihi belli
+                                                oldu mu?"
+                                            </span>
+                                            içerikli
+                                            mesaj attı.
+                                        </p>
+                                        <footer class="blockquote-footer"> 3 Mart 2022</footer>
+                                    </blockquote>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--Son Mesajlar Card End-->
+                </div>
+                <div class="mt-3">
+                    <!--Kısa Sınav Card Start-->
+                    <div class="card d-inline-flex mr-1" style="width: 33%;">
+                        <div class="card-header pb-2 pt-3">
+                            <h5>Aktif veya Yaklaşan Kısa Sınavlar</h5>
+                        </div>
+                        <p class="alert alert-danger mb-1 mt-1">
+                            <span class="d-block">Mat 101 2. Kısa Sınav</span>
+                            <span class="badge bg-secondary text-light d-inline-block">
+                                15.03.2022 -
+                                19.03.2022
+                            </span>
+                        </p>
+                        <p class="alert alert-success mb-1">
+                            <span class="d-block">Mat 101 2. Kısa Sınav</span>
+                            <span class="badge bg-secondary text-light d-inline-block">
+                                15.03.2022 -
+                                19.03.2022
+                            </span>
+                        </p>
+                        <p class="alert alert-warning mb-1">
+                            <span class="d-block">Mat 101 2. Kısa Sınav</span>
+                            <span class="badge bg-secondary text-light d-inline-block">
+                                15.03.2022 -
+                                19.03.2022
+                            </span>
+                        </p>
+                    </div>
+                    <!-- Kısa Sınav Card End-->
+                    <!--Anket bilgilendirme Start-->
+                    <div class="card d-inline-flex ml-1 mr-1" style="width: 32%;">
+                        <div class="card-header pb-2 pt-3">
+                            <h5>Güncel Anketler</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item pt-1 pl-3 pb-1">
+                                <span class="badge badge-danger float-right">Cevaplandırılmadı</span>
+                                <p class="m-0"><strong>Anket Adı : </strong> Ders Sonu Değerlendirmesi</p>
+                                <p class="m-0"><strong>Ders Kodu : </strong> Mat 101</p>
+                                <p class="m-0"><strong>Geçerlilik Tarihi : </strong> 20.03.2022 - 30.03.2022</p>
+                            </li>
+                            <li class="list-group-item pt-1 pl-3 pb-1">
+                                <span class="badge badge-success float-right">Cevaplandırıldı</span>
+                                <p class="m-0"><strong>Anket Adı : </strong> Sınav Tarihinin Belirlenmesi</p>
+                                <p class="m-0"><strong>Ders Kodu : </strong> Mat 345</p>
+                                <p class="m-0"><strong>Geçerlilik Tarihi : </strong> 20.03.2022 - 30.03.2022</p>
+                            </li>
+                            <li class="list-group-item pt-1 pl-3 pb-1">
+                                <span class="badge badge-danger float-right">Cevaplandırılmadı</span>
+                                <p class="m-0"><strong>Anket Adı : </strong> Ders Sonu Değerlendirmesi</p>
+                                <p class="m-0"><strong>Ders Kodu : </strong> Mat 101</p>
+                                <p class="m-0"><strong>Geçerlilik Tarihi : </strong> 20.03.2022 - 30.03.2022</p>
+                            </li>
+                            <li class="list-group-item pt-1 pl-3 pb-1">
+                                <span class="badge badge-success float-right">Cevaplandırıldı</span>
+                                <p class="m-0"><strong>Anket Adı : </strong> Sınav Tarihinin Belirlenmesi</p>
+                                <p class="m-0"><strong>Ders Kodu : </strong> Mat 345</p>
+                                <p class="m-0"><strong>Geçerlilik Tarihi : </strong> 20.03.2022 - 30.03.2022</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--Anket bilgilendirme End-->
+                    <!--Ödev Bilgilendirme Start-->
+                    <div class="card d-inline-flex ml-1 mr-1" style="width: 32%;">
+                        <div class="card-header pb-2 pt-3">
+                            <h5>Aktif Ödevler</h5>
+                        </div>
+                        <div class="card-body m-0 p-0">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <p class="m-0 p-0">
+                                        <span class="text-dark">Ders Kodu - Ödev Adı : </span> END
+                                        405 - 1.Ödev
+                                    </p>
+                                    <p class="m-0 p-0">
+                                        <span class="text-dark">Başlangıç Tarihi : </span> 01.03.2022
+                                        10:00
+                                    </p>
+                                    <p class="m-0 p-0">
+                                        <span class="text-dark">Teslim Tarihi : </span> 15.03.2022
+                                        10:00
+                                    </p>
+                                </li>
+                                <li class="list-group-item">
+                                    <p class="m-0 p-0">
+                                        <span class="text-dark">Ders Kodu - Ödev Adı : </span> Kim
+                                        235 - 2.Ödev
+                                    </p>
+                                    <p class="m-0 p-0">
+                                        <span class="text-dark">Başlangıç Tarihi : </span> 01.03.2022
+                                        10:00
+                                    </p>
+                                    <p class="m-0 p-0">
+                                        <span class="text-dark">Teslim Tarihi : </span> 15.03.2022
+                                        10:00
+                                    </p>
+                                </li>
+                                <li class="list-group-item">
+                                    <p class="m-0 p-0">
+                                        <span class="text-dark">Ders Kodu - Ödev Adı : </span> INS
+                                        405 - 5.Ödev
+                                    </p>
+                                    <p class="m-0 p-0">
+                                        <span class="text-dark">Başlangıç Tarihi : </span> 12.05.2022
+                                        10:00
+                                    </p>
+                                    <p class="m-0 p-0">
+                                        <span class="text-dark">Teslim Tarihi : </span> 15.05.2022
+                                        22:00
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

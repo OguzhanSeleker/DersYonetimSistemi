@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DYS.WebClient.Models.Lesson
+{
     public class InsertCourseDto : InsertDto
     {
         [Required]

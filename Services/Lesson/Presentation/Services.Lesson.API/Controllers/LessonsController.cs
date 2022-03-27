@@ -18,7 +18,6 @@ namespace Services.Lesson.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ServiceFilter(typeof(HttpResponseExceptionFilter))]
-    [Authorize]
     public class LessonsController : CustomBaseController
     {
         #region Repository
@@ -46,6 +45,7 @@ namespace Services.Lesson.API.Controllers
             _timePlaceReadRepository = timePlaceReadRepository;
             _timePlaceWriteRepository = timePlaceWriteRepository;
         }
+        
         [HttpPost]
         [Route("InsertLesson")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
@@ -57,6 +57,7 @@ namespace Services.Lesson.API.Controllers
                 return ReturnCreated(ObjectMapper.Mapper.Map<QueryLessonDto>(lesson));
             return ReturnError();
         }
+        
         [HttpPost]
         [Route("InsertCourse")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
@@ -67,6 +68,7 @@ namespace Services.Lesson.API.Controllers
                 return ReturnCreated(ObjectMapper.Mapper.Map<QueryCourseDto>(course));
             return ReturnError();
         }
+        
         [HttpPost]
         [Route("InsertUserInCourse")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
@@ -77,16 +79,18 @@ namespace Services.Lesson.API.Controllers
                 return ReturnCreated();
             return ReturnError();
         }
+        
         [HttpPost]
         [Route("InsertUserInCourseList")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> InsertCourseUserList(List<InsertCourseUserDto> insertCourseUserDtos)
         {
             await _courseUserWriteRepository.AddRangeAsync(ObjectMapper.Mapper.Map<List<CourseUser>>(insertCourseUserDtos));
-            if(await _courseUserWriteRepository.SaveAsync() > 0)
+            if (await _courseUserWriteRepository.SaveAsync() > 0)
                 return ReturnCreated();
             return ReturnError();
         }
+        
         [HttpGet]
         [Route("GetLessonById")]
         [ServiceFilter(typeof(ParameterFilterAttribute))]
@@ -97,16 +101,19 @@ namespace Services.Lesson.API.Controllers
                 return ReturnNotFound();
             return ReturnOk(ObjectMapper.Mapper.Map<QueryLessonDto>(lesson));
         }
+        
         [HttpGet]
-        [Route("GetLessonlistById")]
+        [Route("GetLessonlistByUserId")]
         [ServiceFilter(typeof(ParameterFilterAttribute))]
         public IActionResult GetLessonlistByUserId(string userId)
         {
             var courseUserList = _courseUserReadRepository.GetWhere(i => i.UserId == Guid.Parse(userId));
             if (courseUserList == null && courseUserList.Count() == 0)
                 return ReturnNotFound();
-            var lessonList = new List<Domain.Entities.Lesson>();
-            courseUserList.ToList().ForEach(i => { lessonList.Add(i.Course.Lesson); });
+            var courseList = courseUserList.Select(i => i.Course);
+            var lessonList = courseList.Select(i => i.Lesson).ToList();
+            
+            //courseUserList.ToList().ForEach(i => { lessonList.Add(i.Course.Lesson); });
             return ReturnOk(ObjectMapper.Mapper.Map<List<QueryLessonDto>>(lessonList));
         }
 
@@ -120,6 +127,7 @@ namespace Services.Lesson.API.Controllers
                 return ReturnNotFound();
             return ReturnOk(ObjectMapper.Mapper.Map<List<QueryLessonDto>>(lessonList));
         }
+
         [HttpPut]
         [Route("UpdateLesson")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
@@ -130,6 +138,7 @@ namespace Services.Lesson.API.Controllers
                 return ReturnSuccess();
             return ReturnError();
         }
+
         [HttpDelete]
         [Route("DeleteLesson")]
         [ServiceFilter(typeof(ParameterFilterAttribute))]
@@ -140,25 +149,38 @@ namespace Services.Lesson.API.Controllers
                 return ReturnSuccess();
             return ReturnError();
         }
+
         [HttpDelete]
         [Route("RemoveUserFromCourse")]
         [ServiceFilter(typeof(ParameterFilterAttribute))]
         public async Task<IActionResult> RemoveUserFromCourse(string courseUserId)
         {
             await _courseUserWriteRepository.RemoveAsync(courseUserId);
-            if(await _courseUserWriteRepository.SaveAsync() > 0)
+            if (await _courseUserWriteRepository.SaveAsync() > 0)
                 ReturnSuccess();
             return ReturnError();
         }
+
         [HttpGet]
         [Route("GetCourseById")]
         [ServiceFilter(typeof(ParameterFilterAttribute))]
-        public async Task<IActionResult> GetCourseById(string id)
+        public IActionResult GetCourseById(string id)
         {
             var course = _courseReadRepository.GetByIdAsync(id);
             if (course == null)
                 return ReturnNotFound();
             return ReturnOk(ObjectMapper.Mapper.Map<QueryCourseDto>(course));
+        }
+
+        [HttpGet]
+        [Route("GetCourseListByLessonIdAndUserId")]
+        [ServiceFilter(typeof(ParameterFilterAttribute))]
+        public IActionResult GetCourseListByLessonIdAndUserId(string lessonId, string userId)
+        {
+            var list = _courseReadRepository.GetWhere(i => i.LessonId == Guid.Parse(lessonId) && i.CourseUsers.Any(i => i.UserId == Guid.Parse(userId)));
+            if (list == null)
+                return ReturnNotFound();
+            return ReturnOk(ObjectMapper.Mapper.Map<List<QueryCourseDto>>(list));
         }
         //[HttpGet]
         //public async Task<IActionResult> test()
