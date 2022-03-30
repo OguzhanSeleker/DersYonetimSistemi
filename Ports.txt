@@ -1,7 +1,7 @@
 Gateway      => 5000
-AuthServer   => 5001
-WebClient    => 5002
-Lesson		 => 5015*
-Message		 => 5012*
-Notification => 5013*
-Survey		 => 5014*
+AuthServer   => 5001 -->1444*
+WebClient    => 5002 -->yok
+Lesson		 => 5015*-->5436
+Message		 => 5012*-->5433*
+Notification => 5013*-->5434*
+Survey		 => 5014*-->5435*

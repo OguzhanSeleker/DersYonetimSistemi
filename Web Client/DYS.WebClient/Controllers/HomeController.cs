@@ -22,7 +22,7 @@ namespace DYS.WebClient.Controllers
         {
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Lesson");
-            return View();
+            return View(new HomeIndexViewModel());
         }
         public IActionResult Privacy()
         {

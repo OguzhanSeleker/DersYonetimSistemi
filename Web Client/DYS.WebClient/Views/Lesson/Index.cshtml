@@ -9,6 +9,14 @@
     <div id="content" class="p-md-4">
         @await Html.PartialAsync("_NavigationBar", Model.SigninInput)
         <div>
+            <nav aria-label="breadcrumb" class="ml-5 mr-5">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">Where am I</li>
+                    <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+                    @*<li class="breadcrumb-item"><a href="#">Ders</a></li>
+        <li class="breadcrumb-item active" aria-current="page">CRN : 21345</li>*@
+                </ol>
+            </nav>
             <h2 class="mb-2 ml-5">Hoşgeldiniz</h2>
             <div class="container-sm shadow bg-light p-5 mt-4 mb-5 ml-5 mr-5">
                 <div class="">
