@@ -1,4 +1,6 @@
 ﻿using DYS.WebClient.Models;
+using Newtonsoft.Json;
+using SharedLibrary.ResponseDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,11 +26,22 @@ namespace DYS.WebClient.Services
 
         public async Task<UserViewModel> GetUserById(string id)
         {
-            var response = await _client.GetAsync($"/api/User/GetUserById/{id}");
+            var response = await _client.GetAsync($"/api/User/GetById/{id}");
             if (!response.IsSuccessStatusCode)
                 return null;
-            var usrmodel = await response.Content.ReadFromJsonAsync<UserViewModel>();
-            return usrmodel;
+            string str = await response.Content.ReadAsStringAsync();
+            var usrmodel = await JsonConvert.DeserializeObjectAsync<OperationResult<UserViewModel>>(str);
+            return usrmodel.Data;
+        }
+
+        public async Task<UserViewModel> GetByUsername(string username)
+        {
+            var response = await _client.GetAsync($"/api/User/GetByUsername/{username}");
+            if (!response.IsSuccessStatusCode)
+                return null;
+            string str = await response.Content.ReadAsStringAsync();
+            var usrmodel = await JsonConvert.DeserializeObjectAsync<OperationResult<UserViewModel>>(str);
+            return usrmodel.Data;
         }
     }
 }

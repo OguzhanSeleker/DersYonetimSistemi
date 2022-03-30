@@ -10,5 +10,6 @@ namespace DYS.WebClient.Services
     {
         Task<UserViewModel> GetUser();
         Task<UserViewModel> GetUserById(string id);
+        Task<UserViewModel> GetByUsername(string username);
     }
 }

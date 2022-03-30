@@ -1,15 +1,136 @@
-﻿@model SideBarViewModel
+﻿@model LessonAddViewModel
 
-@ViewData["Title"] = "Ders Ekle"
+@{
+    ViewData["Title"] = "Ders Ekle";
+}
 <div class="wrapper d-flex align-items-stretch">
-    @await Html.PartialAsync("_SideBar",Model)
+    @await Html.PartialAsync("_SideBar",Model.SideBarViewModel)
     <div id="content" class="p-md-4">
-        @await Html.PartialAsync("_NavigationBar");
+        @await Html.PartialAsync("_NavigationBar")
         <div>
-            <h2 class="mb-2 ml-5">Hoşgeldiniz</h2>
-            <div class="container-sm shadow bg-light p-5 mt-4 mb-5 ml-5 mr-5">
-               
+            <nav aria-label="breadcrumb" class="ml-5 mr-5">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+                    <li class="breadcrumb-item">Ders Ekle</li>
+                </ol>
+            </nav>
+            <h2 class="mb-2 ml-5">Ders Ekle</h2>
+            <div class="container-sm shadow bg-light pt-5 pb-5 pl-4 mt-4 mb-5 ml-5 mr-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-6 col-sm-7  border shadow bg-light ml-2 mr-2 mb-2 pb-3">
+                        <div class="m-4">
+                            <form asp-controller="Lesson" asp-action="Add" method="post">
+                                <div class="form-group">
+                                    <label asp-for="AddFormModel.NameTR" class="col-sm-3">Ders Adı - Türkçe</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" asp-for="AddFormModel.NameTR" placeholder="Ders Adı - Tr" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="AddFormModel.NameEn" class="col-sm-3">Ders Adı - English</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" asp-for="AddFormModel.NameEn" placeholder="Ders Adı - En" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="AddFormModel.Code" class="col-sm-3">Ders Kodu</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" asp-for="AddFormModel.Code" placeholder="Ders Kodu" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="CoordUserName" class="col-sm-3">Dersin Koordinatörü</label>
+                                    <div class="col-sm-10">
+                                        <small class="form-text text-muted" id="coordInfo"></small>  
+                                        <input type="text" class="form-control d-inline col-sm-8" id="CoordUserName" name="CoordUserName" placeholder="Kullanıcı Adı" required>
+                                        <button type="button" id="kisiAra" class="btn btn-outline-primary btn-sm">Ara</button>
+                                        <input type="hidden" asp-for="AddFormModel.CoordinatorId" />
+                                        <input type="hidden" asp-for="AddFormModel.CoordinatorFullName" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="AddFormModel.Language" class="col-sm-3">Ders Dili</label>
+                                    <div class="col-sm-7">
+                                        <select class="form-control" asp-for="AddFormModel.Language" required>
+                                            <option value="Türkçe">Türkçe</option>
+                                            <option value="English">English</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="AddFormModel.TermNumber" class="col-sm-3">Dönem Sayısı</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" asp-for="AddFormModel.TermNumber" aria-describedby="termNumberHelp" placeholder="Dönem sayısı" required>
+                                        <small id="termNumberHelp" class="form-text text-muted">Dersin verileceği dönemi giriniz.</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="AddFormModel.Credit" class="col-sm-3">Ders Kredisi</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" asp-for="AddFormModel.Credit" placeholder="Ders kredisi" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="AddFormModel.Goals" class="col-sm-3">Dersin Amaçları</label>
+                                    <div class="col-sm-7">
+                                        <textarea class="form-control" asp-for="AddFormModel.Goals" rows="2" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="AddFormModel.Descriptions" class="col-sm-3">Dersin Tanımı</label>
+                                    <div class="col-sm-7">
+                                        <textarea class="form-control" asp-for="AddFormModel.Descriptions" rows="2" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="AddFormModel.OtherInformations" class="col-sm-3">Ek Bilgiler</label>
+                                    <div class="col-sm-7">
+                                        <textarea class="form-control" asp-for="AddFormModel.OtherInformations" rows="2" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <button type="submit" class="btn btn-primary float-right pl-4 pr-">Ekle</button>
+                                </div>
+                                <i class=""></i>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+@section Scripts{
+<script type="text/javascript">
+
+    $("#kisiAra").click(function () {
+        var val = $('#CoordUserName').val()
+        $.ajax({
+            url: '/Auth/GetUserByUsername/',
+            data: {username:val},
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    console.log(result);
+                    $('#AddFormModel_CoordinatorId').val(result.id);
+                    $('#AddFormModel_CoordinatorFullName').val(result.fullName);
+                    $('#coordInfo').text(result.fullName);
+                    if($('.icon') != null)
+                        $('.icon').remove()
+                    $('#kisiAra').after('<i class="icon fa fa-check text-success ml-1"></i>');
+                },
+                error: function (result) { 
+                    $('#coordInfo').text(result.responseText);
+                    if($('.icon') != null)
+                        $('.icon').remove()
+                    $('#kisiAra').after('<i class="icon fa fa-close text-danger ml-1"></i>');
+
+                }
+        });
+        return false;
+    });
+</script>
+
+}

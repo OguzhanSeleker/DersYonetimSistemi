@@ -79,5 +79,13 @@ namespace DYS.AuthServer.Controllers
             var userRole = await _userManager.GetRolesAsync(user);
             return CreateActionResultInstance(OperationResult<GetUserDto>.OkSuccessResult(new GetUserDto { Id = user.Id, UserName = user.UserName, Email = user.Email, FirstName = user.FirstName, LastName = user.LastName, Roles = userRole }));
         }
+        [HttpGet("{username}")]
+        public async Task<IActionResult> GetByUsername(string username)
+        {
+            if (string.IsNullOrEmpty(username)) return ReturnBadMessage("parameter could not null");
+            var user = await _userManager.FindByNameAsync(username);
+            if(user == null) return ReturnNotFound();
+            return CreateActionResultInstance(OperationResult<GetUserDto>.OkSuccessResult(new GetUserDto { Id = user.Id, UserName = user.UserName, Email = user.Email, FirstName = user.FirstName, LastName = user.LastName }));
+        }
     }
 }

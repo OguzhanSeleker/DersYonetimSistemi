@@ -14,9 +14,7 @@ namespace DYS.WebClient.Models.Lesson
         public string NameEn { get; set; }
         [Required]
         public string Code { get; set; }
-        [Required]
         public Guid CoordinatorId { get; set; }
-        [Required]
         public string CoordinatorFullName { get; set; }
         [Required]
         public string Language { get; set; }

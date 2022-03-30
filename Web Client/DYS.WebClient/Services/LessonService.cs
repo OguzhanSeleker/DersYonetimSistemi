@@ -38,12 +38,14 @@ namespace DYS.WebClient.Services
             return null;
         }
 
+        [System.Obsolete]
         public async Task<List<QueryCourseDto>> GetCourseListByLessonIdAndUserId(string lessonId, string userId)
         {
             var response = await _client.GetAsync($"Lessons/GetCourseListByLessonIdAndUserId?lessonId={lessonId}&userId={userId}");
             if (!response.IsSuccessStatusCode)
                 return null;
-            var res = await JsonConvert.DeserializeObjectAsync<OperationResult<List<QueryCourseDto>>>(await response.Content.ReadAsStringAsync());
+            string str = await response.Content.ReadAsStringAsync();
+            var res = await JsonConvert.DeserializeObjectAsync<OperationResult<List<QueryCourseDto>>>(str);
             return res.Data;
         }
 
@@ -100,7 +102,9 @@ namespace DYS.WebClient.Services
             var response = await _client.PostAsJsonAsync<InsertLessonDto>($"Lessons/InsertLesson", insertLessonDto);
             if (!response.IsSuccessStatusCode)
                 return null;
-            return (await response.Content.ReadFromJsonAsync<OperationResult<QueryLessonDto>>()).Data;
+            string str = await response.Content.ReadAsStringAsync();
+            var res = await JsonConvert.DeserializeObjectAsync<OperationResult<QueryLessonDto>>(str);
+            return res.Data;
         }
 
         public async Task<bool> RemoveUserFromCourse(string courseUserId)
