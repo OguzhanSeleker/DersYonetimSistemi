@@ -89,7 +89,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-7">
-                                    <button type="submit" class="btn btn-primary float-right pl-4 pr-">Ekle</button>
+                                    <button type="submit" class="btn btn-primary float-right pl-4 pr-4">Ekle</button>
                                 </div>
                                 <i class=""></i>
                             </form>
@@ -113,15 +113,16 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
                 success: function (result) {
-                    console.log(result);
-                    $('#AddFormModel_CoordinatorId').val(result.id);
-                    $('#AddFormModel_CoordinatorFullName').val(result.fullName);
-                    $('#coordInfo').text(result.fullName);
+                    
+                    $('#AddFormModel_CoordinatorId').val(result.Id);
+                    $('#AddFormModel_CoordinatorFullName').val(result.FullName);
+                    $('#coordInfo').text(result.FullName);
                     if($('.icon') != null)
                         $('.icon').remove()
                     $('#kisiAra').after('<i class="icon fa fa-check text-success ml-1"></i>');
                 },
                 error: function (result) { 
+                    debugger;
                     $('#coordInfo').text(result.responseText);
                     if($('.icon') != null)
                         $('.icon').remove()

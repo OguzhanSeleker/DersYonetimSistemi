@@ -18,6 +18,17 @@ namespace DYS.WebClient.Services
         {
             _client = client;
         }
+        public async Task<List<QueryLessonDto>> GetLessonList()
+        {
+            var response = await _client.GetAsync("Lessons/GetLessonList");
+            if(response.IsSuccessStatusCode && response.Content != null)
+            {
+                var str = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<OperationResult<List<QueryLessonDto>>>(str);
+                return result.Data;
+            }
+            return null;
+        }
 
         public async Task<bool> DeleteLesson(string id)
         {
@@ -32,7 +43,8 @@ namespace DYS.WebClient.Services
             var response = await _client.GetAsync($"Lessons/GetCourseById/{id}");
             if(response.IsSuccessStatusCode && response.Content != null)
             {
-                var result = await response.Content.ReadFromJsonAsync<OperationResult<QueryCourseDto>>();
+                string str = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<OperationResult<QueryCourseDto>>(str);
                 return result.Data;
             }
             return null;
@@ -45,7 +57,7 @@ namespace DYS.WebClient.Services
             if (!response.IsSuccessStatusCode)
                 return null;
             string str = await response.Content.ReadAsStringAsync();
-            var res = await JsonConvert.DeserializeObjectAsync<OperationResult<List<QueryCourseDto>>>(str);
+            var res = JsonConvert.DeserializeObject<OperationResult<List<QueryCourseDto>>>(str);
             return res.Data;
         }
 
@@ -103,7 +115,7 @@ namespace DYS.WebClient.Services
             if (!response.IsSuccessStatusCode)
                 return null;
             string str = await response.Content.ReadAsStringAsync();
-            var res = await JsonConvert.DeserializeObjectAsync<OperationResult<QueryLessonDto>>(str);
+            var res =  JsonConvert.DeserializeObject<OperationResult<QueryLessonDto>>(str);
             return res.Data;
         }
 

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DYS.WebClient.Models.Lesson;
+using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DYS.WebClient.Models.Lesson
+namespace DYS.WebClient.Models
 {
-    public class InsertCourseDto : InsertDto
+    public class CourseAddFormModel
     {
         [Required]
         public Guid LessonId { get; set; }
@@ -19,7 +19,13 @@ namespace DYS.WebClient.Models.Lesson
         [Required]
         public DateTime LastAccessDate { get; set; }
         public InsertCourseUserDto Teacher { get; set; }
-        public InsertCourseUserDto Asistant { get; set; }
-        public virtual ICollection<InsertTimePlaceDto> TimePlaces { get; set; }
+        public CourseTimeFormModel[] CourseTimeFormModels { get; set; }
     }
+    public class CourseTimeFormModel
+    {
+        public DayOfWeek Gun { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
+    }
+
 }

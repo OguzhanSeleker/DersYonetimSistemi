@@ -101,7 +101,18 @@ namespace Services.Lesson.API.Controllers
                 return ReturnNotFound();
             return ReturnOk(ObjectMapper.Mapper.Map<QueryLessonDto>(lesson));
         }
-        
+       
+        [HttpGet]
+        [Route("GetLessonList")]
+        public IActionResult GetLessonList()
+        {
+            var lesson = _lessonReadRepository.GetAll(false);
+            if (lesson != null && lesson.Count() > 0)
+                return ReturnOk(ObjectMapper.Mapper.Map<List<QueryLessonDto>>(lesson));
+            return ReturnNotFound();
+        }
+
+
         [HttpGet]
         [Route("GetLessonlistByUserId")]
         [ServiceFilter(typeof(ParameterFilterAttribute))]

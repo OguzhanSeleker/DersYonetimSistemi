@@ -1,4 +1,5 @@
-﻿using DYS.WebClient.Services;
+﻿using DYS.WebClient.Models;
+using DYS.WebClient.Services;
 using DYS.WebClient.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using SharedLibrary.Services;
@@ -19,7 +20,18 @@ namespace DYS.WebClient.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-
+            var model = new CourseAddViewModel()
+            {
+                LessonList = await _lessonService.GetLessonList(),
+                SideBarViewModel = await GetSideBarInfo(_lessonService)
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Add(CourseAddViewModel model)
+        {
+            var model1 = model;
+            return View(model);
         }
     }
 }

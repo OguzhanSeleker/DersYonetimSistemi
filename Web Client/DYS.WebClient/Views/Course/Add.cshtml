@@ -1,0 +1,164 @@
+﻿@model CourseAddViewModel
+@{
+    ViewData["Title"] = "Sınıf Oluştur";
+}
+<div class="wrapper d-flex align-items-stretch">
+    @await Html.PartialAsync("_SideBar",Model.SideBarViewModel)
+    <div id="content" class="p-md-4">
+        @await Html.PartialAsync("_NavigationBar")
+        <div>
+            <nav aria-label="breadcrumb" class="ml-5 mr-5">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+                    <li class="breadcrumb-item">Sınıf Oluştur</li>
+                </ol>
+            </nav>
+            <h2 class="mb-2 ml-5">Sınıf oluştur</h2>
+            <div class="container-sm shadow bg-light pt-5 pb-5 pl-4 mt-4 mb-5 ml-5 mr-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-6 col-sm-7  border shadow bg-light ml-2 mr-2 mb-2 pb-3">
+                        <div class="m-4">
+                            <form asp-controller="Course" asp-action="Add" method="post">
+                                <div class="form-group">
+                                    <label asp-for="InsertCourse.LessonId" class="col-sm-3">Ders Seçiniz</label>
+                                    <div class="col-sm-7">
+                                        <select class="form-control" asp-for="InsertCourse.LessonId">
+                                            <option>Seçiniz</option>
+                                            @if (Model.LessonList != null)
+                                            {
+                                                @foreach (var item in Model.LessonList)
+                                                {
+                                                    <option value="@item.Id">@item.NameTR</option>
+                                                }
+
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="InsertCourse.CRN" class="col-sm-3">CRN</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" asp-for="InsertCourse.CRN" placeholder="CRN giriniz" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="InsertCourse.Donem" class="col-sm-3">Dönem Giriniz</label>
+                                    <div class="col-sm-7">
+                                        <select class="form-control" asp-for="InsertCourse.Donem" required>
+                                            <option>Seçiniz</option>
+                                            <option value="2021-2022 Güz">2021-2022 Güz</option>
+                                            <option value="2021-2022 Bahar">2021-2022 Bahar</option>
+                                            <option value="2021-2022 Yaz">2021-2022 Yaz</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="teacherUsername" class="col-sm-3">Dersin Eğitmeni</label>
+                                    <div class="col-sm-10">
+                                        <small class="form-text text-muted" id="teacherInfo"></small>
+                                        <input type="text" class="form-control d-inline col-sm-8" id="teacherUsername" name="teacherUsername" placeholder="Kullanıcı Adı" required>
+                                        <button type="button" id="teacherSearch" class="btn btn-outline-primary btn-sm">Ara</button>
+                                        <input type="hidden" asp-for="InsertCourse.Teacher.UserId" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="InsertCourse.StartDate" class="col-sm-3">Başlangıç Tarihi</label>
+                                    <div class='col-sm-7'>
+                                        <input type="date" asp-for="InsertCourse.StartDate" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="InsertCourse.EndDate" class="col-sm-3">Bitiş Tarihi</label>
+                                    <div class='col-sm-7'>
+                                        <input type="date" asp-for="InsertCourse.EndDate" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="InsertCourse.EndDate" class="col-sm-3">Son Erişim Tarihi</label>
+                                    <div class='col-sm-7'>
+                                        <input type="date" asp-for="InsertCourse.LastAccessDate" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-9">
+                                    <label asp-for="InsertCourse.CourseTimeFormModels">Gün - Saat</label>
+                                    <div class="form-row">
+                                        <input type="hidden" id="numOfRow" value="0" />
+                                        <select class="form-control col-md-3" name="InsertCourse.CourseTimeFormModels[0].Gun" required>
+                                            <option>Seçiniz</option>
+                                            <option value="@DayOfWeek.Monday">Pazartesi</option>
+                                            <option value="@DayOfWeek.Tuesday">Salı</option>
+                                            <option value="@DayOfWeek.Wednesday">Çarşamba</option>
+                                            <option value="@DayOfWeek.Thursday">Perşembe</option>
+                                            <option value="@DayOfWeek.Friday">Cuma</option>
+                                        </select>
+                                        <div class="col-md-3">
+                                            <input name="InsertCourse.CourseTimeFormModels[0].StartTime" type="time" class=" form-control timepicker" placeholder="hh:mm" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input name="InsertCourse.CourseTimeFormModels[0].EndTime" type="time" class=" form-control timepicker" placeholder="hh:mm" />
+                                        </div>
+                                        <i class="fa fa-minus-circle fa-lg text-danger remove" aria-hidden="true" style="align-self: center;"></i>
+                                    </div>
+                                    <i class="fa fa-plus fa-lg text-success mt-1 add"><span class="text-black-50">Ekle</span></i>
+                                </div>
+                                <div class="col-sm-7">
+                                    <button type="submit" class="btn btn-primary float-right pl-4 pr-4">Oluştur</button>
+                                </div>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+<script type="text/javascript">
+            $(document).on('click','.remove',function() {
+        $(this).parent('div').remove();
+    });
+              $('.add').click(function() {
+                  var num = parseInt($('#numOfRow').val());
+              $(this).before('<div class="form-row">' +
+              '<input type="hidden" id="numOfRow" value="'+(num + 1).toString()+'"/>'+
+    '<select class="form-control col-md-3" asp-for="InsertCourse.CourseTimeFormModels['+
+              (num + 1).toString()+
+              '].Gun" required><option>Seçiniz</option><option value="@DayOfWeek.Monday">Pazartesi</option><option value="@DayOfWeek.Tuesday">Salı</option><option value="@DayOfWeek.Wednesday">Çarşamba</option><option value="@DayOfWeek.Thursday">Perşembe</option><option value="@DayOfWeek.Friday">Cuma</option></select><div class="col-md-3"><input asp-for="InsertCourse.CourseTimeFormModels['+(num + 1).toString()+'].StartTime" type="time" class=" form-control timepicker" placeholder="hh:mm" /></div><div class="col-md-3"><input asp-for="InsertCourse.CourseTimeFormModels['+(num + 1).toString()+'].EndTime" type="time" class=" form-control timepicker" placeholder="hh:mm" /></div><i class="fa fa-minus-circle fa-lg text-danger remove" aria-hidden="true" style="align-self: center;"></i></div>')
+              });
+            $(function () {
+                     $('#1datetimepicker3').datetimepicker({
+                         format: 'LT'
+                     });
+                 });
+            $("#teacherSearch").click(function () {
+                var val = $('#teacherUsername').val()
+                $.ajax({
+                    url: '/Auth/GetUserByUsername/',
+                    data: {username:val},
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                        success: function (result) {
+
+                            $('#InsertCourse_Teacher_UserId').val(result.Id);
+                            $('#teacherInfo').text(result.FullName);
+                            if($('.icon') != null)
+                                $('.icon').remove()
+                            $('#teacherUsername').after('<i class="icon fa fa-check text-success ml-1"></i>');
+                        },
+                        error: function (result) {
+                            debugger;
+                            $('#teacherInfo').text(result.responseText);
+                            if($('.icon') != null)
+                                $('.icon').remove()
+                            $('#teacherUsername').after('<i class="icon fa fa-close text-danger ml-1"></i>');
+
+                        }
+                });
+                return false;
+            });
+</script>
+
+}

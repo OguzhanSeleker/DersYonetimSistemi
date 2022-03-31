@@ -18,6 +18,7 @@ namespace DYS.WebClient.Services.Interfaces
         Task<bool> RemoveUserFromCourse(string courseUserId);
         Task<QueryCourseDto> GetCourseById(string id);
         Task<List<QueryCourseDto>> GetCourseListByLessonIdAndUserId(string lessonId, string userId);
+        Task<List<QueryLessonDto>> GetLessonList();
 
     }
 }

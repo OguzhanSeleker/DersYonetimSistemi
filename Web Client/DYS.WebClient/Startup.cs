@@ -14,6 +14,7 @@ using SharedLibrary.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DYS.WebClient
@@ -45,7 +46,12 @@ namespace DYS.WebClient
                 opt.Cookie.Name = "dyswebcookie";
                 opt.AccessDeniedPath = "/home/AccessDenied";
             });
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            }); ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
