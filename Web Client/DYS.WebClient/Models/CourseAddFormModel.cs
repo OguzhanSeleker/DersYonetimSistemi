@@ -1,5 +1,6 @@
 ﻿using DYS.WebClient.Models.Lesson;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DYS.WebClient.Models
@@ -19,7 +20,7 @@ namespace DYS.WebClient.Models
         [Required]
         public DateTime LastAccessDate { get; set; }
         public InsertCourseUserDto Teacher { get; set; }
-        public CourseTimeFormModel[] CourseTimeFormModels { get; set; }
+        public List<CourseTimeFormModel> CourseTimeFormModels { get; set; }
     }
     public class CourseTimeFormModel
     {

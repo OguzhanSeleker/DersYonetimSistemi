@@ -35,7 +35,7 @@ namespace DYS.AuthServer
             try
             {
                 var host = CreateHostBuilder(args).Build();
-                using(var scope = host.Services.CreateScope())
+                using (var scope = host.Services.CreateScope())
                 {
                     var serviceProvider = scope.ServiceProvider;
                     var applicationDbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
@@ -43,12 +43,17 @@ namespace DYS.AuthServer
                     var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                     if (!userManager.Users.Any())
                     {
-                        userManager.CreateAsync(new ApplicationUser { UserName = "seleker17", Email = "seleker17@itu.edu.tr" }, "Admin123*").Wait();
+                        userManager.CreateAsync(new ApplicationUser { UserName = "seleker17", Email = "seleker17@itu.edu.tr" , FirstName="Oğuzhan",LastName="Seleker"}, "Admin123*").Wait();
+                        userManager.CreateAsync(new ApplicationUser { UserName = "ogrenci22", Email = "ogrenci22@itu.edu.tr", FirstName = "İsimÖğrenci", LastName = "SoyisimÖğrenci" }, "Admin123*").Wait();
+                        userManager.CreateAsync(new ApplicationUser { UserName = "egitmen22", Email = "egitmen22@itu.edu.tr", FirstName = "İsimEğitmen", LastName = "SoyisimEğitmen" }, "Admin123*").Wait();
                     }
                     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
                     if (!roleManager.Roles.Any())
                     {
                         roleManager.CreateAsync(new IdentityRole { Name = "Admin" }).Wait();
+                        roleManager.CreateAsync(new IdentityRole { Name = "Teacher" }).Wait();
+                        roleManager.CreateAsync(new IdentityRole { Name = "Student" }).Wait();
+                        roleManager.CreateAsync(new IdentityRole { Name = "Asistant" }).Wait();
                         userManager.AddToRoleAsync(userManager.FindByNameAsync("seleker17").Result, "Admin").Wait();
                     }
                 }

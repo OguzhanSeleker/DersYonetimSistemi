@@ -30,7 +30,7 @@ namespace DYS.WebClient.Services
             if (!response.IsSuccessStatusCode)
                 return null;
             string str = await response.Content.ReadAsStringAsync();
-            var usrmodel = await JsonConvert.DeserializeObjectAsync<OperationResult<UserViewModel>>(str);
+            var usrmodel = JsonConvert.DeserializeObject<OperationResult<UserViewModel>>(str);
             return usrmodel.Data;
         }
 
@@ -40,7 +40,7 @@ namespace DYS.WebClient.Services
             if (!response.IsSuccessStatusCode)
                 return null;
             string str = await response.Content.ReadAsStringAsync();
-            var usrmodel = await JsonConvert.DeserializeObjectAsync<OperationResult<UserViewModel>>(str);
+            var usrmodel = JsonConvert.DeserializeObject<OperationResult<UserViewModel>>(str);
             return usrmodel.Data;
         }
     }

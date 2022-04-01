@@ -18,8 +18,9 @@ namespace DYS.WebClient.Models.Lesson
         public DateTime EndDate { get; set; }
         [Required]
         public DateTime LastAccessDate { get; set; }
-        public InsertCourseUserDto Teacher { get; set; }
-        public InsertCourseUserDto Asistant { get; set; }
+        //public InsertCourseUserDto Teacher { get; set; }
+        //public InsertCourseUserDto Asistant { get; set; }
+        [Required]
         public virtual ICollection<InsertTimePlaceDto> TimePlaces { get; set; }
     }
 }

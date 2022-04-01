@@ -94,7 +94,9 @@ namespace DYS.WebClient.Services
             var response = await _client.PostAsJsonAsync<InsertCourseDto>($"Lessons/InsertCourse", insertCourseDto);
             if (!response.IsSuccessStatusCode)
                 return null;
-            return (await response.Content.ReadFromJsonAsync<OperationResult<QueryCourseDto>>()).Data;
+            string str = await response.Content.ReadAsStringAsync();
+            var res = JsonConvert.DeserializeObject<OperationResult<QueryCourseDto>>(str);
+            return res.Data;
         }
 
         public async Task<bool> InsertCourseUser(InsertCourseUserDto insertCourseUserDto)
