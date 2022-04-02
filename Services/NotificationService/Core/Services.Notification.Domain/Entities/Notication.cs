@@ -13,6 +13,6 @@ namespace Services.Notification.Domain.Entities
         public string Title { get; set; }
         public string Description { get; set; }
         public bool Priority { get; set; }
-        public Guid LessonId { get; set; }
+        public Guid CourseId { get; set; }
     }
 }

@@ -20,13 +20,13 @@ namespace DYS.WebClient.Models
         [Required]
         public DateTime LastAccessDate { get; set; }
         public InsertCourseUserDto Teacher { get; set; }
-        public List<CourseTimeFormModel> CourseTimeFormModels { get; set; }
+        public List<InsertTimePlaceDto> CourseTimeFormModels { get; set; }
     }
-    public class CourseTimeFormModel
-    {
-        public DayOfWeek Gun { get; set; }
-        public string StartTime { get; set; }
-        public string EndTime { get; set; }
-    }
+    //public class CourseTimeFormModel
+    //{
+    //    public DayOfWeek Gun { get; set; }
+    //    public string StartTime { get; set; }
+    //    public string EndTime { get; set; }
+    //}
 
 }

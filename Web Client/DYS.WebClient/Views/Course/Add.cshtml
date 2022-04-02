@@ -79,11 +79,11 @@
                                         <input type="date" asp-for="InsertCourse.LastAccessDate" class="form-control" />
                                     </div>
                                 </div>
-                                <div class="form-group col-sm-9">
+                                <div class="form-group col-sm-9 mb-1">
                                     <label asp-for="InsertCourse.CourseTimeFormModels">Gün - Saat</label>
-                                    <div class="form-row">
+                                    <div class="form-row mb-1">
                                         <input type="hidden" id="numOfRow" value="0" />
-                                        <select class="form-control col-md-3" name="InsertCourse.CourseTimeFormModels[0].Gun" required>
+                                        <select class="form-control col-md-2" name="InsertCourse.CourseTimeFormModels[0].DayOfWeek" required>
                                             <option>Seçiniz</option>
                                             <option value="@DayOfWeek.Monday">Pazartesi</option>
                                             <option value="@DayOfWeek.Tuesday">Salı</option>
@@ -91,11 +91,14 @@
                                             <option value="@DayOfWeek.Thursday">Perşembe</option>
                                             <option value="@DayOfWeek.Friday">Cuma</option>
                                         </select>
-                                        <div class="col-md-3">
-                                            <input name="InsertCourse.CourseTimeFormModels[0].StartTime" type="time" class=" form-control timepicker" placeholder="hh:mm" />
+                                        <div class="col-md-2">
+                                            <input name="InsertCourse.CourseTimeFormModels[0].StartHour" type="time" class=" form-control timepicker" placeholder="hh:mm" />
                                         </div>
-                                        <div class="col-md-3">
-                                            <input name="InsertCourse.CourseTimeFormModels[0].EndTime" type="time" class=" form-control timepicker" placeholder="hh:mm" />
+                                        <div class="col-md-2">
+                                            <input name="InsertCourse.CourseTimeFormModels[0].EndHour" type="time" class=" form-control timepicker" placeholder="hh:mm" />
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input name="InsertCourse.CourseTimeFormModels[0].ClassRoom" type="text" class=" form-control" placeholder="Sınıf"/>
                                         </div>
                                         <i class="fa fa-minus-circle fa-lg text-danger remove" aria-hidden="true" style="align-self: center;"></i>
                                     </div>
@@ -130,11 +133,13 @@
      });
               $('.add').click(function() {
                   var num = parseInt($('#numOfRow').val());
-              $(this).before('<div class="form-row">' +
+              $(this).before('<div class="form-row mb-1">' +
               '<input type="hidden" id="numOfRow" value="'+(num + 1)+'"/>'+
-    '<select class="form-control col-md-3" name="InsertCourse.CourseTimeFormModels['+
+    '<select class="form-control col-md-2" name="InsertCourse.CourseTimeFormModels['+
               (num + 1)+
-                  '].Gun" required><option>Seçiniz</option><option value="@DayOfWeek.Monday">Pazartesi</option><option value="@DayOfWeek.Tuesday">Salı</option><option value="@DayOfWeek.Wednesday">Çarşamba</option><option value="@DayOfWeek.Thursday">Perşembe</option><option value="@DayOfWeek.Friday">Cuma</option></select><div class="col-md-3"><input name="InsertCourse.CourseTimeFormModels[' + (num + 1) +'].StartTime" type="time" class=" form-control timepicker" placeholder="hh:mm" /></div><div class="col-md-3"><input name="InsertCourse.CourseTimeFormModels['+(num + 1)+'].EndTime" type="time" class=" form-control timepicker" placeholder="hh:mm" /></div><i class="fa fa-minus-circle fa-lg text-danger remove" aria-hidden="true" style="align-self: center;"></i></div>')
+                  '].DayOfWeek" required><option>Seçiniz</option><option value="@DayOfWeek.Monday">Pazartesi</option><option value="@DayOfWeek.Tuesday">Salı</option><option value="@DayOfWeek.Wednesday">Çarşamba</option><option value="@DayOfWeek.Thursday">Perşembe</option><option value="@DayOfWeek.Friday">Cuma</option></select><div class="col-md-2"><input name="InsertCourse.CourseTimeFormModels['
+                  + (num + 1) +'].StartHour" type="time" class=" form-control timepicker" placeholder="hh:mm" /></div><div class="col-md-2"><input name="InsertCourse.CourseTimeFormModels['+(num + 1)+
+                  '].EndHour" type="time" class=" form-control timepicker" placeholder="hh:mm" /></div><div class="col-md-2"><input name="InsertCourse.CourseTimeFormModels['+(num +1)+'].ClassRoom" type="text" class=" form-control" placeholder="Sınıf"/></div><i class="fa fa-minus-circle fa-lg text-danger remove" aria-hidden="true" style="align-self: center;"></i></div>')
               });
             $("#teacherSearch").click(function () {
                 var val = $('#teacherUsername').val()

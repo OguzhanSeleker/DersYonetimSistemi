@@ -19,6 +19,7 @@ namespace DYS.WebClient.Services.Interfaces
         Task<QueryCourseDto> GetCourseById(string id);
         Task<List<QueryCourseDto>> GetCourseListByLessonIdAndUserId(string lessonId, string userId);
         Task<List<QueryLessonDto>> GetLessonList();
+        Task<bool> IsUserInCourse(string courseId, string userId);
 
     }
 }

@@ -131,12 +131,12 @@ namespace Services.Lesson.API.Controllers
         [HttpGet]
         [Route("GetLessonByCourseId")]
         [ServiceFilter(typeof(ParameterFilterAttribute))]
-        public IActionResult GetLessonByCourseId(string courseId)
+        public async Task<IActionResult> GetLessonByCourseId(string courseId)
         {
-            var lessonList = _lessonReadRepository.GetWhere(i => i.Courses.Any(i => i.Id == Guid.Parse(courseId)));
-            if (lessonList == null && lessonList.Count() == 0)
+            var lessonList = await _lessonReadRepository.GetSingleAsync(i => i.Courses.Any(i => i.Id == Guid.Parse(courseId)));
+            if (lessonList == null)
                 return ReturnNotFound();
-            return ReturnOk(ObjectMapper.Mapper.Map<List<QueryLessonDto>>(lessonList));
+            return ReturnOk(ObjectMapper.Mapper.Map<QueryLessonDto>(lessonList));
         }
 
         [HttpPut]
@@ -173,11 +173,11 @@ namespace Services.Lesson.API.Controllers
         }
 
         [HttpGet]
-        [Route("GetCourseById")]
+        [Route("GetCourseById/{id}")]
         [ServiceFilter(typeof(ParameterFilterAttribute))]
-        public IActionResult GetCourseById(string id)
+        public async Task<IActionResult> GetCourseById(string id)
         {
-            var course = _courseReadRepository.GetByIdAsync(id);
+            var course = await _courseReadRepository.GetByIdAsync(id);
             if (course == null)
                 return ReturnNotFound();
             return ReturnOk(ObjectMapper.Mapper.Map<QueryCourseDto>(course));
@@ -192,6 +192,19 @@ namespace Services.Lesson.API.Controllers
             if (list == null)
                 return ReturnNotFound();
             return ReturnOk(ObjectMapper.Mapper.Map<List<QueryCourseDto>>(list));
+        }
+        [HttpGet]
+        [Route("IsUserInCourse")]
+        [ServiceFilter(typeof(ParameterFilterAttribute))]
+        public async Task<IActionResult> IsUserInCourse(string id, string userId)
+        {
+            var course = await _courseReadRepository.GetByIdAsync(id, false);
+            if (course == null)
+                return NotFound();
+            var users = course.CourseUsers.Where(i => i.UserId == Guid.Parse(userId)).AsQueryable();
+            if (users.Any())
+                return ReturnSuccess();
+            return NotFound();
         }
         //[HttpGet]
         //public async Task<IActionResult> test()

@@ -18,7 +18,7 @@ namespace Services.Notification.Domain.Dtos
         [Required]
         public Guid WriterId { get; set; }
         [Required]
-        public Guid LessonId { get; set; }
+        public Guid CourseId { get; set; }
         [Required]
         public bool Priority { get; set; }
     }

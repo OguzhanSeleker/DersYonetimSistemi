@@ -46,12 +46,12 @@ namespace Services.Notification.API.Controllers
             return CreateActionResultInstance(OperationResult<NoContent>.CreateFailure("Could not added", SharedLibrary.ResponseDtos.StatusCode.Error));
         }
         [HttpGet]
-        [Route("[action]/{lessonId}")]
-        public async Task<IActionResult> GetNotificationListByLessonId(string lessonId)
+        [Route("GetNotificationListByCourseId/{CourseId}")]
+        public IActionResult GetNotificationListByCourseId(string CourseId)
         {
-            if (string.IsNullOrEmpty(lessonId))
+            if (string.IsNullOrEmpty(CourseId))
                 return CreateActionResultInstance(OperationResult<NoContent>.CreateFailure("Parameter is empty", SharedLibrary.ResponseDtos.StatusCode.BadRequest));
-            var noticationList = _notificationReadRepository.GetWhere(i => i.LessonId == Guid.Parse(lessonId)).OrderByDescending(i => i.Priority);
+            var noticationList = _notificationReadRepository.GetWhere(i => i.CourseId == Guid.Parse(CourseId)).OrderByDescending(i => i.Priority);
             if (noticationList != null && noticationList.Count() > 0)
                 return CreateActionResultInstance(OperationResult<List<GetNotificationDto>>.OkSuccessResult(ObjectMapper.Mapper.Map<List<GetNotificationDto>>(noticationList)));
             return CreateActionResultInstance(OperationResult<NoContent>.CreateFailure("Could Not found", SharedLibrary.ResponseDtos.StatusCode.NotFound));

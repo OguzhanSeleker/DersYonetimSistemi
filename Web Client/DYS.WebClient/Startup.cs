@@ -1,4 +1,5 @@
 using DYS.WebClient.Extensions;
+using DYS.WebClient.Filters;
 using DYS.WebClient.Handler;
 using DYS.WebClient.Models;
 using DYS.WebClient.Services;
@@ -37,6 +38,9 @@ namespace DYS.WebClient
             var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
             services.AddHttpContextAccessor();
             services.AddHttpClientServices(Configuration);
+
+            services.AddScoped<ValidationFilterAttribute>();
+            services.AddScoped<ParameterFilterAttribute>();
             services.AddScoped<ISharedIdentityService, SharedIdentityService>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opt =>
             {

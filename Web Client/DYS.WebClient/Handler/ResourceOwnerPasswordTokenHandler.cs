@@ -1,7 +1,10 @@
 ﻿using DYS.WebClient.Exceptions;
+using DYS.WebClient.Services;
 using DYS.WebClient.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System;
@@ -44,9 +47,8 @@ namespace DYS.WebClient.Handler
 
             if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
-                // hata fırlatılacak
-                throw new UnAuthorizeException();
-                 
+                response.StatusCode = System.Net.HttpStatusCode.Unauthorized;
+                
             }
             return response;
         }

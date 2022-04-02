@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Services.Notification.Persistence.Contexts;
@@ -9,9 +10,10 @@ using Services.Notification.Persistence.Contexts;
 namespace Services.Notification.Persistence.Migrations
 {
     [DbContext(typeof(NotificationServiceDbContext))]
-    partial class NotificationServiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220402212214_mig_2")]
+    partial class mig_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

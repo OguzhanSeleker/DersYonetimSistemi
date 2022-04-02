@@ -19,7 +19,6 @@
   <ItemGroup>
     <Folder Include="Models\Message\" />
     <Folder Include="Models\Survey\" />
-    <Folder Include="Models\Notification\" />
   </ItemGroup>
 
 </Project>

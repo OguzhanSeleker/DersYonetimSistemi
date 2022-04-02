@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DYS.WebClient.Models.Lesson
 { 
-    [JsonObject]
+    //[JsonObject]
     public class QueryCourseDto : GetDto
     {
         public Guid LessonId { get; set; }
