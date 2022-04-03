@@ -17,7 +17,7 @@
             <h2 class="mb-2 ml-5">@Model.Lesson.NameTR - @Model.Course.CRN</h2>
             <div class="container-sm shadow bg-light pt-5 pb-5 pl-4 mt-4 mb-5 ml-5 mr-5">
                 <div class="row">
-                   @await Html.PartialAsync("_CoursesOperationsPartial",Model.Course)
+                    @await Html.PartialAsync("_CoursesOperationsPartial",Model.Course)
                     <div class="col-6 col-sm-7 border shadow bg-light ml-2 mr-2 " style="height: 45rem;">
                         <div class="card w-100 mt-1">
                             <div class="card-header p-0 ">
@@ -29,10 +29,14 @@
                                     {
                                         foreach (var item in Model.NotificationList)
                                         {
-                                            <li class="list-group-item pb-0 @(item.Priority ? "bg-warning":"")">
+                                            <li class="list-group-item pb-0)">
                                                 <strong>@item.WriterFullname</strong> tarafından "<a href="~/notification/@item.Id.ToString()" class="text-primary">
-                                                   @item.Title
+                                                    @item.Title
                                                 </a>" başlıklı duyuru eklendi.
+                                                @if (item.Priority)
+                                                {
+                                                    <span class="badge badge-warning float-right pt-1">Önemli</span>
+                                                }
                                                 <footer class="text-md-right text-info">@item.CreatedDate</footer>
                                             </li>
                                         }
@@ -44,20 +48,20 @@
                                         </li>
                                     }
 
-                                 @*   <li class="list-group-item pb-0">
+                                    @*   <li class="list-group-item pb-0">
                                         <strong>Fatma Özdemir</strong> tarafından "<a href="#" class="text-primary">
-                                            Dönem Sonu Sınav
-                                            Yerleri
+                                        Dönem Sonu Sınav
+                                        Yerleri
                                         </a>" başlıklı duyuru eklendi.
                                         <footer class="text-md-right text-info">01.06.2022 14:00</footer>
-                                    </li>
-                                    <li class="list-group-item pb-0">
+                                        </li>
+                                        <li class="list-group-item pb-0">
                                         <strong>Fatma Özdemir</strong> tarafından "<a href="#" class="text-primary">
-                                            2. Kısa Sınav
-                                            Sonuçları
+                                        2. Kısa Sınav
+                                        Sonuçları
                                         </a>" başlıklı duyuru eklendi.
                                         <footer class="text-md-right text-info">01.06.2022 14:00</footer>
-                                    </li>*@
+                                        </li>*@
 
                                 </ul>
                             </div>

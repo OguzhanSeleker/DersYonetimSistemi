@@ -12,7 +12,6 @@ namespace DYS.WebClient.Models
         public string Description { get; set; }
         [Required]
         public string WriterId { get; set; }
-        [Required]
         public string WriterFullname { get; set; }
         [Required]
         public string CourseId { get; set; }

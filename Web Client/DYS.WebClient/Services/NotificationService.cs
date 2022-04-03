@@ -20,7 +20,8 @@ namespace DYS.WebClient.Services
         public async Task<GetNotificationDto> AddNotificationAsync(AddNotificationDto addNotificationDto)
         {
             var response = await _client.PostAsJsonAsync<AddNotificationDto>($"Notifications", addNotificationDto);
-            var converted = JsonConvert.DeserializeObject<OperationResult<GetNotificationDto>>(await response.Content.ReadAsStringAsync());
+            var str = await response.Content.ReadAsStringAsync();
+            var converted = JsonConvert.DeserializeObject<OperationResult<GetNotificationDto>>(str);
             if (converted != null)
                 return converted.Data;
             return null;

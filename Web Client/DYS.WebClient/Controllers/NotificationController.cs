@@ -78,7 +78,7 @@ namespace DYS.WebClient.Controllers
         {
             //throw new Exception(JsonConvert.SerializeObject(model));
             if (!ModelState.IsValid)
-                return RedirectToAction("Add", "Notification");
+                return RedirectToAction("Add", "Notification",new { courseId=model.FormModel.CourseId });
             var addnotif = new AddNotificationDto
             {
                 CourseId = Guid.Parse(model.FormModel.CourseId),

@@ -45,7 +45,7 @@ namespace DYS.WebClient
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opt =>
             {
                 opt.LoginPath = "/home/index";
-                opt.ExpireTimeSpan = TimeSpan.FromDays(1);
+                opt.ExpireTimeSpan = TimeSpan.FromHours(1);
                 opt.SlidingExpiration = true;
                 opt.Cookie.Name = "dyswebcookie";
                 opt.AccessDeniedPath = "/home/AccessDenied";

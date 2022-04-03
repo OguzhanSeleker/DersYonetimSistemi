@@ -87,7 +87,7 @@ namespace DYS.WebClient.Controllers
             List<NotificationViewModel> notificationList = new List<NotificationViewModel>();
             if (notifList != null && notifList.Count > 0)
             {
-                foreach (var notif in notifList)
+                foreach (var notif in notifList.OrderByDescending(i => i.CreatedDate).Take(5))
                 {
                     var notification = new NotificationViewModel()
                     {
@@ -113,6 +113,26 @@ namespace DYS.WebClient.Controllers
                 Lesson = lesson,
                 NotificationList = notificationList,
                 SideBarViewModel = await GetSideBarInfo(_lessonService)
+            };
+            return View(model);
+        }
+
+        [HttpGet]
+        [Route("Course/{courseId}/Notifications")]
+        [ServiceFilter(typeof(ParameterFilterAttribute),Order =1)]
+        public async Task<IActionResult> CourseNotificationList(string courseId)
+        {
+            var course = await _lessonService.GetCourseById(courseId);
+            if (course == null) return NotFound();
+            var lesson = await _lessonService.GetLessonByCourseId(courseId);
+            var notifListInCourse = await _notificationService.GetNotificationListByCourseIdAsync(courseId);
+
+            var model = new NotificationListViewModel
+            {
+                Course = course,
+                Lesson = lesson,
+                NotificationList = notifListInCourse.Select(i => new NotificationViewModel { CourseId = i.CourseId.ToString(), CourseName = lesson.NameTR, CreatedDate = i.CreatedDate, Deleted = i.Deleted, Description = i.Description, Id = i.Id, Priority = i.Priority, Title = i.Title, UpdatedDate = i.UpdatedDate, WriterFullname = _userService.GetUserById(i.WriterId.ToString()).Result.FullName, WriterId = i.WriterId.ToString() }).ToList(),
+                SideBarViewModel = await GetSideBarInfo(_lessonService),
             };
             return View(model);
         }

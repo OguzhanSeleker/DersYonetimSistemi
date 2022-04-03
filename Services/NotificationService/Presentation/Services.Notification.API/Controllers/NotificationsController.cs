@@ -24,7 +24,8 @@ namespace Services.Notification.API.Controllers
             _notificationReadRepository = notificationReadRepository;
             _notificationWriteRepository = notificationWriteRepository;
         }
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("{id}")]
         public async Task<IActionResult> GetNotificationById(string id)
         {
             if (string.IsNullOrEmpty(id))
