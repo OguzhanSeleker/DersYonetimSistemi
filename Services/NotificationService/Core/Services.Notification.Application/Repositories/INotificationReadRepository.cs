@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Services.Notification.Application.Repositories
 {
-    public interface INotificationReadRepository : IReadRepository<Domain.Entities.Notication>
+    public interface INotificationReadRepository : IReadRepository<Domain.Entities.Notification>
     {
     }
 }

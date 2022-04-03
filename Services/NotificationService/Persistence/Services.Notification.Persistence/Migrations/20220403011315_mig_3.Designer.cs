@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Services.Notification.Persistence.Contexts;
@@ -9,9 +10,10 @@ using Services.Notification.Persistence.Contexts;
 namespace Services.Notification.Persistence.Migrations
 {
     [DbContext(typeof(NotificationServiceDbContext))]
-    partial class NotificationServiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220403011315_mig_3")]
+    partial class mig_3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +53,7 @@ namespace Services.Notification.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notications");
                 });
 #pragma warning restore 612, 618
         }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Services.Notification.Persistence.Repositories
 {
-    public class NotificationReadRepository : ReadRepository<Domain.Entities.Notication>, INotificationReadRepository
+    public class NotificationReadRepository : ReadRepository<Domain.Entities.Notification>, INotificationReadRepository
     {
         public NotificationReadRepository(NotificationServiceDbContext context) : base(context)
         {

@@ -4,6 +4,7 @@ using DYS.WebClient.Services;
 using DYS.WebClient.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SharedLibrary.Services;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,12 @@ namespace DYS.WebClient.Controllers
     public class LessonController : BaseController
     {
         private readonly ILessonService _lessonService;
+        private readonly ILogger<LessonController> _logger;
 
-        public LessonController(IUserService userService, ISharedIdentityService sharedIdentityService, ILessonService lessonService) : base(userService, sharedIdentityService)
+        public LessonController(IUserService userService, ISharedIdentityService sharedIdentityService, ILessonService lessonService, ILogger<LessonController> logger) : base(userService, sharedIdentityService)
         {
             _lessonService = lessonService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -70,7 +73,7 @@ namespace DYS.WebClient.Controllers
             model.AddFormModel.CreatedBy = Guid.Parse(_sharedIdentityService.GetUserId);
             model.AddFormModel.CreatedDate = DateTime.UtcNow;
 
-            var insertedLesson = _lessonService.InsertLesson(model.AddFormModel);
+            var insertedLesson = await _lessonService.InsertLesson(model.AddFormModel);
             if (insertedLesson != null)
                 return RedirectToAction("Add", "Lesson");
             return View(model);

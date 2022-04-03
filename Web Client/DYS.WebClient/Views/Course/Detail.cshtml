@@ -17,30 +17,7 @@
             <h2 class="mb-2 ml-5">@Model.Lesson.NameTR - @Model.Course.CRN</h2>
             <div class="container-sm shadow bg-light pt-5 pb-5 pl-4 mt-4 mb-5 ml-5 mr-5">
                 <div class="row">
-                    <div class="col-6 col-sm-2 border shadow bg-light mr-2" style="height: 45rem;">
-                        <div class="h5 text-dark mt-4 ml-2 p-1">Ders İşlemleri</div>
-                        <ul class="list-group list-group-flush bg-light">
-                            <li class="list-group-item bg-light"><a href="#">Ders Bilgileri</a></li>
-                            @if (User.IsInRole("Admin") || User.IsInRole("Teacher"))
-                            {
-                                <li class="list-group-item bg-light"><a href="#">Sınıf Kişi İşlemleri</a></li>
-                            <li class="list-group-item bg-light"><a asp-controller="Notification" asp-action="Add" asp-route-courseId="@Model.Course.Id">Duyuru Oluştur</a></li>
-
-                            }
-                            <li class="list-group-item bg-light"><a href="#">Duyurular</a></li>
-                            <li class="list-group-item bg-light"><a href="#">Sınıf Dosyaları</a></li>
-                            <li class="list-group-item bg-light"><a href="#">Mesajlar</a></li>
-                            <li class="list-group-item bg-light"><a href="#">Anketler</a></li>
-                            <li class="list-group-item bg-light"><a href="#">Ödevler</a></li>
-                            <li class="list-group-item bg-light"><a href="#">Kısa Sınavlar</a></li>
-                            <li class="list-group-item bg-light">
-                                <a href="#">
-                                    Notlandırma
-                                </a>
-                            </li>
-                            <li class="list-group-item bg-light"><a href="#">Yoklama</a></li>
-                        </ul>
-                    </div>
+                   @await Html.PartialAsync("_CoursesOperationsPartial",Model.Course)
                     <div class="col-6 col-sm-7 border shadow bg-light ml-2 mr-2 " style="height: 45rem;">
                         <div class="card w-100 mt-1">
                             <div class="card-header p-0 ">
@@ -111,17 +88,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-sm-2 border shadow bg-light ml-3" style="height: 15rem;">
-                        <div class="h6 text-dark mt-4 ml-2 p-1 text-sm-right border-bottom border-top">
-                            Dersin Koordinatörleri
-                        </div>
-                        <div class="text-muted mt-3 text-right">@Model.Lesson.CoordinatorFullName</div>
-
-                        <div class="h6 text-dark mt-4 ml-2 p-1 text-sm-right border-bottom border-top">
-                            Dersin Dili
-                        </div>
-                        <div class="text-muted mt-3 text-right">@(Model.Lesson.Language == "Tr" ? "Türkçe" : "İngilizce")</div>
-                    </div>
+                    @await Html.PartialAsync("_CourseInfoPartial",Model.Lesson)
                 </div>
             </div>
         </div>

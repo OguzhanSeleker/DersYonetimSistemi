@@ -14,6 +14,7 @@ namespace DYS.WebClient.Controllers
     {
         protected readonly IUserService _userService;
         protected readonly ISharedIdentityService _sharedIdentityService;
+
         private UserViewModel FieldCurrentUser;
 
         public UserViewModel CurrentUser

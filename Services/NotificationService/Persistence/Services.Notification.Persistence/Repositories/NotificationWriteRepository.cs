@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Services.Notification.Persistence.Repositories
 {
-    public class NotificationWriteRepository : WriteRepository<Domain.Entities.Notication>, INotificationWriteRepository
+    public class NotificationWriteRepository : WriteRepository<Domain.Entities.Notification>, INotificationWriteRepository
     {
         public NotificationWriteRepository(NotificationServiceDbContext context) : base(context)
         {

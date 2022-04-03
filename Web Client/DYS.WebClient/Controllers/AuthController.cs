@@ -4,6 +4,7 @@ using DYS.WebClient.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SharedLibrary.ControllerBases;
 using SharedLibrary.Services;
 using System;
@@ -17,10 +18,12 @@ namespace DYS.WebClient.Controllers
     public class AuthController : BaseController
     {
         private readonly IIdentityService _identityService;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(IUserService userService, ISharedIdentityService sharedIdentityService, IIdentityService identityService) : base(userService, sharedIdentityService)
+        public AuthController(IUserService userService, ISharedIdentityService sharedIdentityService, IIdentityService identityService, ILogger<AuthController> logger) : base(userService, sharedIdentityService)
         {
             _identityService = identityService;
+            _logger = logger;
         }
 
         [HttpPost]

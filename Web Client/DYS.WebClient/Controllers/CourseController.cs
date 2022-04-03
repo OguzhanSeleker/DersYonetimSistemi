@@ -6,6 +6,7 @@ using DYS.WebClient.Services;
 using DYS.WebClient.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SharedLibrary.Services;
 using System;
 using System.Collections.Generic;
@@ -19,10 +20,12 @@ namespace DYS.WebClient.Controllers
     {
         private ILessonService _lessonService;
         private readonly INotificationService _notificationService;
-        public CourseController(IUserService userService, ISharedIdentityService sharedIdentityService, ILessonService lessonService, INotificationService notificationService) : base(userService, sharedIdentityService)
+        private readonly ILogger<CourseController> _logger;
+        public CourseController(IUserService userService, ISharedIdentityService sharedIdentityService, ILessonService lessonService, INotificationService notificationService, ILogger<CourseController> logger) : base(userService, sharedIdentityService)
         {
             _lessonService = lessonService;
             _notificationService = notificationService;
+            _logger = logger;
         }
         [HttpGet]
         [Authorize(Roles = "Admin,Teacher")]
@@ -80,7 +83,7 @@ namespace DYS.WebClient.Controllers
             if (course == null)
                 return NotFound();
             QueryLessonDto lesson = await _lessonService.GetLessonByCourseId(id);
-            List<GetNotificationDto> notifList = await _notificationService.GetNotificationListByCourseId(id);
+            List<GetNotificationDto> notifList = await _notificationService.GetNotificationListByCourseIdAsync(id);
             List<NotificationViewModel> notificationList = new List<NotificationViewModel>();
             if (notifList != null && notifList.Count > 0)
             {

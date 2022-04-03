@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Services.Notification.Domain.Entities
 {
-    public class Notication : BaseEntity
+    public class Notification : BaseEntity
     {
         public Guid WriterId { get; set; }
         public string Title { get; set; }

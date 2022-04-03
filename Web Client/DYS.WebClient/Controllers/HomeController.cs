@@ -14,8 +14,10 @@ namespace DYS.WebClient.Controllers
 {
     public class HomeController : BaseController
     {
-        public HomeController(IUserService userService, ISharedIdentityService sharedIdentityService) : base(userService, sharedIdentityService)
+        private readonly ILogger<HomeController> _logger;
+        public HomeController(IUserService userService, ISharedIdentityService sharedIdentityService, ILogger<HomeController> logger) : base(userService, sharedIdentityService)
         {
+            _logger = logger;
         }
 
         public IActionResult Index()

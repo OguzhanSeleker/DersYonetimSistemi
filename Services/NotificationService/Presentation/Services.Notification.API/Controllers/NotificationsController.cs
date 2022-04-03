@@ -39,7 +39,7 @@ namespace Services.Notification.API.Controllers
         {
             if (!ModelState.IsValid)
                 return CreateActionResultInstance(OperationResult<NoContent>.CreateFailure("Model is not valid", SharedLibrary.ResponseDtos.StatusCode.BadRequest));
-            var addedEntity = await _notificationWriteRepository.AddAsync(ObjectMapper.Mapper.Map<Notification.Domain.Entities.Notication>(addNotificationDto));
+            var addedEntity = await _notificationWriteRepository.AddAsync(ObjectMapper.Mapper.Map<Notification.Domain.Entities.Notification>(addNotificationDto));
             var save = await _notificationWriteRepository.SaveAsync();
             if (save > 0)
                 return CreateActionResultInstance(OperationResult<GetNotificationDto>.CreatedSuccessResult(ObjectMapper.Mapper.Map<GetNotificationDto>(addedEntity)));
@@ -72,7 +72,7 @@ namespace Services.Notification.API.Controllers
         {
             if (!ModelState.IsValid)
                 return CreateActionResultInstance(OperationResult<NoContent>.CreateFailure("Model is not valid", SharedLibrary.ResponseDtos.StatusCode.BadRequest));
-            var update =  _notificationWriteRepository.Update(ObjectMapper.Mapper.Map<Domain.Entities.Notication>(updateNotificationDto));
+            var update =  _notificationWriteRepository.Update(ObjectMapper.Mapper.Map<Domain.Entities.Notification>(updateNotificationDto));
             int save = 0;
             if (update)
                 save = await _notificationWriteRepository.SaveAsync();

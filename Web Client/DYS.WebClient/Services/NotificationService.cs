@@ -17,35 +17,40 @@ namespace DYS.WebClient.Services
             _client = client;
         }
 
-        public async Task<GetNotificationDto> AddNotification(AddNotificationDto addNotificationDto)
+        public async Task<GetNotificationDto> AddNotificationAsync(AddNotificationDto addNotificationDto)
         {
             var response = await _client.PostAsJsonAsync<AddNotificationDto>($"Notifications", addNotificationDto);
             var converted = JsonConvert.DeserializeObject<OperationResult<GetNotificationDto>>(await response.Content.ReadAsStringAsync());
-            return converted.Data;
-
+            if (converted != null)
+                return converted.Data;
+            return null;
         }
 
-        public async Task<bool> DeleteNotification(string id)
+        public async Task<bool> DeleteNotificationAsync(string id)
         {
             var response = await _client.DeleteAsync($"Notifications/{id}");
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<GetNotificationDto> GetNotificationById(string id)
+        public async Task<GetNotificationDto> GetNotificationByIdAsync(string id)
         {
             var response = await _client.GetAsync($"Notifications/{id}");
             var converted = JsonConvert.DeserializeObject<OperationResult<GetNotificationDto>>(await response.Content.ReadAsStringAsync());
-            return converted.Data;
+            if (converted != null)
+                return converted.Data;
+            return null;
         }
 
-        public async Task<List<GetNotificationDto>> GetNotificationListByCourseId(string courseId)
+        public async Task<List<GetNotificationDto>> GetNotificationListByCourseIdAsync(string courseId)
         {
             var response = await _client.GetAsync($"Notifications/GetNotificationListByCourseId/{courseId}");
-            var converted = JsonConvert.DeserializeObject<OperationResult<List<GetNotificationDto>>>(await response.Content.ReadAsStringAsync());
-            return converted.Data;
+            var converted = JsonConvert.DeserializeObject<OperationResult<List<GetNotificationDto>>>(await response.Content.ReadAsStringAsync()); 
+            if (converted != null)
+                return converted.Data;
+            return null;
         }
 
-        public async Task<bool> UpdateNotifation(UpdateNotificationDto updateNotificationDto)
+        public async Task<bool> UpdateNotificationAync(UpdateNotificationDto updateNotificationDto)
         {
             var response = await _client.PutAsJsonAsync($"Notifications", updateNotificationDto);
             return response.IsSuccessStatusCode;

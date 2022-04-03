@@ -15,7 +15,7 @@ namespace Services.Notification.Persistence.Contexts
         public NotificationServiceDbContext([NotNullAttribute] DbContextOptions options) : base(options)
         {
         }
-        public DbSet<Domain.Entities.Notication> Notications { get; set; }
+        public DbSet<Domain.Entities.Notification> Notifications { get; set; }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var entities = ChangeTracker.Entries<BaseEntity>();

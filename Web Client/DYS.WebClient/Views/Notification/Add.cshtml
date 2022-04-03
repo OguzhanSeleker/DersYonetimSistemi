@@ -1,1 +1,58 @@
-﻿
+﻿@model CourseDetailViewModel
+@{
+    ViewData["Title"] = "Duyuru Oluştur";
+}
+<div class="wrapper d-flex align-items-stretch">
+    @await Html.PartialAsync("_SideBar", Model.SideBarViewModel)
+    <div id="content" class="p-md-4">
+        @await Html.PartialAsync("_NavigationBar")
+        <div>
+            <nav aria-label="breadcrumb" class="ml-5 mr-5">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+                    <li class="breadcrumb-item">Sınıflarım</li>
+                    <li class="breadcrumb-item">@Model.Course.CRN</li>
+                </ol>
+            </nav>
+            <h2 class="mb-2 ml-5">@Model.Lesson.NameTR - @Model.Course.CRN</h2>
+            <div class="container-sm shadow bg-light pt-5 pb-5 pl-4 mt-4 mb-5 ml-5 mr-5">
+                <div class="row">
+                    @await Html.PartialAsync("_CoursesOperationsPartial",Model.Course)
+                    <div class="col-6 col-sm-7 border shadow bg-light ml-2 mr-2 " style="height: 45rem;">
+                        <div class="h4 mt-4 ml-4">Duyuru Oluştur</div>
+                        <div class="row justify-content-md-center mt-3">
+                            <div class="col-md-7 ">
+                                <form asp-controller="Notification" asp-action="Add" method="post">
+                                    <div class="form-group row">
+                                        <input type="hidden" asp-for="FormModel.CourseId" value="@Model.FormModel.CourseId"/>
+                                        <input type="hidden" asp-for="FormModel.WriterId" value="@Model.FormModel.WriterId"/>
+                                        <label asp-for="FormModel.Title" class="col-sm-2 col-form-label">Başlık</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" asp-for="FormModel.Title"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="FormModel.Description" class="col-sm-2 col-form-label">Açıklama</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" asp-for="FormModel.Description" cols="4" rows="4"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label asp-for="FormModel.Priority" class="col-sm-3 col-form-label">Önemli Mi?</label>
+                                        <div class="col-sm-8 pt-1">
+                                            <input type="checkbox" class="form-check-input " asp-for="FormModel.Priority">
+                                        </div>
+
+                                    </div>
+                                    <button type="submit" class="btn btn-outline-primary btn-sm pull-right">Oluştur</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    @await Html.PartialAsync("_CourseInfoPartial",Model.Lesson)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

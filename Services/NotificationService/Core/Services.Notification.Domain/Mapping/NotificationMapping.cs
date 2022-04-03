@@ -12,9 +12,9 @@ namespace Services.Notification.Domain.Mapping
     {
         public NotificationMapping()
         {
-            CreateMap<Entities.Notication, GetNotificationDto>().ReverseMap();
-            CreateMap<Entities.Notication, AddNotificationDto>().ReverseMap();
-            CreateMap<Entities.Notication, UpdateNotificationDto>().ReverseMap();
+            CreateMap<Entities.Notification, GetNotificationDto>().ReverseMap();
+            CreateMap<Entities.Notification, AddNotificationDto>().ReverseMap();
+            CreateMap<Entities.Notification, UpdateNotificationDto>().ReverseMap();
         }
     }
 }

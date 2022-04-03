@@ -1,0 +1,13 @@
+﻿@model DYS.WebClient.Models.Lesson.QueryLessonDto
+
+<div class="col-6 col-sm-2 border shadow bg-light ml-3" style="height: 15rem;">
+    <div class="h6 text-dark mt-4 ml-2 p-1 text-sm-right border-bottom border-top">
+        Dersin Koordinatörleri
+    </div>
+    <div class="text-muted mt-3 text-right">@Model.CoordinatorFullName</div>
+
+    <div class="h6 text-dark mt-4 ml-2 p-1 text-sm-right border-bottom border-top">
+        Dersin Dili
+    </div>
+    <div class="text-muted mt-3 text-right">@(Model.Language == "Tr" ? "Türkçe" : "İngilizce")</div>
+</div>

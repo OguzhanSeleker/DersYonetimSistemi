@@ -10,6 +10,7 @@ namespace DYS.WebClient.Models
         public QueryLessonDto Lesson { get; set; }
         public List<NotificationViewModel> NotificationList { get; set; }
         public SideBarViewModel SideBarViewModel { get; set; }
+        public NotificationViewModel FormModel { get; set; }
         //public  MyProperty { get; set; }
     }
 }

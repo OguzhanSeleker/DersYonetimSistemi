@@ -6,10 +6,10 @@ namespace DYS.WebClient.Services.Interfaces
 {
     public interface INotificationService
     {
-        Task<GetNotificationDto> AddNotification(AddNotificationDto addNotificationDto);
-        Task<List<GetNotificationDto>> GetNotificationListByCourseId(string courseId);
-        Task<GetNotificationDto> GetNotificationById(string id);
-        Task<bool> DeleteNotification(string id);
-        Task<bool> UpdateNotifation(UpdateNotificationDto updateNotificationDto);
+        Task<GetNotificationDto> AddNotificationAsync(AddNotificationDto addNotificationDto);
+        Task<List<GetNotificationDto>> GetNotificationListByCourseIdAsync(string courseId);
+        Task<GetNotificationDto> GetNotificationByIdAsync(string id);
+        Task<bool> DeleteNotificationAsync(string id);
+        Task<bool> UpdateNotificationAync(UpdateNotificationDto updateNotificationDto);
     }
 }
