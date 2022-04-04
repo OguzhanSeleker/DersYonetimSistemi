@@ -222,6 +222,19 @@ namespace Services.Lesson.API.Controllers
             return ReturnOk(ObjectMapper.Mapper.Map<List<QueryCourseUserDto>>(userList));
         }
 
+        [HttpGet]
+        [Route("GetCourseListByUserId/{userId}")]
+        [ServiceFilter(typeof(ParameterFilterAttribute))]
+        public IActionResult GetCourseListByUserId(string userId)
+        {
+            var courseUser = _courseUserReadRepository.GetWhere(i => i.UserId == Guid.Parse(userId));
+            if (courseUser == null)
+                return ReturnNotFound();
+            var courseList = courseUser.Select(i => i.Course).ToList();
+            if (courseList == null)
+                return ReturnNotFound();
+        return ReturnOk(ObjectMapper.Mapper.Map<List<QueryCourseDto>>(courseList));
+        }
         //[HttpGet]
         //public async Task<IActionResult> test()
         //{

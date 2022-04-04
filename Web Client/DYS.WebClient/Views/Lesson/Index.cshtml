@@ -13,8 +13,6 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">Where am I</li>
                     <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
-                    @*<li class="breadcrumb-item"><a href="#">Ders</a></li>
-        <li class="breadcrumb-item active" aria-current="page">CRN : 21345</li>*@
                 </ol>
             </nav>
             <h2 class="mb-2 ml-5">Hoşgeldiniz</h2>
@@ -26,75 +24,46 @@
                             <h5>Son Duyurular</h5>
                         </div>
                         <div class="accordion" id="accordionExample">
-                            <div class="card">
-                                <div class="card-header pl-2 pt-1 pb-1" id="headingOne">
-                                    <h2 class="mb-0 w-100 d-inline-flex">
-                                        <button class="btn btn-link btn-block text-left" type="button"
-                                                data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                                                aria-controls="collapseOne">
-                                            1. Ödevin Teslim Tarihi Hakkında
-                                            <span class="text-muted float-right ">20.03.2022 17.13</span>
-                                        </button>
-                                    </h2>
-                                    <footer class="blockquote-footer pl-3 m-0" style="font-size: 90% !important;">
-                                        Muh 302
-                                    </footer>
-                                </div>
+                            @if (Model.IndexNotificationList != null && Model.IndexNotificationList.Count > 0)
+                            {
+                                foreach (var item in Model.IndexNotificationList)
+                                {
+                                    <div class="card">
+                                        <div class="card-header pl-2 pt-1 pb-1 m-1 rounded @(item.Priority ? "alert-danger" : "alert-warning")" id="@item.Id">
+                                            <h2 class="mb-0 w-100 d-inline-flex">
+                                                <button class="btn btn-link btn-block text-left" type="button"
+                                                data-toggle="collapse" data-target="#body-@item.Id" aria-expanded="true"
+                                                aria-controls="body-@item.Id">
+                                                    @item.Title
+                                                    <span class="text-muted float-right ">@item.CreatedDate</span>
+                                                </button>
+                                            </h2>
+                                            <footer class="blockquote-footer pl-3 m-0" style="font-size: 90% !important;">
+                                                @item.CourseName
+                                            </footer>
+                                        </div>
 
-                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
-                                     data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        1. Ödevin Teslim tarihi 3 gün uzatılmıştır.
-                                        Son Teslim tarihi 23.03.2022 20.00'dır
+                                        <div id="body-@item.Id" class="collapse" aria-labelledby="@item.Id">
+                                            <div class="card-body">
+                                                @item.Description
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="card">
+                                    <div class="card-header pl-2 pt-1 pb-1 m-1 rounded alert-info" id="non-notif">
+                                        <h5 class="mb-0 ml-3 w-100 d-inline-flex">
+                                            Güncel Duyuru bulunmamaktadır.
+                                        </h5>
+
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header pl-2 pt-1 pb-1" id="headingtwo">
-                                    <h2 class="mb-0 w-100 d-inline-flex">
-                                        <button class="btn btn-link btn-block text-left" type="button"
-                                                data-toggle="collapse" data-target="#collapsetwo" aria-expanded="true"
-                                                aria-controls="collapsetwo">
-                                            1. Ödevin Teslim Tarihi Hakkında
-                                            <span class="text-muted float-right ">20.03.2022 17.13</span>
-                                        </button>
-                                    </h2>
-                                    <footer class="blockquote-footer pl-3 m-0" style="font-size: 90% !important;">
-                                        Muh 302
-                                    </footer>
-                                </div>
+                            }
+                                
 
-                                <div id="collapsetwo" class="collapse" aria-labelledby="headingtwo"
-                                     data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        1. Ödevin Teslim tarihi 3 gün uzatılmıştır.
-                                        Son Teslim tarihi 23.03.2022 20.00'dır
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header pl-2 pt-1 pb-1" id="heading3">
-                                    <h2 class="mb-0 w-100 d-inline-flex">
-                                        <button class="btn btn-link btn-block text-left" type="button"
-                                                data-toggle="collapse" data-target="#collapse3" aria-expanded="true"
-                                                aria-controls="collapse3">
-                                            1. Ödevin Teslim Tarihi Hakkında
-                                            <span class="text-muted float-right ">20.03.2022 17.13</span>
-                                        </button>
-                                    </h2>
-                                    <footer class="blockquote-footer pl-3 m-0" style="font-size: 90% !important;">
-                                        Muh 302
-                                    </footer>
-                                </div>
-
-                                <div id="collapse3" class="collapse" aria-labelledby="heading3"
-                                     data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        1. Ödevin Teslim tarihi 3 gün uzatılmıştır.
-                                        Son Teslim tarihi 23.03.2022 20.00'dır
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <!--Duyurular Card End-->
