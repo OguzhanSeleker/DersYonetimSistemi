@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Services.Lesson.API.Filters;
+using Services.Lesson.API.Middlewares;
 using Services.Lesson.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -62,7 +63,8 @@ namespace Services.Lesson.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Services.Lesson.API v1"));
             }
-
+            app.UseMiddleware<RequestResponseLoggingMiddleware>();
+            //app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

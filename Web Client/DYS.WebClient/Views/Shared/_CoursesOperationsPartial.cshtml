@@ -5,7 +5,7 @@
                 <li class="list-group-item bg-light"><a href="#">Ders Bilgileri</a></li>
                 @if (User.IsInRole("Admin") || User.IsInRole("Teacher"))
                 {
-                    <li class="list-group-item bg-light"><a href="#">Sınıf Kişi İşlemleri</a></li>
+                    <li class="list-group-item bg-light"><a asp-controller="Course" asp-action="AddUserToCourse" asp-route-courseId="@Model.Id">Sınıf Kişi İşlemleri</a></li>
                     <li class="list-group-item bg-light"><a asp-controller="Notification" asp-action="Add" asp-route-courseId="@Model.Id">Duyuru Oluştur</a></li>
 
                 }

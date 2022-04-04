@@ -119,7 +119,7 @@ namespace DYS.WebClient.Controllers
 
         [HttpGet]
         [Route("Course/{courseId}/Notifications")]
-        [ServiceFilter(typeof(ParameterFilterAttribute),Order =1)]
+        [ServiceFilter(typeof(ParameterFilterAttribute), Order = 1)]
         public async Task<IActionResult> CourseNotificationList(string courseId)
         {
             var course = await _lessonService.GetCourseById(courseId);
@@ -136,5 +136,152 @@ namespace DYS.WebClient.Controllers
             };
             return View(model);
         }
+        [HttpGet]
+        [Route("Course/{courseId}/UserOperation")]
+        [ServiceFilter(typeof(ParameterFilterAttribute), Order = 1)]
+        public async Task<IActionResult> AddUserToCourse(string courseId)
+        {
+            var course = await _lessonService.GetCourseById(courseId);
+            if (course == null) return NotFound();
+            var lesson = await _lessonService.GetLessonByCourseId(courseId);
+
+            var model = new AddUserToCourseViewModel
+            {
+                Course = course,
+                Lesson = lesson,
+                SideBarViewModel = await GetSideBarInfo(_lessonService),
+                Asistan = new AddUserToCourseFormModel { CourseId = courseId, RoleIdInCourse = RoleInCourse.Asistan },
+                Egitmen = new AddUserToCourseFormModel { CourseId = courseId, RoleIdInCourse = RoleInCourse.Egitmen },
+                Ogrenciler = new AddUserToCourseFormModel { CourseId = courseId, RoleIdInCourse = RoleInCourse.Ogrenci },
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddUserToCourse(AddUserToCourseViewModel model)
+        {
+            if (model.Egitmen != null)
+            {
+                List<string> str = model.Egitmen.UserNames.Split(new char[] { ' ', ',', '\n', '\t' }).ToList();
+                List<InsertCourseUserDto> dtoList = new List<InsertCourseUserDto>();
+                if (str.Any())
+                {
+                    foreach (var item in str)
+                    {
+                        var user = await _userService.GetByUsername(item.Trim());
+                        if (user != null)
+                        {
+                            var dto = new InsertCourseUserDto()
+                            {
+                                CourseId = Guid.Parse(model.Egitmen.CourseId),
+                                CreatedBy = Guid.Parse(_sharedIdentityService.GetUserId),
+                                RoleInCourseId = Guid.Parse(model.Egitmen.RoleIdInCourse),
+                                UserId = Guid.Parse(user.Id)
+                            };
+                            dtoList.Add(dto);
+                        }
+                    }
+
+                }
+                if (dtoList.Count > 0)
+                {
+                    var res = await _lessonService.InsertCourseUserList(dtoList);
+                }
+                return RedirectToAction("AddUserToCourse", "Course", new { courseId = model.Egitmen.CourseId });
+
+            }
+            else if (model.Asistan != null)
+            {
+                List<string> str = model.Asistan.UserNames.Split(new char[] { ' ', ',', '\n', '\t' }).ToList();
+                List<InsertCourseUserDto> dtoList = new List<InsertCourseUserDto>();
+                if (str.Any())
+                {
+                    foreach (var item in str)
+                    {
+                        var user = await _userService.GetByUsername(item.Trim());
+                        if (user != null)
+                        {
+                            var dto = new InsertCourseUserDto()
+                            {
+                                CourseId = Guid.Parse(model.Asistan.CourseId),
+                                CreatedBy = Guid.Parse(_sharedIdentityService.GetUserId),
+                                RoleInCourseId = Guid.Parse(model.Asistan.RoleIdInCourse),
+                                UserId = Guid.Parse(user.Id)
+                            };
+                            dtoList.Add(dto);
+                        }
+                    }
+
+                }
+                if (dtoList.Count > 0)
+                {
+                    var res = await _lessonService.InsertCourseUserList(dtoList);
+                }
+                return RedirectToAction("AddUserToCourse", "Course", new { courseId = model.Asistan.CourseId });
+            }
+            else if(model.Ogrenciler != null)
+            {
+                List<string> str = model.Ogrenciler.UserNames.Split(new char[] { ' ', ',', '\n', '\t' }).ToList();
+                List<InsertCourseUserDto> dtoList = new List<InsertCourseUserDto>();
+                if (str.Any())
+                {
+                    foreach (var item in str)
+                    {
+                        var user = await _userService.GetByUsername(item.Trim());
+                        if (user != null)
+                        {
+                            var dto = new InsertCourseUserDto()
+                            {
+                                CourseId = Guid.Parse(model.Ogrenciler.CourseId),
+                                CreatedBy = Guid.Parse(_sharedIdentityService.GetUserId),
+                                RoleInCourseId = Guid.Parse(model.Ogrenciler.RoleIdInCourse),
+                                UserId = Guid.Parse(user.Id)
+                            };
+                            dtoList.Add(dto);
+                        }
+                    }
+
+                }
+                if (dtoList.Count > 0)
+                {
+                    var res = await _lessonService.InsertCourseUserList(dtoList);
+                }
+                return RedirectToAction("AddUserToCourse", "Course", new { courseId = model.Ogrenciler.CourseId });
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddOgrenci(AddUserToCourseViewModel model)
+        {
+            List<string> str = model.Ogrenciler.UserNames.Split(new char[] { ' ', ',', '\n', '\t' }).ToList();
+            List<InsertCourseUserDto> dtoList = new List<InsertCourseUserDto>();
+            if (str.Any())
+            {
+                foreach (var item in str)
+                {
+                    var user = await _userService.GetByUsername(item.Trim());
+                    if (user != null)
+                    {
+                        var dto = new InsertCourseUserDto()
+                        {
+                            CourseId = Guid.Parse(model.Ogrenciler.CourseId),
+                            CreatedBy = Guid.Parse(_sharedIdentityService.GetUserId),
+                            RoleInCourseId = Guid.Parse(model.Ogrenciler.RoleIdInCourse),
+                            UserId = Guid.Parse(user.Id)
+                        };
+                        dtoList.Add(dto);
+                    }
+                }
+
+            }
+            if (dtoList.Count > 0)
+            {
+                var res = await _lessonService.InsertCourseUserList(dtoList);
+            }
+            return RedirectToAction("AddUserToCourse", "Course", new { courseId = model.Ogrenciler.CourseId });
+        }
     }
+
 }
