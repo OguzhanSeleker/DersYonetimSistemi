@@ -1,4 +1,5 @@
 ﻿using DYS.WebClient.Models.Lesson;
+using System.Collections.Generic;
 
 namespace DYS.WebClient.Models
 {
@@ -10,6 +11,7 @@ namespace DYS.WebClient.Models
         public AddUserToCourseFormModel Egitmen { get; set; }
         public AddUserToCourseFormModel Asistan { get; set; }
         public AddUserToCourseFormModel Ogrenciler { get; set; }
+        public List<UserInCourse> UserList { get; set; }
     }
     public class AddUserToCourseFormModel
     {
@@ -18,4 +20,13 @@ namespace DYS.WebClient.Models
         public string CourseId { get; set; }
 
     }
+    public class UserInCourse
+    {
+        public string CourseUserId { get; set; }
+        public string UserId { get; set; }
+        public string FullName { get; set; }
+        public string RoleIdInCourse { get; set; }
+        public string RoleNameInCourse { get; set; }
+    }
+
 }

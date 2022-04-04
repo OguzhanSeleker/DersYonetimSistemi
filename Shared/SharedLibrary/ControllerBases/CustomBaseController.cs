@@ -30,7 +30,7 @@ namespace SharedLibrary.ControllerBases
         [NonAction]
         public IActionResult ReturnBadMessage(string message) => CreateActionResultInstance(OperationResult<NoContent>.CreateFailure(message, ResponseDtos.StatusCode.BadRequest));
         [NonAction]
-        public IActionResult ReturnSuccess() => CreateActionResultInstance(OperationResult<NoContent>.NoContentSuccessResult());
+        public IActionResult ReturnSuccess() => CreateActionResultInstance(OperationResult<NoContent>.CreatedSuccessResult(new ResponseDtos.NoContent { }));
        
 
 

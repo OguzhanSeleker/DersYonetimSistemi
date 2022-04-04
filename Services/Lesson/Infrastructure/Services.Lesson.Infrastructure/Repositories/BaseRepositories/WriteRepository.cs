@@ -36,8 +36,14 @@ namespace Services.Lesson.Infrastructure.Repositories
 
         public async Task RemoveAsync(string id)
         {
+            //throw new Exception(id);
             T entity = await Table.FirstOrDefaultAsync(i => i.Id == Guid.Parse(id) & !i.Deleted);
-            entity.Deleted = true;
+            if (entity != null)
+            {
+                entity.Deleted = true;
+                entity.DeletedDate = DateTime.UtcNow;
+            }
+
         }
 
         public bool Update(T model)

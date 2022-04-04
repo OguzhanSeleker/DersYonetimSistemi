@@ -30,7 +30,7 @@ namespace Services.Lesson.Infrastructure.Repositories
         }
         public IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true)
         {
-            var query = Table.Where(method).Where(i => !i.Deleted).AsQueryable();
+            var query = Table.Where(i => !i.Deleted).Where(method).AsQueryable();
             if (!tracking)
                 query = query.AsNoTracking();
             return query;

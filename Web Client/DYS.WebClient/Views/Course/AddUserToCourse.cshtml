@@ -17,13 +17,13 @@
             <h2 class="mb-2 ml-5">@Model.Lesson.NameTR - @Model.Course.CRN</h2>
             <div class="container-sm shadow bg-light pt-5 pb-5 pl-4 mt-4 mb-5 ml-5 mr-5">
                 <div class="row">
-                    @await Html.PartialAsync("_CoursesOperationsPartial",Model.Course)
-                    <div class="col-6 col-sm-7 border shadow bg-light ml-2 mr-2 " style="height: 45rem;">
+                    @await Html.PartialAsync("_CoursesOperationsPartial", Model.Course)
+                    <div class="col-6 col-sm-7 border shadow bg-light ml-2 mr-2 " style="height: auto;">
                         <div class="h4 mt-4 ml-4">Sınıf Kişi İşlemleri</div>
                         <div class="row justify-content-md-center mt-3">
                             <div class="col ml-3 mr-3">
                                 <div class="text-dark mb-4 mt-2 border-bottom">Sınıfa Eğitmen Ekle</div>
-                                <form class="form-inline" asp-action="AddUserToCourse" asp-controller="Course" method="post">
+                                <form class="form-inline" asp-action="AddEgitmen" asp-controller="Course" method="post">
                                     <div class="form-group mb-2">
                                         <input type="hidden" asp-for="Egitmen.CourseId" value="@Model.Egitmen.CourseId" />
                                         <input type="hidden" asp-for="Egitmen.RoleIdInCourse" value="@Model.Egitmen.RoleIdInCourse" />
@@ -39,7 +39,7 @@
                                     </small>
                                 </form>
                                 <div class="text-dark mb-4 mt-4 border-bottom">Sınıfa Asistan Ekle</div>
-                                <form class="form-inline" asp-action="AddUserToCourse" asp-controller="Course" method="post">
+                                <form class="form-inline" asp-action="AddAsistan" asp-controller="Course" method="post">
                                     <div class="form-group mb-2">
                                         <input type="hidden" asp-for="Asistan.CourseId" value="@Model.Asistan.CourseId" />
                                         <input type="hidden" asp-for="Asistan.RoleIdInCourse" value="@Model.Asistan.RoleIdInCourse" />
@@ -55,7 +55,7 @@
                                     </small>
                                 </form>
                                 <div class="text-dark mb-4 mt-4 border-bottom">Sınıfa Öğrenci Ekle</div>
-                                <form class="form-inline" id="ogrenciForm" asp-controller="Course"  asp-action="AddOgrenci" method="post">
+                                <form class="form-inline" id="ogrenciForm" asp-controller="Course" asp-action="AddOgrenci" method="post">
                                     <div class="form-group mb-2">
                                         <input type="hidden" asp-for="Ogrenciler.CourseId" value="@Model.Ogrenciler.CourseId" />
                                         <input type="hidden" asp-for="Ogrenciler.RoleIdInCourse" value="@Model.Ogrenciler.RoleIdInCourse" />
@@ -76,8 +76,51 @@
                                 </form>
                             </div>
                         </div>
+                        <div class="row justify-content-md-center mt-3">
+                            <div class="col ml-3 mr-3">
+                                <div class="text-dark mb-4 mt-2 border-bottom">Sınıfa Kayıtlı Kişiler</div>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">İsim Soyisim</th>
+                                            <th scope="col">Rol</th>
+                                            <th scope="col">İşlem</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.UserList != null && Model.UserList.Count > 0)
+                                        {
+                                            for (int i = 0; i < Model.UserList.Count; i++)
+                                            {
+                                                <tr>
+                                                    <th scope="row">@(i+1)</th>
+                                                    <td>@Model.UserList[i].FullName</td>
+                                                    <td>@Model.UserList[i].RoleNameInCourse</td>
+                                                    <td><a asp-controller="Course" asp-action="RemoveUser" asp-route-courseUserId="@Model.UserList[i].CourseUserId" asp-route-courseId="@Model.Course.Id" ><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                                                </tr>
+
+                                            }
+                                        }
+
+                                        @*<tr>
+                                                <th scope="row">2</th>
+                                                <td>Jacob</td>
+                                                <td>Thornton</td>
+                                                <td>@fat</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">3</th>
+                                                <td>Larry</td>
+                                                <td>the Bird</td>
+                                                <td>@twitter</td>
+                                            </tr>*@
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                    @await Html.PartialAsync("_CourseInfoPartial",Model.Lesson)
+                    @await Html.PartialAsync("_CourseInfoPartial", Model.Lesson)
                 </div>
             </div>
         </div>
@@ -85,7 +128,7 @@
 </div>
 @section Scripts{
     <script type="text/javascript">
-        function OgrenciSubmit(){
+        function OgrenciSubmit() {
             $('#ogrenciForm').submit();
         }
     </script>

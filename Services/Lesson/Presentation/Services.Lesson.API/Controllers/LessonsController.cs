@@ -45,7 +45,7 @@ namespace Services.Lesson.API.Controllers
             _timePlaceReadRepository = timePlaceReadRepository;
             _timePlaceWriteRepository = timePlaceWriteRepository;
         }
-        
+
         [HttpPost]
         [Route("InsertLesson")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
@@ -57,7 +57,7 @@ namespace Services.Lesson.API.Controllers
                 return ReturnCreated(ObjectMapper.Mapper.Map<QueryLessonDto>(lesson));
             return ReturnError();
         }
-        
+
         [HttpPost]
         [Route("InsertCourse")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
@@ -68,7 +68,7 @@ namespace Services.Lesson.API.Controllers
                 return ReturnCreated(ObjectMapper.Mapper.Map<QueryCourseDto>(course));
             return ReturnError();
         }
-        
+
         [HttpPost]
         [Route("InsertUserInCourse")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
@@ -79,7 +79,7 @@ namespace Services.Lesson.API.Controllers
                 return ReturnCreated();
             return ReturnError();
         }
-        
+
         [HttpPost]
         [Route("InsertUserInCourseList")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
@@ -90,7 +90,7 @@ namespace Services.Lesson.API.Controllers
                 return ReturnCreated();
             return ReturnError();
         }
-        
+
         [HttpGet]
         [Route("GetLessonById")]
         [ServiceFilter(typeof(ParameterFilterAttribute))]
@@ -101,7 +101,7 @@ namespace Services.Lesson.API.Controllers
                 return ReturnNotFound();
             return ReturnOk(ObjectMapper.Mapper.Map<QueryLessonDto>(lesson));
         }
-       
+
         [HttpGet]
         [Route("GetLessonList")]
         public IActionResult GetLessonList()
@@ -123,7 +123,7 @@ namespace Services.Lesson.API.Controllers
                 return ReturnNotFound();
             var courseList = courseUserList.Select(i => i.Course);
             var lessonList = courseList.Select(i => i.Lesson).ToList();
-            
+
             //courseUserList.ToList().ForEach(i => { lessonList.Add(i.Course.Lesson); });
             return ReturnOk(ObjectMapper.Mapper.Map<List<QueryLessonDto>>(lessonList));
         }
@@ -162,13 +162,14 @@ namespace Services.Lesson.API.Controllers
         }
 
         [HttpDelete]
-        [Route("RemoveUserFromCourse")]
+        [Route("RemoveUserFromCourse/{courseUserId}")]
         [ServiceFilter(typeof(ParameterFilterAttribute))]
         public async Task<IActionResult> RemoveUserFromCourse(string courseUserId)
         {
             await _courseUserWriteRepository.RemoveAsync(courseUserId);
-            if (await _courseUserWriteRepository.SaveAsync() > 0)
-                ReturnSuccess();
+            var save = await _courseUserWriteRepository.SaveAsync();
+            if ( save > 0)
+                return ReturnSuccess();
             return ReturnError();
         }
 
@@ -206,14 +207,29 @@ namespace Services.Lesson.API.Controllers
                 return ReturnSuccess();
             return NotFound();
         }
+        [HttpGet]
+        [Route("GetUserListByCourseId/{courseId}")]
+        [ServiceFilter(typeof(ParameterFilterAttribute))]
+        public IActionResult GetUserListByCourseId(string courseId)
+        {
+            var userList = _courseUserReadRepository.GetWhere(i => i.CourseId == Guid.Parse(courseId));
+            if (userList == null) return ReturnNotFound();
+            var roleList = _roleInCourseReadRepository.GetAll();
+            foreach (var user in userList.ToList())
+            {
+                user.RoleInCourse = roleList.FirstOrDefault(i => i.Id == user.RoleInCourseId);
+            }
+            return ReturnOk(ObjectMapper.Mapper.Map<List<QueryCourseUserDto>>(userList));
+        }
+
         //[HttpGet]
         //public async Task<IActionResult> test()
         //{
         //    await _roleInCourseWriteRepository.AddRangeAsync(new List<RoleInCourse>
         //    {
-        //        new RoleInCourse{RoleName="Öğrenci", RoleKey="Student"},
-        //        new RoleInCourse{RoleName="Eğitmen", RoleKey="Lecturer"},
-        //        new RoleInCourse{RoleName="Asistan",RoleKey="Assistant" }
+        //        new RoleInCourse{Id=Guid.Parse("a953a205-8343-427f-86f6-d09a5f1e659e"),RoleName="Öğrenci", RoleKey="Student"},
+        //        new RoleInCourse{Id=Guid.Parse("a65c19b0-b1d9-44a8-a1e6-3caef164b282"),RoleName="Eğitmen", RoleKey="Lecturer"},
+        //        new RoleInCourse{Id=Guid.Parse("72ab05e6-500a-4f80-8c1d-9c670d17612b"),RoleName="Asistan",RoleKey="Assistant" }
 
         //    });
         //    await _roleInCourseWriteRepository.SaveAsync();

@@ -121,7 +121,7 @@ namespace DYS.WebClient.Services
 
         public async Task<bool> RemoveUserFromCourse(string courseUserId)
         {
-            var response = await _client.DeleteAsync($"Lessons/RemoveUserFromCourse{courseUserId}");
+            var response = await _client.DeleteAsync($"Lessons/RemoveUserFromCourse/{courseUserId}");
             return response.IsSuccessStatusCode;
         }
 
@@ -135,6 +135,16 @@ namespace DYS.WebClient.Services
         {
             var response = await _client.GetAsync($"Lessons/IsUserInCourse?id={courseId}&userId={userId}");
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<List<QueryCourseUserDto>> GetUserListByCourseId(string courseId)
+        {
+            var response = await _client.GetAsync($"Lessons/GetUserListByCourseId/{courseId}");
+            if (!response.IsSuccessStatusCode)
+                return null;
+            string str = await response.Content.ReadAsStringAsync();
+            var res = JsonConvert.DeserializeObject<OperationResult<List<QueryCourseUserDto>>>(str);
+            return res.Data;
         }
     }
 }

@@ -73,8 +73,8 @@ namespace DYS.WebClient.Controllers
         }
 
         [HttpGet]
-        [Route("Course/{id}")]
-        [ServiceFilter(typeof(ParameterFilterAttribute), Order = 1)]
+        [Route("Course/Detail/{id}")]
+        [ServiceFilter(typeof(ParameterFilterAttribute))]
         //[IsUserInCourseFilter(_lessonService,_sharedIdentityService,Order = 2)]
         public async Task<IActionResult> Detail(string id)
         {
@@ -119,7 +119,7 @@ namespace DYS.WebClient.Controllers
 
         [HttpGet]
         [Route("Course/{courseId}/Notifications")]
-        [ServiceFilter(typeof(ParameterFilterAttribute), Order = 1)]
+        [ServiceFilter(typeof(ParameterFilterAttribute))]
         public async Task<IActionResult> CourseNotificationList(string courseId)
         {
             var course = await _lessonService.GetCourseById(courseId);
@@ -144,7 +144,7 @@ namespace DYS.WebClient.Controllers
             var course = await _lessonService.GetCourseById(courseId);
             if (course == null) return NotFound();
             var lesson = await _lessonService.GetLessonByCourseId(courseId);
-
+            var userList = await _lessonService.GetUserListByCourseId(courseId);
             var model = new AddUserToCourseViewModel
             {
                 Course = course,
@@ -153,104 +153,77 @@ namespace DYS.WebClient.Controllers
                 Asistan = new AddUserToCourseFormModel { CourseId = courseId, RoleIdInCourse = RoleInCourse.Asistan },
                 Egitmen = new AddUserToCourseFormModel { CourseId = courseId, RoleIdInCourse = RoleInCourse.Egitmen },
                 Ogrenciler = new AddUserToCourseFormModel { CourseId = courseId, RoleIdInCourse = RoleInCourse.Ogrenci },
+                UserList = userList == null ? null : userList.Select(i => new UserInCourse
+                {
+                    CourseUserId = i.Id.ToString(),
+                    FullName = _userService.GetUserById(i.UserId.ToString()).Result.FullName,
+                    UserId = i.UserId.ToString(),
+                    RoleIdInCourse = i.RoleInCourseId.ToString(),
+                    RoleNameInCourse = i.RoleInCourse.RoleName
+                }).OrderBy(i => i.RoleNameInCourse).ToList()
             };
             return View(model);
         }
+
         [HttpPost]
-        public async Task<IActionResult> AddUserToCourse(AddUserToCourseViewModel model)
+        public async Task<IActionResult> AddAsistan(AddUserToCourseViewModel model)
         {
-            if (model.Egitmen != null)
+            List<string> str = model.Asistan.UserNames.Split(new char[] { ' ', ',', '\n', '\t' }).ToList();
+            List<InsertCourseUserDto> dtoList = new List<InsertCourseUserDto>();
+            if (str.Any())
             {
-                List<string> str = model.Egitmen.UserNames.Split(new char[] { ' ', ',', '\n', '\t' }).ToList();
-                List<InsertCourseUserDto> dtoList = new List<InsertCourseUserDto>();
-                if (str.Any())
+                foreach (var item in str)
                 {
-                    foreach (var item in str)
+                    var user = await _userService.GetByUsername(item.Trim());
+                    if (user != null)
                     {
-                        var user = await _userService.GetByUsername(item.Trim());
-                        if (user != null)
+                        var dto = new InsertCourseUserDto()
                         {
-                            var dto = new InsertCourseUserDto()
-                            {
-                                CourseId = Guid.Parse(model.Egitmen.CourseId),
-                                CreatedBy = Guid.Parse(_sharedIdentityService.GetUserId),
-                                RoleInCourseId = Guid.Parse(model.Egitmen.RoleIdInCourse),
-                                UserId = Guid.Parse(user.Id)
-                            };
-                            dtoList.Add(dto);
-                        }
+                            CourseId = Guid.Parse(model.Asistan.CourseId),
+                            CreatedBy = Guid.Parse(_sharedIdentityService.GetUserId),
+                            RoleInCourseId = Guid.Parse(model.Asistan.RoleIdInCourse),
+                            UserId = Guid.Parse(user.Id)
+                        };
+                        dtoList.Add(dto);
                     }
-
                 }
-                if (dtoList.Count > 0)
-                {
-                    var res = await _lessonService.InsertCourseUserList(dtoList);
-                }
-                return RedirectToAction("AddUserToCourse", "Course", new { courseId = model.Egitmen.CourseId });
 
             }
-            else if (model.Asistan != null)
+            if (dtoList.Count > 0)
             {
-                List<string> str = model.Asistan.UserNames.Split(new char[] { ' ', ',', '\n', '\t' }).ToList();
-                List<InsertCourseUserDto> dtoList = new List<InsertCourseUserDto>();
-                if (str.Any())
+                var res = await _lessonService.InsertCourseUserList(dtoList);
+            }
+            return RedirectToAction("AddUserToCourse", "Course", new { courseId = model.Asistan.CourseId });
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddEgitmen(AddUserToCourseViewModel model)
+        {
+            List<string> str = model.Egitmen.UserNames.Split(new char[] { ' ', ',', '\n', '\t' }).ToList();
+            List<InsertCourseUserDto> dtoList = new List<InsertCourseUserDto>();
+            if (str.Any())
+            {
+                foreach (var item in str)
                 {
-                    foreach (var item in str)
+                    var user = await _userService.GetByUsername(item.Trim());
+                    if (user != null)
                     {
-                        var user = await _userService.GetByUsername(item.Trim());
-                        if (user != null)
+                        var dto = new InsertCourseUserDto()
                         {
-                            var dto = new InsertCourseUserDto()
-                            {
-                                CourseId = Guid.Parse(model.Asistan.CourseId),
-                                CreatedBy = Guid.Parse(_sharedIdentityService.GetUserId),
-                                RoleInCourseId = Guid.Parse(model.Asistan.RoleIdInCourse),
-                                UserId = Guid.Parse(user.Id)
-                            };
-                            dtoList.Add(dto);
-                        }
+                            CourseId = Guid.Parse(model.Egitmen.CourseId),
+                            CreatedBy = Guid.Parse(_sharedIdentityService.GetUserId),
+                            RoleInCourseId = Guid.Parse(model.Egitmen.RoleIdInCourse),
+                            UserId = Guid.Parse(user.Id)
+                        };
+                        dtoList.Add(dto);
                     }
+                }
 
-                }
-                if (dtoList.Count > 0)
-                {
-                    var res = await _lessonService.InsertCourseUserList(dtoList);
-                }
-                return RedirectToAction("AddUserToCourse", "Course", new { courseId = model.Asistan.CourseId });
             }
-            else if(model.Ogrenciler != null)
+            if (dtoList.Count > 0)
             {
-                List<string> str = model.Ogrenciler.UserNames.Split(new char[] { ' ', ',', '\n', '\t' }).ToList();
-                List<InsertCourseUserDto> dtoList = new List<InsertCourseUserDto>();
-                if (str.Any())
-                {
-                    foreach (var item in str)
-                    {
-                        var user = await _userService.GetByUsername(item.Trim());
-                        if (user != null)
-                        {
-                            var dto = new InsertCourseUserDto()
-                            {
-                                CourseId = Guid.Parse(model.Ogrenciler.CourseId),
-                                CreatedBy = Guid.Parse(_sharedIdentityService.GetUserId),
-                                RoleInCourseId = Guid.Parse(model.Ogrenciler.RoleIdInCourse),
-                                UserId = Guid.Parse(user.Id)
-                            };
-                            dtoList.Add(dto);
-                        }
-                    }
-
-                }
-                if (dtoList.Count > 0)
-                {
-                    var res = await _lessonService.InsertCourseUserList(dtoList);
-                }
-                return RedirectToAction("AddUserToCourse", "Course", new { courseId = model.Ogrenciler.CourseId });
+                await _lessonService.InsertCourseUserList(dtoList);
             }
-            else
-            {
-                return NotFound();
-            }
+            return RedirectToAction("AddUserToCourse", "Course", new { courseId = model.Egitmen.CourseId });
         }
         [HttpPost]
         public async Task<IActionResult> AddOgrenci(AddUserToCourseViewModel model)
@@ -281,6 +254,13 @@ namespace DYS.WebClient.Controllers
                 var res = await _lessonService.InsertCourseUserList(dtoList);
             }
             return RedirectToAction("AddUserToCourse", "Course", new { courseId = model.Ogrenciler.CourseId });
+        }
+        [HttpGet]
+        [ServiceFilter(typeof(ParameterFilterAttribute))]
+        public IActionResult RemoveUser(string courseUserId, string courseId)
+        {
+            var courseUser = _lessonService.RemoveUserFromCourse(courseUserId);
+            return RedirectToAction("AddUserToCourse", "Course", new { courseId = courseId });
         }
     }
 
