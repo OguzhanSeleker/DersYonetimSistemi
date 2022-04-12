@@ -1,6 +1,7 @@
 ﻿using DYS.WebClient.Models.Notification;
 using Newtonsoft.Json;
 using SharedLibrary.ResponseDtos;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -33,6 +34,18 @@ namespace DYS.WebClient.Services
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<List<GetNotificationDto>> GetLastFiveNotificationUserCourseByCourseIdList(string courseIds)
+        {
+            var response = await _client.GetAsync($"Notifications/GetLastFiveNotificationUserCourseByCourseIdList?courseIds={courseIds}");
+            if (!response.IsSuccessStatusCode) return null;
+            var str = await response.Content.ReadAsStringAsync();
+
+            var converted = JsonConvert.DeserializeObject<OperationResult<List<GetNotificationDto>>>(str);
+
+            return converted.Data;
+
+        }
+
         public async Task<GetNotificationDto> GetNotificationByIdAsync(string id)
         {
             var response = await _client.GetAsync($"Notifications/{id}");
@@ -45,7 +58,7 @@ namespace DYS.WebClient.Services
         public async Task<List<GetNotificationDto>> GetNotificationListByCourseIdAsync(string courseId)
         {
             var response = await _client.GetAsync($"Notifications/GetNotificationListByCourseId/{courseId}");
-            var converted = JsonConvert.DeserializeObject<OperationResult<List<GetNotificationDto>>>(await response.Content.ReadAsStringAsync()); 
+            var converted = JsonConvert.DeserializeObject<OperationResult<List<GetNotificationDto>>>(await response.Content.ReadAsStringAsync());
             if (converted != null)
                 return converted.Data;
             return null;

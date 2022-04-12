@@ -11,5 +11,6 @@ namespace DYS.WebClient.Services.Interfaces
         Task<GetNotificationDto> GetNotificationByIdAsync(string id);
         Task<bool> DeleteNotificationAsync(string id);
         Task<bool> UpdateNotificationAync(UpdateNotificationDto updateNotificationDto);
+        Task<List<GetNotificationDto>> GetLastFiveNotificationUserCourseByCourseIdList(string courseIds);
     }
 }

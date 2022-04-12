@@ -146,5 +146,15 @@ namespace DYS.WebClient.Services
             var res = JsonConvert.DeserializeObject<OperationResult<List<QueryCourseUserDto>>>(str);
             return res.Data;
         }
+
+        public async Task<List<QueryCourseDto>> GetCourseListByUserId(string userId)
+        {
+            var response = await _client.GetAsync($"Lessons/GetCourseListByUserId/{userId}");
+            if (!response.IsSuccessStatusCode)
+                return null;
+            string str = await response.Content.ReadAsStringAsync();
+            var res = JsonConvert.DeserializeObject<OperationResult<List<QueryCourseDto>>>(str);
+            return res.Data;
+        }
     }
 }

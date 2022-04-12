@@ -80,7 +80,16 @@ namespace Services.Notification.API.Controllers
             if (save > 0)
                 return CreateActionResultInstance(OperationResult<NoContent>.NoContentSuccessResult());
             return CreateActionResultInstance(OperationResult<NoContent>.CreateFailure("Could not Updated", SharedLibrary.ResponseDtos.StatusCode.Error));
-
+        }
+        [HttpGet]
+        [Route("GetLastFiveNotificationUserCourseByCourseIdList")]
+        public IActionResult GetLastFiveNotificationUserCourseByCourseIdList(string courseIds)
+        {
+            var list = courseIds.Split(',').ToList();
+            var notifList = _notificationReadRepository.GetWhere(i => list.ConvertAll<Guid>(Guid.Parse).Contains(i.CourseId)).ToList();
+            if (notifList == null)
+                return ReturnNotFound();
+            return ReturnOk(ObjectMapper.Mapper.Map<List<GetNotificationDto>>(notifList));
         }
 
     }
