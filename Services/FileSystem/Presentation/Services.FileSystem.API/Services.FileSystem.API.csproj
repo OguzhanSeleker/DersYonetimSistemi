@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\12322\**" />
+    <Content Remove="wwwroot\12322\**" />
+    <EmbeddedResource Remove="wwwroot\12322\**" />
+    <None Remove="wwwroot\12322\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.15" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
@@ -14,7 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\12322\" />
+    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\24252\" />
   </ItemGroup>
 
 </Project>

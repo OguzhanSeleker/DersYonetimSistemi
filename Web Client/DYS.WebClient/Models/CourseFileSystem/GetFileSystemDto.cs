@@ -8,13 +8,15 @@ namespace DYS.WebClient.Models.CourseFileSystem
 {
     public class GetFileSystemDto
     {
-        public Guid Id { get; set; }
-        public Guid CourseId { get; set; }
+        public string Id { get; set; }
+        public string CourseId { get; set; }
         public string CourseCRN { get; set; }
-        public Guid CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public string Extension { get; set; }
+        public string FullPath { get; set; }
         public string Path { get; set; }
+        public string DisplayFileName { get; set; }
         public bool Deleted { get; set; }
     }
 }

@@ -44,7 +44,7 @@ namespace Services.FileSystem.Infrastructure
         {
             try
             {
-                var entity = await _collection.Find<WebFileSystem>(i => i.Id == Guid.Parse(id)).FirstAsync();
+                var entity = await _collection.Find<WebFileSystem>(i => i.Id == id && !i.Deleted).FirstAsync();
                 if (entity == null) throw new Exception("Metadata Not Found");
                 entity.Deleted = true;
                 var save = await _collection.UpdateOneAsync(Builders<WebFileSystem>.Filter.Eq(i => i.Id,entity.Id),Builders<WebFileSystem>.Update.Set(i => i.Deleted,true));
@@ -61,7 +61,7 @@ namespace Services.FileSystem.Infrastructure
         {
             try
             {
-                var entity = await _collection.Find(i => i.Id == Guid.Parse(id)).FirstAsync();
+                var entity = await _collection.Find(i => i.Id == id && !i.Deleted).FirstAsync();
                 if (entity == null) throw new Exception("Not Found");
                 return OperationResult<GetFileSystemDto>.OkSuccessResult(ObjectMapper.Mapper.Map<GetFileSystemDto>(entity));
             }
@@ -75,7 +75,7 @@ namespace Services.FileSystem.Infrastructure
         {
             try
             {
-                var entityList = await _collection.Find(i => i.CourseId == courseId).ToListAsync();
+                var entityList = await _collection.Find(i => i.CourseId == courseId && !i.Deleted).SortByDescending(i => i.CreatedDate).ToListAsync();
                 if(entityList == null) throw new Exception("Not Found");
                 return OperationResult<List<GetFileSystemDto>>.OkSuccessResult(ObjectMapper.Mapper.Map<List<GetFileSystemDto>>(entityList));
             }

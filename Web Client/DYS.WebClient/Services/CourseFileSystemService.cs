@@ -39,12 +39,38 @@ namespace DYS.WebClient.Services
             return null;
         }
 
+        public async Task<bool> DeleteFile(string fileId)
+        {
+            var response = await _client.DeleteAsync($"FileSystems/{fileId}");
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<FileDto> DownloadFile(string fileId)
+        {
+            var response = await _client.GetAsync($"FileSystems/GetById/{fileId}");
+            if (response != null && response.IsSuccessStatusCode)
+            {
+                var str = await response.Content.ReadAsStringAsync();
+                var converted = JsonConvert.DeserializeObject<OperationResult<GetFileSystemDto>>(str);
+                if (converted != null && converted.Data != null)
+                {
+                    HttpClient dosyaClient = new HttpClient();
+                    var fileRes = await dosyaClient.GetAsync($"http://localhost:5016/{converted.Data.Path}");
+                    fileRes.EnsureSuccessStatusCode();
+                    var ba = await fileRes.Content.ReadAsByteArrayAsync();
+                    return new FileDto { fileByteArr =ba, DisplayName = converted.Data.DisplayFileName};
+                }
+                return null;
+            }
+            return null;
+        }
+
         public async Task<List<GetFileSystemDto>> GetByCourseId(string courseId)
         {
-            var response = await _client.GetAsync($"FileSystems/{courseId}");
+            var response = await _client.GetAsync($"FileSystems/GetFileListByCourseId/{courseId}");
             var str = await response.Content.ReadAsStringAsync();
             var converted = JsonConvert.DeserializeObject<OperationResult<List<GetFileSystemDto>>>(str);
-            if (converted != null)
+            if (converted != null && converted.Data != null)
                 return converted.Data;
             return null;
         }

@@ -21,7 +21,7 @@ namespace Services.FileSystem.API.Middlewares
         public async Task Invoke(HttpContext context)
         {
             //First, get the incoming request
-            var request = await FormatRequest(context.Request);
+            //var request = await FormatRequest(context.Request);
 
             //Copy a pointer to the original response body stream
             var originalBodyStream = context.Response.Body;
@@ -39,7 +39,7 @@ namespace Services.FileSystem.API.Middlewares
                 var response = await FormatResponse(context.Response);
 
                 //TODO: Save log to chosen datastore
-                _logger.LogInformation($"Request : {request}" +
+                _logger.LogInformation(
                     $"Response : {response}");
                 //Copy the contents of the new memory stream (which contains the response) to the original stream, which is then returned to the client.
                 await responseBody.CopyToAsync(originalBodyStream);

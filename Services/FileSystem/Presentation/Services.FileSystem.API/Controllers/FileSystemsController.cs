@@ -27,29 +27,31 @@ namespace Services.FileSystem.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCourseFile(IFormFile File,IFormCollection keyValues, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddCourseFile(IFormFile File, IFormCollection keyValues, CancellationToken cancellationToken)
         {
             var req = Request;
             var courseCRN = keyValues["courseCRN"];
             var courseId = keyValues["courseId"];
             var createdBy = keyValues["createdBy"];
-            
+
             if (File != null && File.Length > 0 && !string.IsNullOrEmpty(courseId) && !string.IsNullOrEmpty(createdBy) && !string.IsNullOrEmpty(courseCRN) && File.Length <= 20971520)
             {
                 string directory = "wwwroot\\" + courseCRN;
                 DirectoryInfo di = null;
                 if (!Directory.Exists(directory)) di = Directory.CreateDirectory(directory);
-
-                var path = Path.Combine(Directory.GetCurrentDirectory(), directory, Guid.NewGuid().ToString() + Path.GetExtension(File.FileName));
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(File.FileName);
+                var path = Path.Combine(Directory.GetCurrentDirectory(), directory, fileName);
                 using var stream = new FileStream(path: path, FileMode.Create);
                 await File.CopyToAsync(stream, cancellationToken);
                 var addFileSystemDto = new AddFileSystemDto()
                 {
                     CourseCRN = courseCRN,
-                    Path = path,
+                    Path = courseCRN + "/" + fileName,
+                    FullPath = path,
                     CourseId = courseId,
                     CreatedBy = createdBy,
-                    Extension = Path.GetExtension(File.FileName)
+                    Extension = Path.GetExtension(File.FileName),
+                    DisplayFileName = File.FileName
                 };
                 var getmetadata = await _fileMetadataService.AddFileMetadata(addFileSystemDto);
                 if (getmetadata.Success) return ReturnOk(getmetadata.Data);
@@ -65,6 +67,23 @@ namespace Services.FileSystem.API.Controllers
             var metadatalist = await _fileMetadataService.GetByCourseId(courseId);
             if (!metadatalist.Success) return ReturnNotFound();
             return ReturnOk(metadatalist.Data);
+        }
+        [HttpGet]
+        //[ServiceFilter(typeof(ParameterFilterAttribute))]
+        [Route("GetById/{fileId}")]
+        public async Task<IActionResult> GetById(string fileId)
+        {
+            var metadata = await _fileMetadataService.GetById(fileId);
+            if (!metadata.Success) return ReturnNotFound();
+            return ReturnOk(metadata.Data);
+        }
+
+        [HttpDelete]
+        [Route("{fileId}")]
+        public async Task<IActionResult> DeleteFile(string fileId)
+        {
+            var del = await _fileMetadataService.DeleteFileMetadata(fileId);
+            return del.Success ? ReturnSuccess() : ReturnError();
         }
     }
 }

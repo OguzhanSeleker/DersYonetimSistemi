@@ -12,7 +12,9 @@ namespace Services.FileSystem.Domain.Entities
         public string CourseId { get; set; }
         public string CourseCRN { get; set; }
         public string CreatedBy { get; set; }
+        public string FullPath { get; set; }
         public string Path { get; set; }
         public string Extension { get; set; }
+        public string DisplayFileName { get; set; }
     }
 }

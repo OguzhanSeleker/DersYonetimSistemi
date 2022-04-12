@@ -1,4 +1,5 @@
-﻿using DYS.WebClient.Models.Lesson;
+﻿using DYS.WebClient.Models.CourseFileSystem;
+using DYS.WebClient.Models.Lesson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace DYS.WebClient.Models
         public QueryLessonDto Lesson { get; set; }
         public FileOperationModel FileOperationModel { get; set; }
         public SideBarViewModel SideBarViewModel { get; set; }
+        public List<GetFileSystemDto> FileList { get; set; }
     }
 }

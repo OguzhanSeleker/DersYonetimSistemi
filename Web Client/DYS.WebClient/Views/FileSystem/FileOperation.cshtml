@@ -21,7 +21,7 @@
                     <div class="col-6 col-sm-7 border shadow bg-light ml-2 mr-2 " style="height: 45rem;">
                         @if (User.IsInRole("Teacher") || User.IsInRole("Admin"))
                         {
-                            <div class="h4 mt-4 ml-4">Dosya Ekle</div>
+                            <div class="h5 mt-4 ml-4">Dosya Ekle</div>
                             <div class="row justify-content-md-center mt-3">
                                 <div class="col ml-3 mr-3">
                                     <div class="list-group">
@@ -45,10 +45,48 @@
                                             </div>
                                         </form>
                                     </div>
+
                                 </div>
                             </div>
                         }
 
+                        <div class="h4 mt-4 ml-4">Sınıf Dosyaları</div>
+                        <div class="row justify-content-md-center mt-3">
+                            <table class="table table-bordered table-hover ml-4 mr-4">
+                                <thead>
+                                    <tr>
+                                        <th>Dosya Adı</th>
+                                        <th>Eklenme Tarihi</th>
+                                        <th>İşlem</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.FileList != null && Model.FileList.Count > 0)
+                                    {
+                                        foreach (var file in Model.FileList)
+                                        {
+                                            <tr>
+                                                <td>@file.DisplayFileName</td>
+                                                <td>@file.CreatedDate</td>
+                                                <td>
+                                                    <a asp-controller="FileSystem" asp-action="DownloadFile" asp-route-fileId="@file.Id"><i class="fa fa-download fa-lg" aria-hidden="true"></i></a>
+                                                    @if (User.IsInRole("Teacher") || User.IsInRole("Admin"))
+                                                    {
+                                                        <a asp-controller="FileSystem" asp-action="DeleteFile" asp-route-fileId="@file.Id" asp-route-courseId="@Model.Course.Id"><i class="fa fa-remove fa-lg" aria-hidden="true"></i></a>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    @*<tr>
+                                        <td>John</td>
+                                        <td>Doe</td>
+                                        <td><a asp-controller="FileSystem" asp-action="DownloadFile" asp-route-fileId=""><i class="fa fa-download" aria-hidden="true"></i></a></td>
+                                    </tr>*@
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     @await Html.PartialAsync("_CourseInfoPartial", Model.Lesson)
                 </div>
