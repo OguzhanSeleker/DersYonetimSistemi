@@ -13,5 +13,6 @@ namespace Services.FileSystem.Domain.Entities
         public string CourseCRN { get; set; }
         public Guid CreatedBy { get; set; }
         public string Path { get; set; }
+        public string Extension { get; set; }
     }
 }

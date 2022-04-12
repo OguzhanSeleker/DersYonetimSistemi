@@ -1,7 +1,8 @@
 Gateway      => 5000
 AuthServer   => 5001 -->1444*
 WebClient    => 5002 -->yok
-Lesson		 => 5015*-->5436
 Message		 => 5012*-->5433*
 Notification => 5013*-->5434*
 Survey		 => 5014*-->5435*
+Lesson		 => 5015*-->5436
+FileSystem   => 5016 -->27018 MongoDb

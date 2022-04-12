@@ -18,6 +18,7 @@ namespace DYS.AuthServer
             new ApiResource("resource_notification"){Scopes={"notification_fullpermission"}},
             new ApiResource("resource_survey"){ Scopes={ "survey_fullpermission"} },
             new ApiResource("resource_gateway"){Scopes={"gateway_fullpermission"}},
+            new ApiResource("resource_fileSystem"){Scopes={"fileSystem_fullpermission"}},
             new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
                 };
 
@@ -38,6 +39,7 @@ namespace DYS.AuthServer
                 new ApiScope("notification_fullpermission","Notification API için full erişim"),
                 new ApiScope("survey_fullpermission","Survey API için full erişim"),
                 new ApiScope("gateway_fullpermission","Gateway API için full erişim"),
+                new ApiScope("fileSystem_fullpermission","Dosya Yönetim API için full erişim"),
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName),
 
             };

@@ -1,12 +1,17 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Services.FileSystem.API.Filters;
+using Services.FileSystem.API.Middlewares;
+using Services.FileSystem.Application;
 using Services.FileSystem.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -28,6 +33,21 @@ namespace Services.FileSystem.API
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.Authority = Configuration["IdentityServerURL"];
+                options.Audience = "resource_fileSystem";
+                options.RequireHttpsMetadata = false;
+            });
+            services.AddControllers(opt =>
+            {
+                opt.Filters.Add(new AuthorizeFilter());
+            });
+            services.AddScoped<ValidationFilterAttribute>();
+            services.AddScoped<ParameterFilterAttribute>();
+            services.AddScoped<HttpResponseExceptionFilter>();
+            services.AddScoped<IFileMetadataService, FileMetadataService>();
+
             services.Configure<DatabaseSettings>(Configuration.GetSection("DatabaseSettings"));
 
             services.AddSingleton<IDatabaseSettings>(sp =>
@@ -35,7 +55,7 @@ namespace Services.FileSystem.API
                 return sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
             });
 
-            services.AddControllers();
+           
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Services.FileSystem.API", Version = "v1" });
@@ -51,9 +71,10 @@ namespace Services.FileSystem.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Services.FileSystem.API v1"));
             }
-
+            app.UseMiddleware<RequestResponseLoggingMiddleware>();
+            app.UseStaticFiles();
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
