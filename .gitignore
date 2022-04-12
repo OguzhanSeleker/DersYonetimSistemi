@@ -363,6 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 #fileSystem wwwroot
-DersYonetimSistemi\Services\FileSystem\Presentation\Services.FileSystem.API\wwwroot\
-DersYonetimSistemi\Services\FileSystem\Presentation\Services.FileSystem.API\wwwroot\*
-DersYonetimSistemi\Services\FileSystem\Presentation\Services.FileSystem.API\wwwroot\*\*
+**/Services.FileSystem.API/wwwroot/
