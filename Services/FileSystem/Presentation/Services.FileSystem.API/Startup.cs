@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ using Services.FileSystem.Application;
 using Services.FileSystem.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,16 +34,18 @@ namespace Services.FileSystem.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.Authority = Configuration["IdentityServerURL"];
                 options.Audience = "resource_fileSystem";
                 options.RequireHttpsMetadata = false;
             });
+            services.AddHttpContextAccessor();
             services.AddControllers(opt =>
             {
-                opt.Filters.Add(new AuthorizeFilter());
+                opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
             });
             services.AddScoped<ValidationFilterAttribute>();
             services.AddScoped<ParameterFilterAttribute>();
@@ -71,7 +75,7 @@ namespace Services.FileSystem.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Services.FileSystem.API v1"));
             }
-            app.UseMiddleware<RequestResponseLoggingMiddleware>();
+            //app.UseMiddleware<RequestResponseLoggingMiddleware>();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();

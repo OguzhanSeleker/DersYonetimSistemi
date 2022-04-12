@@ -1,0 +1,58 @@
+﻿@model FileOperationViewModel
+@{
+    ViewData["Title"] = "Ders Dosyaları";
+}
+<div class="wrapper d-flex align-items-stretch">
+    @await Html.PartialAsync("_SideBar", Model.SideBarViewModel)
+    <div id="content" class="p-md-4">
+        @await Html.PartialAsync("_NavigationBar")
+        <div>
+            <nav aria-label="breadcrumb" class="ml-5 mr-5">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+                    <li class="breadcrumb-item">Sınıflarım</li>
+                    <li class="breadcrumb-item">@Model.Course.CRN</li>
+                </ol>
+            </nav>
+            <h2 class="mb-2 ml-5">@Model.Lesson.NameTR - @Model.Course.CRN</h2>
+            <div class="container-sm shadow bg-light pt-5 pb-5 pl-4 mt-4 mb-5 ml-5 mr-5">
+                <div class="row">
+                    @await Html.PartialAsync("_CoursesOperationsPartial", Model.Course)
+                    <div class="col-6 col-sm-7 border shadow bg-light ml-2 mr-2 " style="height: 45rem;">
+                        @if (User.IsInRole("Teacher") || User.IsInRole("Admin"))
+                        {
+                            <div class="h4 mt-4 ml-4">Dosya Ekle</div>
+                            <div class="row justify-content-md-center mt-3">
+                                <div class="col ml-3 mr-3">
+                                    <div class="list-group">
+                                        <form method="post" asp-controller="FileSystem" asp-action="FileUpload" enctype="multipart/form-data">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <div class="form-inline ">
+                                                <div class="form-group mb-2">
+                                                    <input type="hidden" asp-for="FileOperationModel.CourseId" value="@Model.Course.Id" />
+                                                    <input type="hidden" asp-for="FileOperationModel.CourseCRN" value="@Model.Course.CRN" />
+                                                    <input type="text" asp-for="FileOperationModel.FileName" class="form-control" placeholder="Dosya İsmi" />
+                                                </div>
+                                                <div class="form-group mx-sm-3 mb-2">
+                                                    @*<label class="form-label" asp-for="FileOperationModel.File"></label>*@
+
+                                                    <input asp-for="FileOperationModel.File" class="form-control-file" />
+                                                    @*<input class="form-control-file" asp-for="FileOperationModel.File">*@
+                                                    @*<div class="invalid-feedback">Sadece pdf, docx, rar uzantılı dosyalar yükleyebilirsiniz.</div>*@
+                                                </div>
+                                                <button type="submit" class="btn btn-primary ml-2">ekle</button>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                    @await Html.PartialAsync("_CourseInfoPartial", Model.Lesson)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

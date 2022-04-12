@@ -25,11 +25,15 @@ namespace DYS.WebClient.Extensions
             {
                 opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
             }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
-
+            
             services.AddHttpClient<ILessonService, LessonService>(opt =>
             {
                 opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Lesson.Path}");
             }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+            services.AddHttpClient<ICourseFileSystemService, CourseFileSystemService>(opt =>
+             {
+                 opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.FileSystem.Path}");
+             }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
         }
     }
 }

@@ -9,9 +9,9 @@ namespace Services.FileSystem.Domain.Entities
 {
     public class WebFileSystem : BaseEntity
     {
-        public Guid CourseId { get; set; }
+        public string CourseId { get; set; }
         public string CourseCRN { get; set; }
-        public Guid CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
         public string Path { get; set; }
         public string Extension { get; set; }
     }

@@ -75,7 +75,7 @@ namespace Services.FileSystem.Infrastructure
         {
             try
             {
-                var entityList = await _collection.Find(i => i.CourseId == Guid.Parse(courseId)).ToListAsync();
+                var entityList = await _collection.Find(i => i.CourseId == courseId).ToListAsync();
                 if(entityList == null) throw new Exception("Not Found");
                 return OperationResult<List<GetFileSystemDto>>.OkSuccessResult(ObjectMapper.Mapper.Map<List<GetFileSystemDto>>(entityList));
             }

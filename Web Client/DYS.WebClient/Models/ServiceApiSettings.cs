@@ -13,6 +13,7 @@ namespace DYS.WebClient.Models
         public ServiceApi Message { get; set; }
         public ServiceApi Notification { get; set; }
         public ServiceApi Survey { get; set; }
+        public ServiceApi FileSystem { get; set; }
     }
     public class ServiceApi
     {
