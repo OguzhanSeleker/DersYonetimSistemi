@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Shared\SharedLibrary\SharedLibrary.csproj" />
+    <ProjectReference Include="..\..\Domain\Services.FileSystem.Domain\Services.FileSystem.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
