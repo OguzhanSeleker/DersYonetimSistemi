@@ -78,11 +78,17 @@
                                             </tr>
                                         }
                                     }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="3" class="p-0"><label class="alert alert-info m-0 d-block">Dosya Bulunmamaktadır</label></td>
+                                        </tr>
+                                    }
                                     @*<tr>
-                                        <td>John</td>
-                                        <td>Doe</td>
-                                        <td><a asp-controller="FileSystem" asp-action="DownloadFile" asp-route-fileId=""><i class="fa fa-download" aria-hidden="true"></i></a></td>
-                                    </tr>*@
+                                            <td>John</td>
+                                            <td>Doe</td>
+                                            <td><a asp-controller="FileSystem" asp-action="DownloadFile" asp-route-fileId=""><i class="fa fa-download" aria-hidden="true"></i></a></td>
+                                        </tr>*@
 
                                 </tbody>
                             </table>

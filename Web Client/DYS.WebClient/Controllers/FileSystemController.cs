@@ -50,9 +50,9 @@ namespace DYS.WebClient.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin,Teacher")]
-        public IActionResult FileUpload(FileOperationViewModel model)
+        public async Task<IActionResult> FileUpload(FileOperationViewModel model)
         {
-             _courseFileSystemService.AddCourseFile(new Models.CourseFileSystem.AddFileWithMetadata { AddFileSystemDto = new Models.CourseFileSystem.AddFileSystemDto { CourseId = model.FileOperationModel.CourseId.ToString(), CourseCRN = model.FileOperationModel.CourseCRN, CreatedBy = _sharedIdentityService.GetUserId }, File = model.FileOperationModel.File, FileName = model.FileOperationModel.FileName });
+             await _courseFileSystemService.AddCourseFile(new Models.CourseFileSystem.AddFileWithMetadata { AddFileSystemDto = new Models.CourseFileSystem.AddFileSystemDto { CourseId = model.FileOperationModel.CourseId.ToString(), CourseCRN = model.FileOperationModel.CourseCRN, CreatedBy = _sharedIdentityService.GetUserId }, File = model.FileOperationModel.File, FileName = model.FileOperationModel.FileName });
             return RedirectToAction("FileOperation", "FileSystem", new { courseId = model.FileOperationModel.CourseId }); 
 
         }
