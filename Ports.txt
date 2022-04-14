@@ -6,3 +6,4 @@ Notification => 5013*-->5434*
 Survey		 => 5014*-->5435*
 Lesson		 => 5015*-->5436
 FileSystem   => 5016 -->27018 MongoDb
+Attendance   => 5017 -->5437

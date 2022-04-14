@@ -24,7 +24,7 @@ namespace Services.Lesson.Infrastructure
             services.AddScoped<ICourseUserWriteRepository, CourseUserWriteRepository>();
             services.AddScoped<IRoleInCourseReadRepository, RoleInCourseReadRepository>();
             services.AddScoped<IRoleInCourseWriteRepository, RoleInCourseWriteRepository>();
-            services.AddScoped<ITimePlaceReadRepository,TimePlaceReadRepository>(); 
+            services.AddScoped<ITimePlaceReadRepository, TimePlaceReadRepository>();
             services.AddScoped<ITimePlaceWriteRepository, TimePlaceWriteRepository>();
         }
     }

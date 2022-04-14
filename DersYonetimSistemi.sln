@@ -102,13 +102,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{4F952045-146F-4453-B501-7E814BEC3AF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.FileSystem.Domain", "Services\FileSystem\Domain\Services.FileSystem.Domain\Services.FileSystem.Domain.csproj", "{DF9D8A36-2F5F-41A4-9CDF-B8A8BDF74FB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.FileSystem.Domain", "Services\FileSystem\Domain\Services.FileSystem.Domain\Services.FileSystem.Domain.csproj", "{DF9D8A36-2F5F-41A4-9CDF-B8A8BDF74FB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.FileSystem.Infrastructure", "Services\FileSystem\Infrastructure\Services.FileSystem.Infrastructure\Services.FileSystem.Infrastructure.csproj", "{CAB0E651-156D-4432-B993-025E77DD65FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.FileSystem.Infrastructure", "Services\FileSystem\Infrastructure\Services.FileSystem.Infrastructure\Services.FileSystem.Infrastructure.csproj", "{CAB0E651-156D-4432-B993-025E77DD65FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.FileSystem.Application", "Services\FileSystem\Application\Services.FileSystem.Application\Services.FileSystem.Application.csproj", "{5C3528A5-B0F8-495E-99F2-4CD2CA692D4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.FileSystem.Application", "Services\FileSystem\Application\Services.FileSystem.Application\Services.FileSystem.Application.csproj", "{5C3528A5-B0F8-495E-99F2-4CD2CA692D4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.FileSystem.API", "Services\FileSystem\Presentation\Services.FileSystem.API\Services.FileSystem.API.csproj", "{7A303011-825B-40DF-8A60-BA047451FE1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.FileSystem.API", "Services\FileSystem\Presentation\Services.FileSystem.API\Services.FileSystem.API.csproj", "{7A303011-825B-40DF-8A60-BA047451FE1F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Attendance", "Attendance", "{25E7DD41-EA1A-41F3-A63F-7BE019362797}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{EB3D3697-E5E0-400C-A4A9-3EA351F6FB5B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{2546420F-D2C4-400F-B6BF-B52E348B593D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{55F2AEC9-496B-4A56-81A1-C23A3EE5D306}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Attendance.Domain", "Services\Attendance\Core\Services.Attendance.Domain\Services.Attendance.Domain.csproj", "{AC0187A1-D770-4756-AC2F-9E9BED3B8C8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Attendance.Infrastructure", "Services\Attendance\Infrastructure\Services.Attendance.Infrastructure\Services.Attendance.Infrastructure.csproj", "{AAB776AB-EA1C-44A5-AE40-A5736555F210}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Attendance.API", "Services\Attendance\Presentation\Services.Attendance.API\Services.Attendance.API.csproj", "{CE2CFAC6-8584-4960-AA33-F8F4DC489DB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Attendance.Application", "Services\Attendance\Core\Services.Attendance.Application\Services.Attendance.Application.csproj", "{FBA55F44-20E0-4C74-BAFD-AF9809C96498}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -216,6 +232,22 @@ Global
 		{7A303011-825B-40DF-8A60-BA047451FE1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A303011-825B-40DF-8A60-BA047451FE1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A303011-825B-40DF-8A60-BA047451FE1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC0187A1-D770-4756-AC2F-9E9BED3B8C8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC0187A1-D770-4756-AC2F-9E9BED3B8C8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC0187A1-D770-4756-AC2F-9E9BED3B8C8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC0187A1-D770-4756-AC2F-9E9BED3B8C8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAB776AB-EA1C-44A5-AE40-A5736555F210}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAB776AB-EA1C-44A5-AE40-A5736555F210}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAB776AB-EA1C-44A5-AE40-A5736555F210}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAB776AB-EA1C-44A5-AE40-A5736555F210}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE2CFAC6-8584-4960-AA33-F8F4DC489DB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE2CFAC6-8584-4960-AA33-F8F4DC489DB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE2CFAC6-8584-4960-AA33-F8F4DC489DB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE2CFAC6-8584-4960-AA33-F8F4DC489DB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBA55F44-20E0-4C74-BAFD-AF9809C96498}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBA55F44-20E0-4C74-BAFD-AF9809C96498}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBA55F44-20E0-4C74-BAFD-AF9809C96498}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBA55F44-20E0-4C74-BAFD-AF9809C96498}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -267,6 +299,14 @@ Global
 		{CAB0E651-156D-4432-B993-025E77DD65FF} = {4F952045-146F-4453-B501-7E814BEC3AF1}
 		{5C3528A5-B0F8-495E-99F2-4CD2CA692D4A} = {43923C69-6626-414C-B01B-D9F8C1283E4F}
 		{7A303011-825B-40DF-8A60-BA047451FE1F} = {331FFA54-354D-42D3-88C6-2A0430B3225A}
+		{25E7DD41-EA1A-41F3-A63F-7BE019362797} = {18FC6D21-3059-4F85-806A-18217AC4E844}
+		{EB3D3697-E5E0-400C-A4A9-3EA351F6FB5B} = {25E7DD41-EA1A-41F3-A63F-7BE019362797}
+		{2546420F-D2C4-400F-B6BF-B52E348B593D} = {25E7DD41-EA1A-41F3-A63F-7BE019362797}
+		{55F2AEC9-496B-4A56-81A1-C23A3EE5D306} = {25E7DD41-EA1A-41F3-A63F-7BE019362797}
+		{AC0187A1-D770-4756-AC2F-9E9BED3B8C8E} = {EB3D3697-E5E0-400C-A4A9-3EA351F6FB5B}
+		{AAB776AB-EA1C-44A5-AE40-A5736555F210} = {2546420F-D2C4-400F-B6BF-B52E348B593D}
+		{CE2CFAC6-8584-4960-AA33-F8F4DC489DB8} = {55F2AEC9-496B-4A56-81A1-C23A3EE5D306}
+		{FBA55F44-20E0-4C74-BAFD-AF9809C96498} = {EB3D3697-E5E0-400C-A4A9-3EA351F6FB5B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CC1628FE-1C14-4F5F-9074-308AA558A6A8}
