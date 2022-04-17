@@ -10,5 +10,6 @@ namespace Services.Attendance.Domain.Entities
         [ForeignKey(nameof(CourseAttendance))]
         public Guid CourseAttendanceId { get; set; }
         public bool IsMarked { get; set; }
+        public CourseAttendance CourseAttendance { get; set; }
     }
 }

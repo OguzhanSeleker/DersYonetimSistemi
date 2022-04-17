@@ -16,6 +16,7 @@ namespace Services.Attendance.Domain.Entities
         public DateTime WeekDateTime { get; set; }
         [ForeignKey(nameof(CourseProgramInfo))]
         public Guid CourseProgramInfoId { get; set; }
+        public CourseProgramInfo CourseProgramInfo { get; set; }
         public virtual ICollection<StudentAttendance> StudentAttendances { get; set; }
     }
 }

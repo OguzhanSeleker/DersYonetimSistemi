@@ -14,5 +14,6 @@ namespace Services.Attendance.Domain.Dtos
         public bool IsMarked { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool Deleted { get; set; }
+        public GetCourseAttendanceDto CourseAttendance { get; set; }
     }
 }

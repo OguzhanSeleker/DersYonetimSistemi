@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MassTransit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Lesson.API.Filters;
@@ -7,6 +8,7 @@ using Services.Lesson.Domain.Dtos;
 using Services.Lesson.Domain.Entities;
 using Services.Lesson.Domain.Mapping;
 using SharedLibrary.ControllerBases;
+using SharedLibrary.RabbitMQClasses;
 using SharedLibrary.ResponseDtos;
 using System;
 using System.Collections.Generic;
@@ -32,7 +34,9 @@ namespace Services.Lesson.API.Controllers
         private readonly ITimePlaceReadRepository _timePlaceReadRepository;
         private readonly ITimePlaceWriteRepository _timePlaceWriteRepository;
         #endregion
-        public LessonsController(ILessonWriteRepository lessonWriteRepository, ILessonReadRepository lessonReadRepository, ICourseReadRepository courseReadRepository, ICourseWriteRepository courseWriteRepository, ICourseUserReadRepository courseUserReadRepository, ICourseUserWriteRepository courseUserWriteRepository, IRoleInCourseReadRepository roleInCourseReadRepository, IRoleInCourseWriteRepository roleInCourseWriteRepository, ITimePlaceReadRepository timePlaceReadRepository, ITimePlaceWriteRepository timePlaceWriteRepository)
+        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly ISendEndpointProvider _sendEndpointProvider;
+        public LessonsController(ILessonWriteRepository lessonWriteRepository, ILessonReadRepository lessonReadRepository, ICourseReadRepository courseReadRepository, ICourseWriteRepository courseWriteRepository, ICourseUserReadRepository courseUserReadRepository, ICourseUserWriteRepository courseUserWriteRepository, IRoleInCourseReadRepository roleInCourseReadRepository, IRoleInCourseWriteRepository roleInCourseWriteRepository, ITimePlaceReadRepository timePlaceReadRepository, ITimePlaceWriteRepository timePlaceWriteRepository, IPublishEndpoint publishEndpoint, ISendEndpointProvider sendEndpointProvider)
         {
             _lessonWriteRepository = lessonWriteRepository;
             _lessonReadRepository = lessonReadRepository;
@@ -44,6 +48,8 @@ namespace Services.Lesson.API.Controllers
             _roleInCourseWriteRepository = roleInCourseWriteRepository;
             _timePlaceReadRepository = timePlaceReadRepository;
             _timePlaceWriteRepository = timePlaceWriteRepository;
+            _publishEndpoint = publishEndpoint;
+            _sendEndpointProvider = sendEndpointProvider;
         }
 
         [HttpPost]
@@ -64,9 +70,23 @@ namespace Services.Lesson.API.Controllers
         public async Task<IActionResult> InsertCourse(InsertCourseDto insertCourseDto)
         {
             var course = await _courseWriteRepository.AddAsync(ObjectMapper.Mapper.Map<Course>(insertCourseDto));
-            if (await _courseWriteRepository.SaveAsync() > 0)
-                return ReturnCreated(ObjectMapper.Mapper.Map<QueryCourseDto>(course));
-            return ReturnError();
+            if (await _courseWriteRepository.SaveAsync() < 1) return ReturnError();
+
+            var sendEndpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:course-created-queue"));
+            var headerDictionary = Request.HttpContext.Request.Headers.ToDictionary(a => a.Key, a => string.Join(";", a.Value));
+            
+            var createdCourseCommand = new CourseCreated
+            {
+                CourseId = course.Id,
+                CRN = course.CRN,
+                EndDate = course.EndDate,
+                StartDate = course.StartDate,
+                TimePlaces = course.TimePlaces.Select(i => new CreatedTimePlaces { DayOfWeek = i.DayOfWeek, EndHour = i.EndHour, Id = i.Id, StartHour = i.StartHour }).ToList(),
+                BearerToken = headerDictionary["Authorization"],
+            };
+            
+            await sendEndpoint.Send<CourseCreated>(createdCourseCommand);
+            return ReturnCreated(ObjectMapper.Mapper.Map<QueryCourseDto>(course));
         }
 
         [HttpPost]
@@ -168,7 +188,7 @@ namespace Services.Lesson.API.Controllers
         {
             await _courseUserWriteRepository.RemoveAsync(courseUserId);
             var save = await _courseUserWriteRepository.SaveAsync();
-            if ( save > 0)
+            if (save > 0)
                 return ReturnSuccess();
             return ReturnError();
         }
@@ -233,7 +253,7 @@ namespace Services.Lesson.API.Controllers
             var courseList = courseUser.Select(i => i.Course).ToList();
             if (courseList == null)
                 return ReturnNotFound();
-        return ReturnOk(ObjectMapper.Mapper.Map<List<QueryCourseDto>>(courseList));
+            return ReturnOk(ObjectMapper.Mapper.Map<List<QueryCourseDto>>(courseList));
         }
         //[HttpGet]
         //public async Task<IActionResult> test()

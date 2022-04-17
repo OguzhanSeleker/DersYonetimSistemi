@@ -1,22 +1,18 @@
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Services.Lesson.API.Filters;
 using Services.Lesson.API.Middlewares;
 using Services.Lesson.Infrastructure;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Services.Lesson.API
 {
@@ -40,12 +36,29 @@ namespace Services.Lesson.API
                 options.Audience = "resource_lesson";
                 options.RequireHttpsMetadata = false;
             });
+
+            services.Configure<Models.RabbitMqSettings>(Configuration.GetSection("RabbitMqSettings"));
+            var rabbitmqsettings = Configuration.GetSection("RabbitMqSettings").Get<Models.RabbitMqSettings>();
+            services.Configure<Models.RabbitMqSettings>(Configuration.GetSection("RabbitMqSettings"));
+            services.AddMassTransit(x =>
+            {
+                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+                {
+                    cfg.Host(new Uri(rabbitmqsettings.RabbitMqRootUri), h =>
+                    {
+                        h.Username(rabbitmqsettings.RabbitMqUsername);
+                        h.Password(rabbitmqsettings.RabbitMqPassword);
+                    });
+                }));
+            });
             services.AddHttpContextAccessor();
+            //services.AddMassTransitHostedService();
             services.AddInfraServices(Configuration);
             services.AddScoped<ValidationFilterAttribute>();
             services.AddScoped<ParameterFilterAttribute>();
             services.AddScoped<HttpResponseExceptionFilter>();
-            services.AddControllers(pt => {
+            services.AddControllers(pt =>
+            {
                 pt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
             });
             services.AddSwaggerGen(c =>

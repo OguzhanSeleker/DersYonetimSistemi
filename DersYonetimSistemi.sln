@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32228.343
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{18FC6D21-3059-4F85-806A-18217AC4E844}"
 EndProject
@@ -118,13 +118,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{55F2AEC9-496B-4A56-81A1-C23A3EE5D306}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Attendance.Domain", "Services\Attendance\Core\Services.Attendance.Domain\Services.Attendance.Domain.csproj", "{AC0187A1-D770-4756-AC2F-9E9BED3B8C8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Attendance.Domain", "Services\Attendance\Core\Services.Attendance.Domain\Services.Attendance.Domain.csproj", "{AC0187A1-D770-4756-AC2F-9E9BED3B8C8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Attendance.Infrastructure", "Services\Attendance\Infrastructure\Services.Attendance.Infrastructure\Services.Attendance.Infrastructure.csproj", "{AAB776AB-EA1C-44A5-AE40-A5736555F210}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Attendance.Infrastructure", "Services\Attendance\Infrastructure\Services.Attendance.Infrastructure\Services.Attendance.Infrastructure.csproj", "{AAB776AB-EA1C-44A5-AE40-A5736555F210}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Attendance.API", "Services\Attendance\Presentation\Services.Attendance.API\Services.Attendance.API.csproj", "{CE2CFAC6-8584-4960-AA33-F8F4DC489DB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Attendance.API", "Services\Attendance\Presentation\Services.Attendance.API\Services.Attendance.API.csproj", "{CE2CFAC6-8584-4960-AA33-F8F4DC489DB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Attendance.Application", "Services\Attendance\Core\Services.Attendance.Application\Services.Attendance.Application.csproj", "{FBA55F44-20E0-4C74-BAFD-AF9809C96498}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Attendance.Application", "Services\Attendance\Core\Services.Attendance.Application\Services.Attendance.Application.csproj", "{FBA55F44-20E0-4C74-BAFD-AF9809C96498}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RabbitMqConsumer", "RabbitMqConsumer", "{D21C934B-AA79-4382-8B4F-212EDED57205}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.RabbitMQ.Consumer", "Services\RabbitMqConsumer\Services.RabbitMQ.Consumer\Services.RabbitMQ.Consumer.csproj", "{1E370AA1-804F-4C92-B653-AB2FD66FCBB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -248,6 +252,10 @@ Global
 		{FBA55F44-20E0-4C74-BAFD-AF9809C96498}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBA55F44-20E0-4C74-BAFD-AF9809C96498}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBA55F44-20E0-4C74-BAFD-AF9809C96498}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E370AA1-804F-4C92-B653-AB2FD66FCBB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E370AA1-804F-4C92-B653-AB2FD66FCBB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E370AA1-804F-4C92-B653-AB2FD66FCBB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E370AA1-804F-4C92-B653-AB2FD66FCBB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -307,6 +315,8 @@ Global
 		{AAB776AB-EA1C-44A5-AE40-A5736555F210} = {2546420F-D2C4-400F-B6BF-B52E348B593D}
 		{CE2CFAC6-8584-4960-AA33-F8F4DC489DB8} = {55F2AEC9-496B-4A56-81A1-C23A3EE5D306}
 		{FBA55F44-20E0-4C74-BAFD-AF9809C96498} = {EB3D3697-E5E0-400C-A4A9-3EA351F6FB5B}
+		{D21C934B-AA79-4382-8B4F-212EDED57205} = {18FC6D21-3059-4F85-806A-18217AC4E844}
+		{1E370AA1-804F-4C92-B653-AB2FD66FCBB0} = {D21C934B-AA79-4382-8B4F-212EDED57205}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CC1628FE-1C14-4F5F-9074-308AA558A6A8}

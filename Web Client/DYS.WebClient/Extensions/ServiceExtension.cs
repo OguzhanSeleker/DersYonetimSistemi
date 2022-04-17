@@ -14,8 +14,8 @@ namespace DYS.WebClient.Extensions
         {
             var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
             //services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
-            services.AddHttpClient<IIdentityService, IdentityService>()
-                ;
+            services.AddHttpClient<IIdentityService, IdentityService>();
+
             services.AddHttpClient<INotificationService,NotificationService>(opt =>
             {
                 opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Notification.Path}");

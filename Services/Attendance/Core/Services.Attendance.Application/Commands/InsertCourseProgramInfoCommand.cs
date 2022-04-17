@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Services.Attendance.Application.Commands
 {
-    public class InsertCourseProgramInfoQuery : IRequest<GetCourseProgramInfoDto>
+    public class InsertCourseProgramInfoCommand : IRequest<GetCourseProgramInfoDto>
     {
         public Guid CourseId { get; set; }
         public DateTime StartDate { get; set; }

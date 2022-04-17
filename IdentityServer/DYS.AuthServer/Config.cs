@@ -19,6 +19,7 @@ namespace DYS.AuthServer
             new ApiResource("resource_survey"){ Scopes={ "survey_fullpermission"} },
             new ApiResource("resource_gateway"){Scopes={"gateway_fullpermission"}},
             new ApiResource("resource_fileSystem"){Scopes={"fileSystem_fullpermission"}},
+            new ApiResource("resource_attendance"){Scopes={"attendance_fullpermission"}},
             new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
                 };
 
@@ -40,6 +41,7 @@ namespace DYS.AuthServer
                 new ApiScope("survey_fullpermission","Survey API için full erişim"),
                 new ApiScope("gateway_fullpermission","Gateway API için full erişim"),
                 new ApiScope("fileSystem_fullpermission","Dosya Yönetim API için full erişim"),
+                new ApiScope("attendance_fullpermission","Yoklama API için full erişim"),
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName),
 
             };
@@ -54,7 +56,7 @@ namespace DYS.AuthServer
                     AllowOfflineAccess = true,
                     ClientSecrets={new Secret("secret".Sha256())},
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                    AllowedScopes={ "lesson_fullpermission", "fileSystem_fullpermission", "message_fullpermission", "notification_fullpermission", "survey_fullpermission","gateway_fullpermission",IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.OfflineAccess,"Roles", IdentityServerConstants.LocalApi.ScopeName},
+                    AllowedScopes={ "lesson_fullpermission", "attendance_fullpermission", "fileSystem_fullpermission", "message_fullpermission", "notification_fullpermission", "survey_fullpermission","gateway_fullpermission",IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.OfflineAccess,"Roles", IdentityServerConstants.LocalApi.ScopeName},
                     AccessTokenLifetime = 1*60*60, // 1 saat
                     RefreshTokenExpiration = TokenExpiration.Absolute,
                     AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(60)- DateTime.Now).TotalSeconds,

@@ -35,13 +35,13 @@ namespace DYS.WebClient
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
-            var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
+            services.AddScoped<ISharedIdentityService, SharedIdentityService>();
+            //var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
             services.AddHttpContextAccessor();
             services.AddHttpClientServices(Configuration);
 
             services.AddScoped<ValidationFilterAttribute>();
             services.AddScoped<ParameterFilterAttribute>();
-            services.AddScoped<ISharedIdentityService, SharedIdentityService>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opt =>
             {
                 opt.LoginPath = "/home/index";
