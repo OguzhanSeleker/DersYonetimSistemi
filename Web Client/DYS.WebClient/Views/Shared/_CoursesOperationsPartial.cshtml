@@ -1,0 +1,25 @@
+﻿@model DYS.WebClient.Models.Lesson.QueryCourseDto
+<div class="col-6 col-sm-2 border shadow bg-light mr-2" style="height: 45rem;">
+            <div class="h5 text-dark mt-4 ml-2 p-1">Ders İşlemleri</div>
+            <ul class="list-group list-group-flush bg-light">
+                <li class="list-group-item bg-light"><a href="#">Ders Bilgileri</a></li>
+                @if (User.IsInRole("Admin") || User.IsInRole("Teacher"))
+                {
+                    <li class="list-group-item bg-light"><a asp-controller="Course" asp-action="AddUserToCourse" asp-route-courseId="@Model.Id">Sınıf Kişi İşlemleri</a></li>
+                    <li class="list-group-item bg-light"><a asp-controller="Notification" asp-action="Add" asp-route-courseId="@Model.Id">Duyuru Oluştur</a></li>
+
+                }
+                <li class="list-group-item bg-light"><a asp-controller="Course" asp-action="CourseNotificationList" asp-route-courseId="@Model.Id">Duyurular</a></li>
+                <li class="list-group-item bg-light"><a asp-controller="FileSystem" asp-action="FileOperation" asp-route-courseId="@Model.Id">Sınıf Dosyaları</a></li>
+                <li class="list-group-item bg-light"><a href="#">Mesajlar</a></li>
+                <li class="list-group-item bg-light"><a href="#">Anketler</a></li>
+                <li class="list-group-item bg-light"><a href="#">Ödevler</a></li>
+                <li class="list-group-item bg-light"><a href="#">Kısa Sınavlar</a></li>
+                <li class="list-group-item bg-light">
+                    <a href="#">
+                        Notlandırma
+                    </a>
+                </li>
+                <li class="list-group-item bg-light"><a href="#">Yoklama</a></li>
+            </ul>
+        </div>

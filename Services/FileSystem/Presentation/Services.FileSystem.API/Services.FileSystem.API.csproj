@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\12322\**" />
+    <Compile Remove="wwwroot\24252\**" />
+    <Content Remove="wwwroot\12322\**" />
+    <Content Remove="wwwroot\24252\**" />
+    <EmbeddedResource Remove="wwwroot\12322\**" />
+    <EmbeddedResource Remove="wwwroot\24252\**" />
+    <None Remove="wwwroot\12322\**" />
+    <None Remove="wwwroot\24252\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.15" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\Services.FileSystem.Infrastructure\Services.FileSystem.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+</Project>
