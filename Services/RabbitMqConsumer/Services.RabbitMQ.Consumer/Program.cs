@@ -22,8 +22,7 @@ namespace Services.RabbitMQ.Consumer
                 {
                     services.Configure<ClientSettings>(hostContext.Configuration.GetSection("ClientSettings"));
                     services.Configure<ServiceApiSettings>(hostContext.Configuration.GetSection("ServiceApiSettings"));
-                    //services.AddScoped<ResourceOwnerPasswordTokenHandler>();
-                    //services.AddScoped<BearerTokenHandler>();
+                    services.AddScoped<BearerTokenHandler>();
                     services.AddScoped<ISharedIdentityService, SharedIdentityService>();
                     services.AddScoped<IIdentityService, IdentityService>();
                     services.AddHttpContextAccessor();

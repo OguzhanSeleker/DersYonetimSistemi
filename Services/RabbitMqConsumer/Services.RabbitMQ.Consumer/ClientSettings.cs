@@ -8,7 +8,7 @@ namespace Services.RabbitMQ.Consumer
 {
     public class ClientSettings
     {
-        public Client WebClientForUser { get; set; }
+        public Client ConsumerWorker { get; set; }
     }
     public class Client
     {

@@ -28,7 +28,7 @@ namespace DYS.AuthServer
                 {
                     new IdentityResources.Email(),
                     new IdentityResources.OpenId(),
-                    new IdentityResources.Profile(),                    
+                    new IdentityResources.Profile(),
                     new IdentityResource(){Name = "Roles",DisplayName="Roles",Description="Kullanıcı rolleri",UserClaims= new []{ "role"} }
                 };
 
@@ -61,8 +61,23 @@ namespace DYS.AuthServer
                     RefreshTokenExpiration = TokenExpiration.Absolute,
                     AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(60)- DateTime.Now).TotalSeconds,
                     RefreshTokenUsage = TokenUsage.ReUse
-                    
-                }
+
+                },
+                 new Client
+                 {
+                     ClientName = "Consumer",
+                     ClientId = "ConsumerWorker",
+                     AllowOfflineAccess=true,
+                     ClientSecrets = {new Secret("WorkerSecret".Sha256())},
+                     AllowedGrantTypes = GrantTypes.ClientCredentials,
+                     AllowedScopes = { "lesson_fullpermission", "attendance_fullpermission", IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.OfflineAccess, "Roles", IdentityServerConstants.LocalApi.ScopeName },
+                    AccessTokenLifetime = 1*60*60, // 1 saat
+                    RefreshTokenExpiration = TokenExpiration.Absolute,
+                    AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(60)- DateTime.Now).TotalSeconds,
+                    RefreshTokenUsage = TokenUsage.ReUse
+
+
+                 }
             };
     }
 }

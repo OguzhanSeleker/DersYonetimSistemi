@@ -17,18 +17,17 @@ namespace Services.RabbitMQ.Consumer.Consumers
     public class CourseCreatedConsumer : IConsumer<CourseCreated>
     {
         private readonly IConfiguration Configuration;
-        //private readonly IIdentityService _identityService;
+        private readonly BearerTokenHandler bearerTokenHandler;
 
-        public CourseCreatedConsumer(IConfiguration configuration)
+        public CourseCreatedConsumer(IConfiguration configuration, BearerTokenHandler bearerTokenHandler)
         {
             Configuration = configuration;
+            this.bearerTokenHandler = bearerTokenHandler;
         }
 
         public async Task Consume(ConsumeContext<CourseCreated> context)
         {
-            
-            HttpClient client = new HttpClient(new BearerTokenHandler(context.Message.BearerToken));
-
+            HttpClient client = new HttpClient(bearerTokenHandler);
             var serviceAPISettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
             
             var response = await client.PostAsJsonAsync(serviceAPISettings.AttendanceBaseUri + "api/attendances/CreateCourseInfo", new { CourseId = context.Message.CourseId, StartDate = context.Message.StartDate, EndDate = context.Message.EndDate });
