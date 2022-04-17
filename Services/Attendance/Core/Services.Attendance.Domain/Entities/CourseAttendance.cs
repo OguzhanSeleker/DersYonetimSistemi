@@ -13,7 +13,8 @@ namespace Services.Attendance.Domain.Entities
         public Guid CourseId { get; set; }
         public Guid TimePlaceId { get; set; }
         public int WeekNumber { get; set; }
-        public DateTime WeekDateTime { get; set; }
+        public int WeeklyProgramNumber { get; set; }
+
         [ForeignKey(nameof(CourseProgramInfo))]
         public Guid CourseProgramInfoId { get; set; }
         public CourseProgramInfo CourseProgramInfo { get; set; }

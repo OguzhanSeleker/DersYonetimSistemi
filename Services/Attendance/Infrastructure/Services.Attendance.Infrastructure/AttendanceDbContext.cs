@@ -17,5 +17,11 @@ namespace Services.Attendance.Infrastructure
         public DbSet<CourseProgramInfo> CourseProgramInfos { get; set; }
         public DbSet<CourseAttendance> CourseAttendances { get; set; }
         public DbSet<StudentAttendance> StudentAttendances { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.EnableSensitiveDataLogging();
+            base.OnConfiguring(optionsBuilder);
+        }
     }
 }

@@ -73,16 +73,13 @@ namespace Services.Lesson.API.Controllers
             if (await _courseWriteRepository.SaveAsync() < 1) return ReturnError();
 
             var sendEndpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:course-created-queue"));
-            var headerDictionary = Request.HttpContext.Request.Headers.ToDictionary(a => a.Key, a => string.Join(";", a.Value));
-            
             var createdCourseCommand = new CourseCreated
             {
                 CourseId = course.Id,
                 CRN = course.CRN,
                 EndDate = course.EndDate,
                 StartDate = course.StartDate,
-                TimePlaces = course.TimePlaces.Select(i => new CreatedTimePlaces { DayOfWeek = i.DayOfWeek, EndHour = i.EndHour, Id = i.Id, StartHour = i.StartHour }).ToList(),
-                BearerToken = headerDictionary["Authorization"],
+                TimePlaces = course.TimePlaces.Select(i => new CreatedTimePlaces { DayOfWeek = i.DayOfWeek, EndHour = i.EndHour, Id = i.Id, StartHour = i.StartHour }).ToList()
             };
             
             await sendEndpoint.Send<CourseCreated>(createdCourseCommand);

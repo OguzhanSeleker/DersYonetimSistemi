@@ -33,14 +33,14 @@ namespace Services.Lesson.Infrastructure
                         break;
                     case EntityState.Deleted:
                         entity.Entity.Deleted = true;
-                        entity.Entity.DeletedDate = DateTime.UtcNow;
+                        entity.Entity.DeletedDate = DateTime.Now;
                         break;
                     case EntityState.Modified:
-                        entity.Entity.UpdatedDate = DateTime.UtcNow;
+                        entity.Entity.UpdatedDate = DateTime.Now;
                         
                         break;
                     case EntityState.Added:
-                        entity.Entity.CreatedDate = DateTime.UtcNow;
+                        entity.Entity.CreatedDate = DateTime.Now;
                         entity.Entity.UpdatedDate = null;
                         entity.Entity.Deleted = false;
                         entity.Entity.DeletedDate = null;

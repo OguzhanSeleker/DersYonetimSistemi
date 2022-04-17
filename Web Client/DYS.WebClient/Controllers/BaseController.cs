@@ -44,16 +44,17 @@ namespace DYS.WebClient.Controllers
 
             var userNameSurname = User.Identity.Name;
             var getUserLessons = await lessonService.GetLessonlistByUserId(_sharedIdentityService.GetUserId);
+            var getUserLessonsIdLİst = getUserLessons.ToLookup(i => i.Id).ToList();
             var sidebarLessonList = new List<SideBarLessonModel>();
             if (getUserLessons != null)
             {
-                foreach (var userLesson in getUserLessons)
+                foreach (var userLesson in getUserLessonsIdLİst)
                 {
-                    var courseList = await lessonService.GetCourseListByLessonIdAndUserId(userLesson.Id.ToString(), _sharedIdentityService.GetUserId);
+                    var courseList = await lessonService.GetCourseListByLessonIdAndUserId(userLesson.Key.ToString(), _sharedIdentityService.GetUserId);
                     var sidebarlesson = new SideBarLessonModel
                     {
-                        LessonName = userLesson.NameTR,
-                        LessonCode = userLesson.Code,
+                        LessonName = userLesson.FirstOrDefault().NameTR,
+                        LessonCode = userLesson.FirstOrDefault().Code,
                         LessonCourseModelList = courseList.ToList().Select(i => new SideBarLessonCourseModel { CourseCRN = i.CRN, CourseId = i.Id.ToString() }).ToList()
                     };
                     sidebarLessonList.Add(sidebarlesson);

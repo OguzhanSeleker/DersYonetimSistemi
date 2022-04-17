@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Attendance.Domain.Dtos
+namespace Services.RabbitMQ.Consumer.Models
 {
     public class AddCourseAttendanceDto
     {

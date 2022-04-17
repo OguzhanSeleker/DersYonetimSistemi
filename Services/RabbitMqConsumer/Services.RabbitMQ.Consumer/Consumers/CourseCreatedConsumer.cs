@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using Services.RabbitMQ.Consumer.Services;
+using Services.RabbitMQ.Consumer.Models;
 using SharedLibrary.RabbitMQClasses;
 using System;
 using System.Collections.Generic;
@@ -29,11 +29,31 @@ namespace Services.RabbitMQ.Consumer.Consumers
         {
             HttpClient client = new HttpClient(bearerTokenHandler);
             var serviceAPISettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
-            
-            var response = await client.PostAsJsonAsync(serviceAPISettings.AttendanceBaseUri + "api/attendances/CreateCourseInfo", new { CourseId = context.Message.CourseId, StartDate = context.Message.StartDate, EndDate = context.Message.EndDate });
+
+            var response = await client.PostAsJsonAsync(serviceAPISettings.AttendanceBaseUri + "CreateCourseInfo", new { CourseId = context.Message.CourseId, StartDate = context.Message.StartDate, EndDate = context.Message.EndDate });
             if (response.IsSuccessStatusCode)
             {
-                //context.
+                var totalDays = (context.Message.EndDate.Date - context.Message.StartDate.Date).Days;
+                var totalWeeks = totalDays / 7;
+                List<AddCourseAttendanceDto> attendances = new List<AddCourseAttendanceDto>();
+                for (int i = 0; i < totalWeeks; i++)
+                {
+                    for (int j = 0; j < context.Message.TimePlaces.Count(); j++)
+                    {
+                        AddCourseAttendanceDto model = new AddCourseAttendanceDto
+                        {
+                            CourseId = context.Message.CourseId,
+                            TimePlaceId = context.Message.TimePlaces[j].Id,
+                            WeeklyProgramNumber = j + 1,
+                            WeekNumber = i + 1,
+                        };
+                        attendances.Add(model);
+                    }
+
+                }
+                var attendanceResponse = await client.PostAsJsonAsync(serviceAPISettings.AttendanceBaseUri + "CreateCourseAttendanceList", attendances);
+                if (!attendanceResponse.IsSuccessStatusCode)
+                    throw new Exception();
             }
         }
     }

@@ -2,7 +2,6 @@ using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Services.RabbitMQ.Consumer.Consumers;
-using Services.RabbitMQ.Consumer.Services;
 using SharedLibrary.Services;
 using System;
 using System.Net.Http;
@@ -23,8 +22,6 @@ namespace Services.RabbitMQ.Consumer
                     services.Configure<ClientSettings>(hostContext.Configuration.GetSection("ClientSettings"));
                     services.Configure<ServiceApiSettings>(hostContext.Configuration.GetSection("ServiceApiSettings"));
                     services.AddScoped<BearerTokenHandler>();
-                    services.AddScoped<ISharedIdentityService, SharedIdentityService>();
-                    services.AddScoped<IIdentityService, IdentityService>();
                     services.AddHttpContextAccessor();
                     services.Configure<RabbitMqSettings>(hostContext.Configuration.GetSection("RabbitMqSettings"));
                     services.AddMassTransit(x =>
@@ -41,10 +38,27 @@ namespace Services.RabbitMQ.Consumer
 
                             cfg.ReceiveEndpoint("course-created-queue", e =>
                             {
-                                 e.ConfigureConsumer<CourseCreatedConsumer>(config);
+                                e.ConfigureConsumer<CourseCreatedConsumer>(config);
+                                e.UseMessageRetry(i => i.Immediate(5));
+
+
                             });
                         });
                     });
+                    services.AddOptions<MassTransitHostOptions>()
+                        .Configure(options =>
+                        {
+                            // if specified, waits until the bus is started before
+                            // returning from IHostedService.StartAsync
+                            // default is false
+                            options.WaitUntilStarted = true;
+
+                            // if specified, limits the wait time when starting the bus
+                            options.StartTimeout = TimeSpan.FromSeconds(10);
+
+                            // if specified, limits the wait time when stopping the bus
+                            options.StopTimeout = TimeSpan.FromSeconds(30);
+                        });
                     //services.AddHostedService<Worker>();
                 });
     }

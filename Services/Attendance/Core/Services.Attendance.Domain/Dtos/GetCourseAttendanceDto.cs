@@ -12,7 +12,8 @@ namespace Services.Attendance.Domain.Dtos
         public Guid CourseId { get; set; }
         public Guid TimePlaceId { get; set; }
         public int WeekNumber { get; set; }
-        public DateTime WeekDateTime { get; set; }
+        public int WeeklyProgramNumber { get; set; }
+
         public Guid CourseProgramInfoId { get; set; }
         public virtual ICollection<GetStudentAttendanceDto> StudentAttendances { get; set; }
         public DateTime CreatedDate { get; set; }
