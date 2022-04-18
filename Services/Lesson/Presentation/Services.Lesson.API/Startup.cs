@@ -39,7 +39,6 @@ namespace Services.Lesson.API
 
             services.Configure<Models.RabbitMqSettings>(Configuration.GetSection("RabbitMqSettings"));
             var rabbitmqsettings = Configuration.GetSection("RabbitMqSettings").Get<Models.RabbitMqSettings>();
-            services.Configure<Models.RabbitMqSettings>(Configuration.GetSection("RabbitMqSettings"));
             services.AddMassTransit(x =>
             {
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>

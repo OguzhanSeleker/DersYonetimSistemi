@@ -10,6 +10,7 @@ namespace Services.RabbitMQ.Consumer
     {
         public string RabbitMqRootUri { get; set; }
         public string RabbitMqCourseCreatedQueue { get; set; }
+        public string RabbitMqCourseUserCreatedQueue { get; set; }
         public string RabbitMqUsername { get; set; }
         public string RabbitMqPassword { get; set; }
         public string RabbitMqLessonServiceQueue { get; set; }

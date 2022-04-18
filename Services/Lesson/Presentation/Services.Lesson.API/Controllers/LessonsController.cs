@@ -34,9 +34,8 @@ namespace Services.Lesson.API.Controllers
         private readonly ITimePlaceReadRepository _timePlaceReadRepository;
         private readonly ITimePlaceWriteRepository _timePlaceWriteRepository;
         #endregion
-        private readonly IPublishEndpoint _publishEndpoint;
         private readonly ISendEndpointProvider _sendEndpointProvider;
-        public LessonsController(ILessonWriteRepository lessonWriteRepository, ILessonReadRepository lessonReadRepository, ICourseReadRepository courseReadRepository, ICourseWriteRepository courseWriteRepository, ICourseUserReadRepository courseUserReadRepository, ICourseUserWriteRepository courseUserWriteRepository, IRoleInCourseReadRepository roleInCourseReadRepository, IRoleInCourseWriteRepository roleInCourseWriteRepository, ITimePlaceReadRepository timePlaceReadRepository, ITimePlaceWriteRepository timePlaceWriteRepository, IPublishEndpoint publishEndpoint, ISendEndpointProvider sendEndpointProvider)
+        public LessonsController(ILessonWriteRepository lessonWriteRepository, ILessonReadRepository lessonReadRepository, ICourseReadRepository courseReadRepository, ICourseWriteRepository courseWriteRepository, ICourseUserReadRepository courseUserReadRepository, ICourseUserWriteRepository courseUserWriteRepository, IRoleInCourseReadRepository roleInCourseReadRepository, IRoleInCourseWriteRepository roleInCourseWriteRepository, ITimePlaceReadRepository timePlaceReadRepository, ITimePlaceWriteRepository timePlaceWriteRepository, ISendEndpointProvider sendEndpointProvider)
         {
             _lessonWriteRepository = lessonWriteRepository;
             _lessonReadRepository = lessonReadRepository;
@@ -48,7 +47,6 @@ namespace Services.Lesson.API.Controllers
             _roleInCourseWriteRepository = roleInCourseWriteRepository;
             _timePlaceReadRepository = timePlaceReadRepository;
             _timePlaceWriteRepository = timePlaceWriteRepository;
-            _publishEndpoint = publishEndpoint;
             _sendEndpointProvider = sendEndpointProvider;
         }
 
@@ -81,7 +79,7 @@ namespace Services.Lesson.API.Controllers
                 StartDate = course.StartDate,
                 TimePlaces = course.TimePlaces.Select(i => new CreatedTimePlaces { DayOfWeek = i.DayOfWeek, EndHour = i.EndHour, Id = i.Id, StartHour = i.StartHour }).ToList()
             };
-            
+
             await sendEndpoint.Send<CourseCreated>(createdCourseCommand);
             return ReturnCreated(ObjectMapper.Mapper.Map<QueryCourseDto>(course));
         }
@@ -92,9 +90,19 @@ namespace Services.Lesson.API.Controllers
         public async Task<IActionResult> InsertCourseUser(InsertCourseUserDto insertCourseUserDto)
         {
             await _courseUserWriteRepository.AddAsync(ObjectMapper.Mapper.Map<CourseUser>(insertCourseUserDto));
-            if (await _courseUserWriteRepository.SaveAsync() > 0)
-                return ReturnCreated();
-            return ReturnError();
+            if (await _courseUserWriteRepository.SaveAsync() < 1)
+                return ReturnError();
+            if (insertCourseUserDto.RoleInCourseId == Guid.Parse(RoleInCourse.Ogrenci))
+            {
+                var sendEndpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:course-user-created-queue"));
+                var createdCourseUserCommand = new CourseUserCreated
+                {
+                    CourseId = insertCourseUserDto.CourseId,
+                    StudentId = insertCourseUserDto.UserId
+                };
+                await sendEndpoint.Send<CourseUserCreated>(createdCourseUserCommand);
+            }
+            return ReturnCreated();
         }
 
         [HttpPost]
@@ -103,9 +111,24 @@ namespace Services.Lesson.API.Controllers
         public async Task<IActionResult> InsertCourseUserList(List<InsertCourseUserDto> insertCourseUserDtos)
         {
             await _courseUserWriteRepository.AddRangeAsync(ObjectMapper.Mapper.Map<List<CourseUser>>(insertCourseUserDtos));
-            if (await _courseUserWriteRepository.SaveAsync() > 0)
-                return ReturnCreated();
-            return ReturnError();
+            if (await _courseUserWriteRepository.SaveAsync() < 1)
+                return ReturnError();
+
+            insertCourseUserDtos.ForEach(i =>
+            {
+                if (i.RoleInCourseId == Guid.Parse(RoleInCourse.Ogrenci))
+                {
+                    var sendEndpoint = _sendEndpointProvider.GetSendEndpoint(new Uri("queue:course-user-created-queue"));
+                    var createdCourseUserCommand = new CourseUserCreated
+                    {
+                        CourseId = i.CourseId,
+                        StudentId = i.UserId
+                    };
+                    sendEndpoint.Wait();
+                    sendEndpoint.Result.Send<CourseUserCreated>(createdCourseUserCommand);
+                }
+            });
+            return ReturnCreated();
         }
 
         [HttpGet]
