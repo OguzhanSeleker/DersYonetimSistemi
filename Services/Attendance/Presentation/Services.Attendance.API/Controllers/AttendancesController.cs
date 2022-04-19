@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Services.Attendance.API.Models;
 using Services.Attendance.Application.Commands;
 using Services.Attendance.Application.Queries;
 using Services.Attendance.Domain.Dtos;
@@ -45,7 +46,16 @@ namespace Services.Attendance.API.Controllers
         [Route("CreateStudentAttendance")]
         public async Task<IActionResult> CreateStudentAttendance(CreateStudentAttendanceModel createStudentAttendanceModel)
         {
-
+            if (!ModelState.IsValid) return ReturnBadMessage(string.Join(",", ModelState.Values));
+            var getCourseInfo = await _mediator.Send(new GetCourseProgramInfoByCourseIdQuery { CourseId = createStudentAttendanceModel.CourseId });
+            if (getCourseInfo == null) return ReturnNotFound();
+            var getCourseAttendance = await _mediator.Send(new GetCourseAttendanceByCourseIdQuery { CourseId = createStudentAttendanceModel.CourseId });
+            if (getCourseAttendance == null) return ReturnNotFound();
+            foreach (var item in getCourseAttendance)
+            {
+                var createStudentAttendanceProgram = await _mediator.Send(new CreateStudentAttendanceCommand { AddStudentAttendanceDto = new AddStudentAttendanceDto { CourseAttendanceId = item.Id, IsMarked = false, StudentId = createStudentAttendanceModel.StudentId } });
+            }
+            return ReturnCreated();
         }
 
     }

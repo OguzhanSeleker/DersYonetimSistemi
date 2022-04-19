@@ -31,7 +31,7 @@ namespace Services.RabbitMQ.Consumer
                     services.AddMassTransit(x =>
                     {
                         x.AddConsumer<CourseCreatedConsumer>();
-
+                        x.AddConsumer<CourseUserCreatedConsumer>();
                         x.UsingRabbitMq((config, cfg) =>
                         {
                             cfg.Host(new Uri(rabbitMqSettings.RabbitMqRootUri), host =>

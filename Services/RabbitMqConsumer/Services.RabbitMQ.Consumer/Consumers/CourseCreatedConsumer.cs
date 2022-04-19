@@ -36,7 +36,7 @@ namespace Services.RabbitMQ.Consumer.Consumers
             if (response.IsSuccessStatusCode)
             {
                 var totalDays = (context.Message.EndDate.Date - context.Message.StartDate.Date).Days;
-                var totalWeeks = totalDays / 7;
+                var totalWeeks = totalDays / 7 + 1;
                 List<AddCourseAttendanceDto> attendances = new List<AddCourseAttendanceDto>();
                 for (int i = 0; i < totalWeeks; i++)
                 {
