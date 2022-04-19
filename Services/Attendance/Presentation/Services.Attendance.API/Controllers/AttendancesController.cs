@@ -41,6 +41,12 @@ namespace Services.Attendance.API.Controllers
             if(entities == null) return ReturnError();
             return ReturnCreated(entities);
         }
+        [HttpPost]
+        [Route("CreateStudentAttendance")]
+        public async Task<IActionResult> CreateStudentAttendance(CreateStudentAttendanceModel createStudentAttendanceModel)
+        {
+
+        }
 
     }
 }
