@@ -1,9 +1,11 @@
-using MassTransit;
+using MassTransit;  
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
 using Services.RabbitMQ.Consumer.Consumers;
 using SharedLibrary.Services;
 using System;
+using System.Configuration;
 using System.Net.Http;
 
 namespace Services.RabbitMQ.Consumer
@@ -21,27 +23,34 @@ namespace Services.RabbitMQ.Consumer
                 {
                     services.Configure<ClientSettings>(hostContext.Configuration.GetSection("ClientSettings"));
                     services.Configure<ServiceApiSettings>(hostContext.Configuration.GetSection("ServiceApiSettings"));
+                    var serviceApiSettings = hostContext.Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
                     services.AddScoped<BearerTokenHandler>();
                     services.AddHttpContextAccessor();
                     services.Configure<RabbitMqSettings>(hostContext.Configuration.GetSection("RabbitMqSettings"));
+                    var rabbitMqSettings = hostContext.Configuration.GetSection("RabbitMqSettings").Get<RabbitMqSettings>();
                     services.AddMassTransit(x =>
                     {
                         x.AddConsumer<CourseCreatedConsumer>();
-
+                        x.AddConsumer<CourseUserCreatedConsumer>();
                         x.UsingRabbitMq((config, cfg) =>
                         {
-                            cfg.Host(new Uri(hostContext.Configuration.GetSection("RabbitMqSettings")["RabbitMqRootUri"]), host =>
+                            cfg.Host(new Uri(rabbitMqSettings.RabbitMqRootUri), host =>
                             {
-                                host.Username(hostContext.Configuration.GetSection("RabbitMqSettings")["RabbitMqUsername"]);
-                                host.Password(hostContext.Configuration.GetSection("RabbitMqSettings")["RabbitMqPassword"]);
+                                host.Username(rabbitMqSettings.RabbitMqUsername);
+                                host.Password(rabbitMqSettings.RabbitMqPassword);
                             });
 
-                            cfg.ReceiveEndpoint("course-created-queue", e =>
+                            cfg.ReceiveEndpoint(rabbitMqSettings.RabbitMqCourseCreatedQueue, e =>
                             {
                                 e.ConfigureConsumer<CourseCreatedConsumer>(config);
                                 e.UseMessageRetry(i => i.Immediate(5));
 
 
+                            });
+                            cfg.ReceiveEndpoint(rabbitMqSettings.RabbitMqCourseUserCreatedQueue, e =>
+                            {
+                                e.ConfigureConsumer<CourseUserCreatedConsumer>(config);
+                                e.UseMessageRetry(i => i.Immediate(5));
                             });
                         });
                     });

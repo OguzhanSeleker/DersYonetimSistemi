@@ -13,7 +13,6 @@ namespace SharedLibrary.RabbitMQClasses
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public IList<CreatedTimePlaces> TimePlaces{ get; set; }
-        public string BearerToken { get; set; }
 
     }
 }

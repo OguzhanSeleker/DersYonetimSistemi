@@ -1,5 +1,6 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Services.RabbitMQ.Consumer.Models;
 using SharedLibrary.RabbitMQClasses;
@@ -18,23 +19,24 @@ namespace Services.RabbitMQ.Consumer.Consumers
     {
         private readonly IConfiguration Configuration;
         private readonly BearerTokenHandler bearerTokenHandler;
+        private readonly ServiceApiSettings serviceApiSettings;
 
-        public CourseCreatedConsumer(IConfiguration configuration, BearerTokenHandler bearerTokenHandler)
+        public CourseCreatedConsumer(IConfiguration configuration, BearerTokenHandler bearerTokenHandler, IOptions<ServiceApiSettings> serviceApiSettings)
         {
             Configuration = configuration;
             this.bearerTokenHandler = bearerTokenHandler;
+            this.serviceApiSettings = serviceApiSettings.Value;
         }
 
         public async Task Consume(ConsumeContext<CourseCreated> context)
         {
             HttpClient client = new HttpClient(bearerTokenHandler);
-            var serviceAPISettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
 
-            var response = await client.PostAsJsonAsync(serviceAPISettings.AttendanceBaseUri + "CreateCourseInfo", new { CourseId = context.Message.CourseId, StartDate = context.Message.StartDate, EndDate = context.Message.EndDate });
+            var response = await client.PostAsJsonAsync(serviceApiSettings.AttendanceBaseUri + "CreateCourseInfo", new { CourseId = context.Message.CourseId, StartDate = context.Message.StartDate, EndDate = context.Message.EndDate });
             if (response.IsSuccessStatusCode)
             {
                 var totalDays = (context.Message.EndDate.Date - context.Message.StartDate.Date).Days;
-                var totalWeeks = totalDays / 7;
+                var totalWeeks = totalDays / 7 + 1;
                 List<AddCourseAttendanceDto> attendances = new List<AddCourseAttendanceDto>();
                 for (int i = 0; i < totalWeeks; i++)
                 {
@@ -51,7 +53,7 @@ namespace Services.RabbitMQ.Consumer.Consumers
                     }
 
                 }
-                var attendanceResponse = await client.PostAsJsonAsync(serviceAPISettings.AttendanceBaseUri + "CreateCourseAttendanceList", attendances);
+                var attendanceResponse = await client.PostAsJsonAsync(serviceApiSettings.AttendanceBaseUri + "CreateCourseAttendanceList", attendances);
                 if (!attendanceResponse.IsSuccessStatusCode)
                     throw new Exception();
             }
