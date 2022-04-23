@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +18,21 @@ namespace Services.Notification.API
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args).ConfigureLogging(conf =>
+            Host.CreateDefaultBuilder(args)
+            .UseSerilog((ctx, provider, loggerConfig) =>
             {
-                conf.ClearProviders();
-                conf.AddDebug();
-                conf.AddConsole();
+                loggerConfig
+                        .ReadFrom.Configuration(ctx.Configuration)
+                        .Enrich.FromLogContext()
+                        .WriteTo.Console()
+                        .WriteTo.Seq("http://localhost:5341");
             })
+                //.ConfigureLogging(conf =>
+                //{
+                //    conf.ClearProviders();
+                //    conf.AddDebug();
+                //    conf.AddConsole();
+                //})
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
