@@ -51,7 +51,7 @@ namespace Services.FileSystem.API
             services.AddScoped<ParameterFilterAttribute>();
             services.AddScoped<HttpResponseExceptionFilter>();
             services.AddScoped<IFileMetadataService, FileMetadataService>();
-
+            services.AddHealthChecks();
             services.Configure<DatabaseSettings>(Configuration.GetSection("DatabaseSettings"));
 
             services.AddSingleton<IDatabaseSettings>(sp =>
@@ -76,7 +76,7 @@ namespace Services.FileSystem.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Services.FileSystem.API v1"));
             }
             app.UseStaticFiles();
-            app.UseMiddleware<RequestResponseLoggingMiddleware>();
+            app.UseFileSystemRequestLogging();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
