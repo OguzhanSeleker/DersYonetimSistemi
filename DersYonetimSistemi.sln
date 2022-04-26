@@ -128,7 +128,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Attendance.Applica
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RabbitMqConsumer", "RabbitMqConsumer", "{D21C934B-AA79-4382-8B4F-212EDED57205}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.RabbitMQ.Consumer", "Services\RabbitMqConsumer\Services.RabbitMQ.Consumer\Services.RabbitMQ.Consumer.csproj", "{1E370AA1-804F-4C92-B653-AB2FD66FCBB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.RabbitMQ.Consumer", "Services\RabbitMqConsumer\Services.RabbitMQ.Consumer\Services.RabbitMQ.Consumer.csproj", "{1E370AA1-804F-4C92-B653-AB2FD66FCBB0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Homework", "Homework", "{C49B3848-AD32-41CA-8208-64C1BE6E33A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -317,6 +319,7 @@ Global
 		{FBA55F44-20E0-4C74-BAFD-AF9809C96498} = {EB3D3697-E5E0-400C-A4A9-3EA351F6FB5B}
 		{D21C934B-AA79-4382-8B4F-212EDED57205} = {18FC6D21-3059-4F85-806A-18217AC4E844}
 		{1E370AA1-804F-4C92-B653-AB2FD66FCBB0} = {D21C934B-AA79-4382-8B4F-212EDED57205}
+		{C49B3848-AD32-41CA-8208-64C1BE6E33A5} = {18FC6D21-3059-4F85-806A-18217AC4E844}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CC1628FE-1C14-4F5F-9074-308AA558A6A8}
