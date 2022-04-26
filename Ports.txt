@@ -10,6 +10,6 @@ Attendance   => 5017 -->5437
 
 docker run -d --hostname dys-rabbit --name dys-rabbit -p 5672:5672 -p 15672:15672 -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=123456 rabbitmq:3-management
 
-
+docker run --name seq -d --restart unless-stopped -e ACCEPT_EULA=Y -p 5341:80 datalust/seq:latest
 
 http://host.docker.internal:5341
