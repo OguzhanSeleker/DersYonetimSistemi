@@ -38,6 +38,7 @@ namespace Services.Notification.API
             services.AddHttpContextAccessor();
             services.AddControllers(opt => { opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy)); });
             services.AddPersistenceServices(Configuration);
+            services.AddHealthChecks();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

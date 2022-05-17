@@ -131,7 +131,7 @@ namespace DYS.WebClient.Controllers
             {
                 Course = course,
                 Lesson = lesson,
-                NotificationList = notifListInCourse.Select(i => new NotificationViewModel { CourseId = i.CourseId.ToString(), CourseName = lesson.NameTR, CreatedDate = i.CreatedDate, Deleted = i.Deleted, Description = i.Description, Id = i.Id, Priority = i.Priority, Title = i.Title, UpdatedDate = i.UpdatedDate, WriterFullname = _userService.GetUserById(i.WriterId.ToString()).Result.FullName, WriterId = i.WriterId.ToString() }).ToList(),
+                NotificationList = notifListInCourse != null && notifListInCourse.Count > 0 ? notifListInCourse.Select(i => new NotificationViewModel { CourseId = i.CourseId.ToString(), CourseName = lesson.NameTR, CreatedDate = i.CreatedDate, Deleted = i.Deleted, Description = i.Description, Id = i.Id, Priority = i.Priority, Title = i.Title, UpdatedDate = i.UpdatedDate, WriterFullname = _userService.GetUserById(i.WriterId.ToString()).Result.FullName, WriterId = i.WriterId.ToString() }).ToList() : null,
                 SideBarViewModel = await GetSideBarInfo(_lessonService),
             };
             return View(model);

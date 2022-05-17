@@ -88,8 +88,6 @@ namespace DYS.WebClient.Controllers
                 WriterId = Guid.Parse(model.FormModel.WriterId)
             };
             var addedNotif = await _notificationService.AddNotificationAsync(addnotif);
-            if (addedNotif == null)
-                throw new Exception();
             return RedirectToAction("Detail", "Course", new { id = model.FormModel.CourseId });
         }
     }
