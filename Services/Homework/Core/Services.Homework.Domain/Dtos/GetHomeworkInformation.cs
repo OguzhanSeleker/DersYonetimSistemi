@@ -1,13 +1,12 @@
-﻿using Services.Homework.Domain.Entities.Base;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Homework.Domain.Entities
+namespace Services.Homework.Domain.Dtos
 {
-    public class HomeworkInformation : BaseEntity
+    public class GetHomeworkInformation
     {
         public string HomeworkTitle { get; set; }
         public string HomeworkDescription { get; set; }
@@ -16,5 +15,9 @@ namespace Services.Homework.Domain.Entities
         public DateTime StartDate { get; set; }
         public DateTime DueDate { get; set; }
         public bool Active { get; set; }
+        public string Id { get; set; }
+        public DateTime UploadDate { get; set; }
+        public string UploadBy { get; set; }
+        public bool Deleted { get; set; }
     }
 }

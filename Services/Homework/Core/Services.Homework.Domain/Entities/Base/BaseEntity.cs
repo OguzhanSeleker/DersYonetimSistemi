@@ -13,8 +13,8 @@ namespace Services.Homework.Domain.Entities.Base
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public string CreatedBy { get; set; }
+        public DateTime UploadDate { get; set; }
+        public string UploadBy { get; set; }
         public bool Deleted { get; set; }
     }
 }
