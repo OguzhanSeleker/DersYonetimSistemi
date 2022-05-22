@@ -12,7 +12,6 @@ namespace Services.Homework.Application.Services.BaseRepository
     public interface IRepository<T> where T : BaseEntity, new()
     {
         IMongoCollection<T> Collection { get; }
-
         IQueryable<T> GetAll(bool tracking = true);
         IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true);
         Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true);

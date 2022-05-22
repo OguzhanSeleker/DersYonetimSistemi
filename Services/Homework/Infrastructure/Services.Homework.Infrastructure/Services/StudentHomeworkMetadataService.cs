@@ -28,11 +28,6 @@ namespace Services.Homework.Infrastructure.Services
             
         }
 
-        public Task<bool> AddRangeAsync(List<StudentHomeworkMetadata> modelList)
-        {
-            
-        }
-
         public IQueryable<StudentHomeworkMetadata> GetAll(bool tracking = true)
         {
             
