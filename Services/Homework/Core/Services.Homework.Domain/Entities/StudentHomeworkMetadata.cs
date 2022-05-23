@@ -9,7 +9,7 @@ namespace Services.Homework.Domain.Entities
 {
     public class StudentHomeworkMetadata : BaseEntity
     {
-        public string HomeworkInformation { get; set; }
+        public string HomeworkInformationId { get; set; }
         public string FullPath { get; set; }
         public string ShortPath { get; set; }
         public string Extension { get; set; }

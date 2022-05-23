@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Homework.Domain.Mapping
+namespace Services.Homework.Application.Mapping
 {
     public static class ObjectMapper
     {

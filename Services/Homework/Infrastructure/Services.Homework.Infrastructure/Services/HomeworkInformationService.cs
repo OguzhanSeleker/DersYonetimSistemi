@@ -35,27 +35,33 @@ namespace Services.Homework.Infrastructure.Services
 
         public async Task<HomeworkInformation> GetByIdAsync(string Id, bool tracking = true)
         {
-            
+            var entity = await Collection.Find(i => i.Id == Id && !i.Deleted).FirstOrDefaultAsync();
+            if (entity == null) return null;
+            return entity;
         }
 
-        public Task<HomeworkInformation> GetSingleAsync(Expression<Func<HomeworkInformation, bool>> method, bool tracking = true)
-        {
-            
-        }
 
-        public IQueryable<HomeworkInformation> GetWhere(Expression<Func<HomeworkInformation, bool>> method, bool tracking = true)
+        public async Task RemoveAsync(string id)
         {
-            
-        }
-
-        public Task RemoveAsync(string id)
-        {
-            
+            var entity = await Collection
+                .Find(i => i.Id == id && !i.Deleted)
+                .FirstOrDefaultAsync();
+            if (entity == null) throw new Exception("Not Found");
+            var save = await Collection.UpdateOneAsync(Builders<HomeworkInformation>.Filter.Eq(i => i.Id, entity.Id), Builders<HomeworkInformation>.Update.Set(i => i.Deleted, true));
         }
 
         public bool Update(HomeworkInformation model)
         {
-            
+            var filter = Builders<HomeworkInformation>.Filter.Eq(i => i.Id, model.Id);
+            var res = Collection.ReplaceOne(filter, model);
+            return res.IsModifiedCountAvailable;
+        }
+
+        public async Task<HomeworkInformation> GetByCourseId(string courseId)
+        {
+            var entity = await Collection.Find(i => i.CourseId == courseId && !i.Deleted).FirstOrDefaultAsync();
+            if (entity == null) return null;
+            return entity;
         }
     }
 }

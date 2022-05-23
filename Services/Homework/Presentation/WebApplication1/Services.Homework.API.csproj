@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IdentityModel" Version="5.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.17" />
+    <PackageReference Include="Serilog.AspNetCore" Version="5.0.1-dev-00264" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="3.1.1-dev-10301" />
+    <PackageReference Include="Serilog.Sinks.Seq" Version="5.1.2-dev-00222" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Services.Homework.Application\Services.Homework.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Services.Homework.Infrastructure\Services.Homework.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

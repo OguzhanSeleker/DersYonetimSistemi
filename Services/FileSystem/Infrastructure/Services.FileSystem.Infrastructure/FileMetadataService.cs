@@ -62,7 +62,7 @@ namespace Services.FileSystem.Infrastructure
             try
             {
                 var entity = await _collection.Find(i => i.Id == id && !i.Deleted).FirstAsync();
-                if (entity == null) throw new Exception("Not Found");
+                if (entity == null) return null;
                 return OperationResult<GetFileSystemDto>.OkSuccessResult(ObjectMapper.Mapper.Map<GetFileSystemDto>(entity));
             }
             catch (Exception ex)
@@ -76,7 +76,7 @@ namespace Services.FileSystem.Infrastructure
             try
             {
                 var entityList = await _collection.Find(i => i.CourseId == courseId && !i.Deleted).SortByDescending(i => i.CreatedDate).ToListAsync();
-                if(entityList == null) throw new Exception("Not Found");
+                if(entityList == null) return null;
                 return OperationResult<List<GetFileSystemDto>>.OkSuccessResult(ObjectMapper.Mapper.Map<List<GetFileSystemDto>>(entityList));
             }
             catch (Exception ex)

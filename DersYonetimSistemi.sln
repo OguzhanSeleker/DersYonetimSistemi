@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.1.32407.343
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{18FC6D21-3059-4F85-806A-18217AC4E844}"
 EndProject
@@ -140,9 +140,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Homework.Domain", "Services\Homework\Core\Services.Homework.Domain\Services.Homework.Domain.csproj", "{02B9854F-88C4-4F1E-8D96-D27FF01FDB2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Homework.Application", "Services\Homework\Core\Services.Homework.Application\Services.Homework.Application.csproj", "{41223D8D-DFCF-45EA-8407-93E1A2BEA143}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Homework.Application", "Services\Homework\Core\Services.Homework.Application\Services.Homework.Application.csproj", "{41223D8D-DFCF-45EA-8407-93E1A2BEA143}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Homework.Infrastructure", "Services\Homework\Infrastructure\Services.Homework.Infrastructure\Services.Homework.Infrastructure.csproj", "{7FEF7AB8-4CD6-4401-93FC-9C325D6DD4F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Homework.Infrastructure", "Services\Homework\Infrastructure\Services.Homework.Infrastructure\Services.Homework.Infrastructure.csproj", "{7FEF7AB8-4CD6-4401-93FC-9C325D6DD4F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Homework.API", "Services\Homework\Presentation\WebApplication1\Services.Homework.API.csproj", "{1FB63AAA-3D7A-415C-8146-CF8D1AA1C356}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -282,6 +284,10 @@ Global
 		{7FEF7AB8-4CD6-4401-93FC-9C325D6DD4F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FEF7AB8-4CD6-4401-93FC-9C325D6DD4F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FEF7AB8-4CD6-4401-93FC-9C325D6DD4F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FB63AAA-3D7A-415C-8146-CF8D1AA1C356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FB63AAA-3D7A-415C-8146-CF8D1AA1C356}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FB63AAA-3D7A-415C-8146-CF8D1AA1C356}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FB63AAA-3D7A-415C-8146-CF8D1AA1C356}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -350,6 +356,7 @@ Global
 		{02B9854F-88C4-4F1E-8D96-D27FF01FDB2D} = {D7109594-5C98-4585-8413-FD476DA30DE2}
 		{41223D8D-DFCF-45EA-8407-93E1A2BEA143} = {D7109594-5C98-4585-8413-FD476DA30DE2}
 		{7FEF7AB8-4CD6-4401-93FC-9C325D6DD4F6} = {914D4CD5-057A-4F82-960C-7AB2B95EE994}
+		{1FB63AAA-3D7A-415C-8146-CF8D1AA1C356} = {F5AE56BB-0F5A-459E-9976-D2BC1D15BB10}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CC1628FE-1C14-4F5F-9074-308AA558A6A8}

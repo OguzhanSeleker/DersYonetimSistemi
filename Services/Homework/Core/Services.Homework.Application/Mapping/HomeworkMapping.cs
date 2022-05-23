@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Services.Homework.Domain.Dtos;
+using Services.Homework.Application.Dtos;
 using Services.Homework.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Homework.Domain.Mapping
+namespace Services.Homework.Application.Mapping
 {
     public class HomeworkMapping : Profile
     {

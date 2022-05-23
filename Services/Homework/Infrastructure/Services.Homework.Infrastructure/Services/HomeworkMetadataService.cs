@@ -22,44 +22,46 @@ namespace Services.Homework.Infrastructure.Services
 
             Collection = database.GetCollection<HomeworkMetadata>(databaseSettings.HomeworkMetadataCollectionName);
         }
-        public Task<HomeworkMetadata> AddAsync(HomeworkMetadata model)
+        public async Task<HomeworkMetadata> AddAsync(HomeworkMetadata model)
         {
-            
+            model.UploadDate = DateTime.Now;
+            model.Deleted = false;
+            await Collection.InsertOneAsync(model);
+            return model;
+        }
+   
+
+
+        public async Task<HomeworkMetadata> GetByIdAsync(string Id, bool tracking = true)
+        {
+            var entity = await Collection.Find(i => i.Id == Id && !i.Deleted).FirstOrDefaultAsync();
+            if (entity == null) throw new Exception("Not Found");
+            return entity;
         }
 
-        public Task<bool> AddRangeAsync(List<HomeworkMetadata> modelList)
-        {
-            
-        }
+       
 
-        public IQueryable<HomeworkMetadata> GetAll(bool tracking = true)
+        public async Task RemoveAsync(string id)
         {
-            
-        }
-
-        public Task<HomeworkMetadata> GetByIdAsync(string Id, bool tracking = true)
-        {
-            
-        }
-
-        public Task<HomeworkMetadata> GetSingleAsync(Expression<Func<HomeworkMetadata, bool>> method, bool tracking = true)
-        {
-            
-        }
-
-        public IQueryable<HomeworkMetadata> GetWhere(Expression<Func<HomeworkMetadata, bool>> method, bool tracking = true)
-        {
-            
-        }
-
-        public Task RemoveAsync(string id)
-        {
-            
+            var entity = await Collection
+                .Find(i => i.Id == id && !i.Deleted)
+                .FirstOrDefaultAsync();
+            if (entity == null) throw new Exception("Not Found");
+            var save = await Collection.UpdateOneAsync(Builders<HomeworkMetadata>.Filter.Eq(i => i.Id, entity.Id), Builders<HomeworkMetadata>.Update.Set(i => i.Deleted, true));
         }
 
         public bool Update(HomeworkMetadata model)
         {
-            
+            var filter = Builders<HomeworkMetadata>.Filter.Eq(i => i.Id, model.Id);
+            var res = Collection.ReplaceOne(filter, model);
+            return res.IsModifiedCountAvailable;
+        }
+
+        public async Task<HomeworkMetadata> GetHomeworkMetadataByHomeworkInformationId(string homeworkInformationId)
+        {
+            var entity = await Collection.Find(i => i.HomeworkInformationId == homeworkInformationId && !i.Deleted).FirstOrDefaultAsync();
+            if (entity == null) throw new Exception("Not Found");
+            return entity;
         }
     }
 }
