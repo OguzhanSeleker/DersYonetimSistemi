@@ -262,6 +262,25 @@ namespace DYS.WebClient.Controllers
             var courseUser = _lessonService.RemoveUserFromCourse(courseUserId);
             return RedirectToAction("AddUserToCourse", "Course", new { courseId = courseId });
         }
+
+        [HttpGet]
+        [Route("Course/{courseId}/CourseInformation")]
+        [ServiceFilter(typeof(ParameterFilterAttribute))]
+        public async Task<IActionResult> CourseInformation(string courseId)
+        {
+            var lessonInfo = await _lessonService.GetLessonByCourseId(courseId);
+            var courseInfo = await _lessonService.GetCourseById(courseId);
+            var usrList = await _lessonService.GetUserListByCourseId(courseId);
+            var model = new CourseInformationViewModel()
+            {
+                LessonInformation = lessonInfo,
+                CourseInformation = courseInfo,
+                CourseUserList = usrList,
+                SideBarViewModel = await GetSideBarInfo(_lessonService)
+            };
+            return View(model);
+        }
+
     }
 
 }
