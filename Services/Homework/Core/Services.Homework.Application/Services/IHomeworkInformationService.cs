@@ -12,6 +12,6 @@ namespace Services.Homework.Application.Services
 {
     public interface IHomeworkInformationService : IRepository<HomeworkInformation>
     {
-        Task<HomeworkInformation> GetByCourseId(string courseId);
+        Task<List<HomeworkInformation>> GetByCourseId(string courseId);
     }
 }

@@ -57,11 +57,11 @@ namespace Services.Homework.Infrastructure.Services
             return res.IsModifiedCountAvailable;
         }
 
-        public async Task<HomeworkInformation> GetByCourseId(string courseId)
+        public async Task<List<HomeworkInformation>> GetByCourseId(string courseId)
         {
-            var entity = await Collection.Find(i => i.CourseId == courseId && !i.Deleted).FirstOrDefaultAsync();
-            if (entity == null) return null;
-            return entity;
+            var entityList = await Collection.Find(i => i.CourseId == courseId && !i.Deleted).ToListAsync();
+            if (entityList == null) return null;
+            return entityList;
         }
     }
 }
