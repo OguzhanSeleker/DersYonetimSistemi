@@ -75,8 +75,9 @@ namespace Services.Lesson.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Services.Lesson.API v1"));
             }
-            app.UseMiddleware<RequestResponseLoggingMiddleware>();
+            //app.UseMiddleware<RequestResponseLoggingMiddleware>();
             //app.UseMiddleware<ExceptionHandlerMiddleware>();
+            app.UseLessonRequestLogging();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

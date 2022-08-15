@@ -44,10 +44,10 @@ namespace DYS.WebClient.Controllers
 
             var userNameSurname = User.Identity.Name;
             var getUserLessons = await lessonService.GetLessonlistByUserId(_sharedIdentityService.GetUserId);
-            var getUserLessonsIdLİst = getUserLessons.ToLookup(i => i.Id).ToList();
             var sidebarLessonList = new List<SideBarLessonModel>();
             if (getUserLessons != null)
             {
+            var getUserLessonsIdLİst = getUserLessons.ToLookup(i => i.Id).ToList();
                 foreach (var userLesson in getUserLessonsIdLİst)
                 {
                     var courseList = await lessonService.GetCourseListByLessonIdAndUserId(userLesson.Key.ToString(), _sharedIdentityService.GetUserId);

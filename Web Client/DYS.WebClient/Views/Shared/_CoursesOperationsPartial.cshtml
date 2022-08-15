@@ -2,7 +2,7 @@
 <div class="col-6 col-sm-2 border shadow bg-light mr-2" style="height: 45rem;">
             <div class="h5 text-dark mt-4 ml-2 p-1">Ders İşlemleri</div>
             <ul class="list-group list-group-flush bg-light">
-                <li class="list-group-item bg-light"><a href="#">Ders Bilgileri</a></li>
+                <li class="list-group-item bg-light"><a asp-controller="Course" asp-action="CourseInformation" asp-route-courseid="@Model.Id">Ders Bilgileri</a></li>
                 @if (User.IsInRole("Admin") || User.IsInRole("Teacher"))
                 {
                     <li class="list-group-item bg-light"><a asp-controller="Course" asp-action="AddUserToCourse" asp-route-courseId="@Model.Id">Sınıf Kişi İşlemleri</a></li>

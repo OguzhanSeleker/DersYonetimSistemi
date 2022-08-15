@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Services.Notification.API.Middleware;
+using Services.Notification.API.Middlewares;
 using Services.Notification.Persistence;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -37,6 +38,7 @@ namespace Services.Notification.API
             services.AddHttpContextAccessor();
             services.AddControllers(opt => { opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy)); });
             services.AddPersistenceServices(Configuration);
+            services.AddHealthChecks();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -53,8 +55,9 @@ namespace Services.Notification.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Services.Notification.API v1"));
             }
-            app.UseMiddleware<RequestResponseLoggingMiddleware>();
+            //app.UseMiddleware<RequestResponseLoggingMiddleware>();
             //app.UseMiddleware<ExceptionHandlerMiddleware>();
+            app.UseNotificationRequestLogging();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Services.Message.API.Middlewares;
 using Services.Message.Persistence;
 using System;
 using System.Collections.Generic;
@@ -59,7 +60,7 @@ namespace Services.Message.API
             }
 
             app.UseHttpsRedirection();
-
+            app.UseMessageRequestLogging();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

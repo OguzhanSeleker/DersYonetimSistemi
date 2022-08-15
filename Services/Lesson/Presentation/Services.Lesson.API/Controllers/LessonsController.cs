@@ -164,7 +164,6 @@ namespace Services.Lesson.API.Controllers
             var courseList = courseUserList.Select(i => i.Course);
             var lessonList = courseList.Select(i => i.Lesson).ToList();
 
-            //courseUserList.ToList().ForEach(i => { lessonList.Add(i.Course.Lesson); });
             return ReturnOk(ObjectMapper.Mapper.Map<List<QueryLessonDto>>(lessonList));
         }
 

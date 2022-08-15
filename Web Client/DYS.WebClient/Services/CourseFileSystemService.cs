@@ -58,7 +58,7 @@ namespace DYS.WebClient.Services
                     var fileRes = await dosyaClient.GetAsync($"http://localhost:5016/{converted.Data.Path}");
                     fileRes.EnsureSuccessStatusCode();
                     var ba = await fileRes.Content.ReadAsByteArrayAsync();
-                    return new FileDto { fileByteArr =ba, DisplayName = converted.Data.DisplayFileName};
+                    return new FileDto { fileByteArr = ba, DisplayName = converted.Data.DisplayFileName };
                 }
                 return null;
             }
@@ -68,10 +68,13 @@ namespace DYS.WebClient.Services
         public async Task<List<GetFileSystemDto>> GetByCourseId(string courseId)
         {
             var response = await _client.GetAsync($"FileSystems/GetFileListByCourseId/{courseId}");
-            var str = await response.Content.ReadAsStringAsync();
-            var converted = JsonConvert.DeserializeObject<OperationResult<List<GetFileSystemDto>>>(str);
-            if (converted != null && converted.Data != null)
-                return converted.Data;
+            if (response.IsSuccessStatusCode)
+            {
+                var str = await response.Content.ReadAsStringAsync();
+                var converted = JsonConvert.DeserializeObject<OperationResult<List<GetFileSystemDto>>>(str);
+                if (converted != null && converted.Data != null)
+                    return converted.Data;
+            }
             return null;
         }
     }
